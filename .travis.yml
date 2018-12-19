@@ -1,0 +1,44 @@
+language: java
+java : "8"
+
+sudo: required
+
+# 使用安全列表指定要构建的分支
+branches:
+  only:
+  - master
+  - stable
+
+cache:
+  directories:
+  - ".autoconf"
+  - "$HOME/.m2"
+services:
+- docker
+
+script:
+  - mvn test -DargLine="-Dspring.profiles.active=test" -Djasypt.encryptor.password="$ENCRYP_PASSWORD"
+  - mvn clean package -Djasypt.encryptor.password="$ENCRYP_PASSWORD"
+
+addons:
+  ssh_known_hosts:
+   - $HOST
+
+before_install:
+  - sudo apt-get update
+  - sudo apt-get install sshpass
+
+after_success:
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker build --build-arg key="$ENCRYP_PASSWORD" --build-arg java_file=./target/zealsay-1.0.0.jar -t zealsay/zealsay_backend:$TRAVIS_BRANCH-$TRAVIS_BUILD_ID .
+  - docker push zealsay/zealsay_backend:$TRAVIS_BRANCH-$TRAVIS_BUILD_ID;
+  - sshpass -p $VPS_PASSWORD ssh -o stricthostkeychecking=no travis@$HOST "/home/travis/zealsay/travis-deploy.sh $TRAVIS_BRANCH-$TRAVIS_BUILD_ID"
+
+notifications:
+  email:
+    recipients:
+      - zhangleifor@163.com
+      - jinjinyike@163.com
+    on_success: always # default: change
+    on_failure: always # default: always
+

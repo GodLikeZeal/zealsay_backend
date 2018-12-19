@@ -1,0 +1,387 @@
+
+[[_definitions]]
+== Definitions
+
+[[_grantedauthority]]
+=== GrantedAuthority
+
+[options="header", cols=".^3,.^4"]
+|===
+|Name|Schema
+|**authority** +
+__optional__|string
+|===
+
+
+[[_modelandview]]
+=== ModelAndView
+
+[options="header", cols=".^3,.^4"]
+|===
+|Name|Schema
+|**empty** +
+__optional__|boolean
+|**model** +
+__optional__|object
+|**modelMap** +
+__optional__|< string, object > map
+|**reference** +
+__optional__|boolean
+|**status** +
+__optional__|enum (100, 101, 102, 103, 200, 201, 202, 203, 204, 205, 206, 207, 208, 226, 300, 301, 302, 303, 304, 305, 307, 308, 400, 401, 402, 403, 404, 405, 406, 407, 408, 409, 410, 411, 412, 413, 414, 415, 416, 417, 418, 419, 420, 421, 422, 423, 424, 426, 428, 429, 431, 451, 500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511)
+|**view** +
+__optional__|<<_view,View>>
+|**viewName** +
+__optional__|string
+|===
+
+
+[[_roleresponse]]
+=== RoleResponse
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**createAt** +
+__optional__|创建时间 +
+**Example** : `"2018-09-25"`|string
+|**description** +
+__optional__|描述 +
+**Example** : `"整个系统的最高权限"`|string
+|**id** +
+__optional__|id +
+**Example** : `"123"`|string
+|**name** +
+__optional__|角色名称 +
+**Example** : `"系统管理员"`|string
+|**updateAt** +
+__optional__|更新时间 +
+**Example** : `"2018-09-26"`|string
+|**value** +
+__optional__|角色值 +
+**Example** : `"ADMIN"`|string
+|===
+
+
+[[_47851a6880b0d2ca7529526c2d027084]]
+=== Role对象«RoleResponse»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**currentPage** +
+__optional__|currentPage +
+**Example** : `"当前页面"`|integer (int64)
+|**pageSize** +
+__optional__|pageSize +
+**Example** : `"页面大小"`|integer (int64)
+|**records** +
+__optional__||< <<_roleresponse,RoleResponse>> > array
+|**total** +
+__optional__|total +
+**Example** : `"总页面数"`|integer (int64)
+|===
+
+
+[[_7d2c07792b70f0da474548f494995a30]]
+=== Role对象«UserResponse»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**currentPage** +
+__optional__|currentPage +
+**Example** : `"当前页面"`|integer (int64)
+|**pageSize** +
+__optional__|pageSize +
+**Example** : `"页面大小"`|integer (int64)
+|**records** +
+__optional__||< <<_userresponse,UserResponse>> > array
+|**total** +
+__optional__|total +
+**Example** : `"总页面数"`|integer (int64)
+|===
+
+
+[[_secuityuser]]
+=== SecuityUser
+
+[options="header", cols=".^3,.^4"]
+|===
+|Name|Schema
+|**accountNonExpired** +
+__optional__|boolean
+|**accountNonLocked** +
+__optional__|boolean
+|**age** +
+__optional__|integer (int32)
+|**authorities** +
+__optional__|< <<_grantedauthority,GrantedAuthority>> > array
+|**avatar** +
+__optional__|string
+|**credentialsNonExpired** +
+__optional__|boolean
+|**enabled** +
+__optional__|boolean
+|**lastPasswordResetDate** +
+__optional__|string (date-time)
+|**password** +
+__optional__|string
+|**roles** +
+__optional__|< string > array
+|**sex** +
+__optional__|integer (int32)
+|**userId** +
+__optional__|integer (int64)
+|**username** +
+__optional__|string
+|===
+
+
+[[_useraddrequest]]
+=== UserAddRequest
+
+[options="header", cols=".^3,.^4"]
+|===
+|Name|Schema
+|**address** +
+__optional__|string
+|**age** +
+__optional__|integer (int32)
+|**area** +
+__optional__|string
+|**avatar** +
+__optional__|string
+|**city** +
+__optional__|string
+|**deptId** +
+__optional__|integer (int64)
+|**email** +
+__optional__|string
+|**name** +
+__optional__|string
+|**password** +
+__optional__|string
+|**phoneNumber** +
+__optional__|string
+|**province** +
+__optional__|string
+|**roleId** +
+__optional__|integer (int64)
+|**sex** +
+__optional__|integer (int32)
+|**username** +
+__optional__|string
+|===
+
+
+[[_userresponse]]
+=== UserResponse
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**address** +
+__optional__|地址 +
+**Example** : `"北京市朝阳中央大街12号"`|string
+|**age** +
+__optional__|年龄 +
+**Example** : `24`|integer (int32)
+|**area** +
+__optional__|区 +
+**Example** : `"朝阳区"`|string
+|**avatar** +
+__optional__|头像|string
+|**city** +
+__optional__|市 +
+**Example** : `"北京市"`|string
+|**deptId** +
+__optional__|部门id|integer (int64)
+|**email** +
+__optional__|邮箱 +
+**Example** : `"13342345678@qq.com"`|string
+|**id** +
+__optional__|id +
+**Example** : `"123"`|string
+|**lastPasswordResetDate** +
+__optional__|最后密码修改时间 +
+**Example** : `"2018.9.26 12:12:12"`|string
+|**name** +
+__optional__|真实名称 +
+**Example** : `"张三"`|string
+|**password** +
+__optional__|密码 +
+**Example** : `"12345"`|string
+|**phoneNumber** +
+__optional__|手机号 +
+**Example** : `"13322345678"`|string
+|**province** +
+__optional__|省 +
+**Example** : `"北京市"`|string
+|**registerAt** +
+__optional__|注册时间 +
+**Example** : `"2018.9.26 12:12:12"`|string
+|**roleId** +
+__optional__|角色 +
+**Example** : `"USER"`|integer (int64)
+|**sex** +
+__optional__|性别 +
+**Example** : `1`|integer (int32)
+|**status** +
+__optional__|状态 +
+**Example** : `"NORMAL"`|enum (NORMAL, DISABLED, LOCK)
+|**username** +
+__optional__|用户名 +
+**Example** : `"浪里小白龙"`|string
+|===
+
+
+[[_view]]
+=== View
+
+[options="header", cols=".^3,.^4"]
+|===
+|Name|Schema
+|**contentType** +
+__optional__|string
+|===
+
+
+[[_ec3f6f6e954021499fe4a1209a74ffc9]]
+=== 统一响应对象
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|响应码 +
+**Example** : `"200"`|string
+|**data** +
+__optional__|响应内容|object
+|**message** +
+__optional__|请求message +
+**Example** : `"请求成功"`|string
+|===
+
+
+[[_89a551050cedcba7d13af2a0dea44e22]]
+=== 统一响应对象«RoleResponse»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|响应码 +
+**Example** : `"200"`|string
+|**data** +
+__optional__|响应内容|<<_roleresponse,RoleResponse>>
+|**message** +
+__optional__|请求message +
+**Example** : `"请求成功"`|string
+|===
+
+
+[[_453e74bc7d5bf28e4931dc354f161858]]
+=== 统一响应对象«Role对象«RoleResponse»»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|响应码 +
+**Example** : `"200"`|string
+|**data** +
+__optional__|响应内容|<<_47851a6880b0d2ca7529526c2d027084,Role对象«RoleResponse»>>
+|**message** +
+__optional__|请求message +
+**Example** : `"请求成功"`|string
+|===
+
+
+[[_6b6e566f3e6caca6bdcc18e70c0bed18]]
+=== 统一响应对象«Role对象«UserResponse»»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|响应码 +
+**Example** : `"200"`|string
+|**data** +
+__optional__|响应内容|<<_7d2c07792b70f0da474548f494995a30,Role对象«UserResponse»>>
+|**message** +
+__optional__|请求message +
+**Example** : `"请求成功"`|string
+|===
+
+
+[[_7af439735c3a53e185d7af09034fd7d1]]
+=== 统一响应对象«SecuityUser»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|响应码 +
+**Example** : `"200"`|string
+|**data** +
+__optional__|响应内容|<<_secuityuser,SecuityUser>>
+|**message** +
+__optional__|请求message +
+**Example** : `"请求成功"`|string
+|===
+
+
+[[_10e8f871d3f6be4fa339f40fd973d2e3]]
+=== 统一响应对象«UserResponse»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|响应码 +
+**Example** : `"200"`|string
+|**data** +
+__optional__|响应内容|<<_userresponse,UserResponse>>
+|**message** +
+__optional__|请求message +
+**Example** : `"请求成功"`|string
+|===
+
+
+[[_fc32a758eabc43366aea90feb4eb883f]]
+=== 统一响应对象«boolean»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|响应码 +
+**Example** : `"200"`|string
+|**data** +
+__optional__|响应内容 +
+**Example** : `false`|boolean
+|**message** +
+__optional__|请求message +
+**Example** : `"请求成功"`|string
+|===
+
+
+[[_494555083211e91d3afc0c5db04e90b6]]
+=== 统一响应对象«object»
+
+[options="header", cols=".^3,.^11,.^4"]
+|===
+|Name|Description|Schema
+|**code** +
+__optional__|响应码 +
+**Example** : `"200"`|string
+|**data** +
+__optional__|响应内容|object
+|**message** +
+__optional__|请求message +
+**Example** : `"请求成功"`|string
+|===
+
+
+

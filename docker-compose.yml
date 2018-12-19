@@ -1,0 +1,13 @@
+version: '3'
+services:
+  app:
+   image: maven:3.5-jdk-8
+   working_dir: /app
+   volumes:
+     - ./:/app
+     - ~/.m2:/root/.m2
+   ports:
+     - '${APP_PORT}:${APP_PORT}'
+   expose:
+     - '${APP_PORT}'
+   command: ['/app/script/deploy/app-start.sh']
