@@ -2,10 +2,7 @@ package com.zeal.zealsay.security;
 
 import com.zeal.zealsay.config.FilterIgnorePropertiesConfig;
 import com.zeal.zealsay.security.filter.JwtAuthorizationTokenFilter;
-import com.zeal.zealsay.security.handler.MyAccessDeniedHandler;
-import com.zeal.zealsay.security.handler.MyAuthenticationEntryPoint;
-import com.zeal.zealsay.security.handler.MyAuthenticationFailureHandler;
-import com.zeal.zealsay.security.handler.MyAuthenticationSuccessHandler;
+import com.zeal.zealsay.security.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +28,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  * @date 2018/9/26  下午8:36
  */
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
@@ -49,6 +46,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
   MyAccessDeniedHandler myAccessDeniedHandler;
   @Autowired
   MyAuthenticationEntryPoint myAuthenticationEntryPoint;
+  @Autowired
+  MyLogoutSuccessHandler myLogoutSuccessHandler;
   @Autowired
   UserDetailsService userDetailsService;
   @Autowired
@@ -81,6 +80,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             .and()
             .logout()
             .logoutUrl("/api/v1/authentication/logout")
+            .logoutSuccessHandler(myLogoutSuccessHandler)
             .and()
             .authorizeRequests();
 
