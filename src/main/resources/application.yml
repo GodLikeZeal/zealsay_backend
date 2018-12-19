@@ -55,6 +55,7 @@ ignore:
   urls:
       - /api/v1/authentication/login
       - /api/v1/authentication/require
+      - /api/v1/authentication/logout
       - /**/*.css
       - /social
       - /signin
