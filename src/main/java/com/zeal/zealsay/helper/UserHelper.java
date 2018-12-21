@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.converter.UserConvertMapper;
+import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.User;
@@ -17,7 +18,7 @@ import java.util.stream.Collectors;
 /**
  * 用户帮助类.
  *
- * @author  zhanglei
+ * @author zhanglei
  * @date 2018/11/15  6:53 PM
  */
 @Component
@@ -25,23 +26,24 @@ public class UserHelper {
 
   @Autowired
   UserConvertMapper userConvertMapper;
+
   /**
    * 更新之前通过请求参数转换成user.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2018/11/15  7:46 PM
    */
-  public User initBeforeUpdate(UserUpdateRequest userUpdateRequest){
+  public User initBeforeUpdate(UserUpdateRequest userUpdateRequest) {
     return userConvertMapper.toUser(userUpdateRequest);
   }
 
   /**
    * 转换成返回列表.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2018/11/15  9:25 PM
    */
-  public PageInfo<UserResponse> toPageInfo(Page<User> userPage){
+  public PageInfo<UserResponse> toPageInfo(Page<User> userPage) {
     PageInfo<User> userPageInfo = new PageInfo(userPage);
     List<UserResponse> userResponses = userPageInfo.getRecords()
         .stream()
@@ -53,5 +55,15 @@ public class UserHelper {
         .pageSize(userPageInfo.getPageSize())
         .total(userPageInfo.getTotal())
         .build();
+  }
+
+  /**
+   * 添加之前通过请求参数转换成user.
+   *
+   * @author zhanglei
+   * @date 2018/11/15  7:46 PM
+   */
+  public User initBeforeAdd(UserAddRequest userAddRequest) {
+    return userConvertMapper.toUser(userAddRequest);
   }
 }

@@ -3,52 +3,61 @@ package com.zeal.zealsay.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
+import com.zeal.zealsay.dto.request.UserAddRequest;
+import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.common.entity.UserVo;
+import com.zeal.zealsay.exception.ServiceException;
+import com.zeal.zealsay.helper.UserHelper;
 import com.zeal.zealsay.mapper.RoleMapper;
 import com.zeal.zealsay.mapper.UserMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author zhanglei
  * @since 2018-09-14
  */
 @Service
-public class UserService extends ServiceImpl<UserMapper, User> implements IService<User>{
+public class UserService extends ServiceImpl<UserMapper, User> implements IService<User> {
 
   @Autowired
   RoleMapper roleMapper;
+  @Autowired
+  UserHelper userHelper;
 
   /**
-  * 通过手机号，用户名或者邮箱查询.
-  *
-  * @author  zeal
-  * @date 2018/11/24 14:03
-  */
-  public UserVo userFind(String  s){
+   * 通过手机号，用户名或者邮箱查询.
+   *
+   * @author zeal
+   * @date 2018/11/24 14:03
+   */
+  public UserVo userFind(String s) {
     //判断是邮箱还是手机号的正则表达式
     String em = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
     String ph = "^[1][34578]\\d{9}$";
     User user = null;
     QueryWrapper<User> qu = new QueryWrapper<>();
-    if (s.matches(ph)){
+    if (s.matches(ph)) {
       //手机号登录
-      user = baseMapper.selectOne(qu.eq("phone_number",s));
-    }else  if (s.matches(em)){
+      user = baseMapper.selectOne(qu.eq("phone_number", s));
+    } else if (s.matches(em)) {
       //邮箱登录
-      user = baseMapper.selectOne(qu.eq("email",s));
-    }else {
+      user = baseMapper.selectOne(qu.eq("email", s));
+    } else {
       //用户名
-      user = baseMapper.selectOne(qu.eq("username",s));
+      user = baseMapper.selectOne(qu.eq("username", s));
     }
-    if (user!=null){
-      return  UserVo.builder()
+    if (user != null) {
+      return UserVo.builder()
           .user(user)
           .role(roleMapper.selectById(user.getRoleId()))
           .build();
@@ -59,15 +68,55 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
   }
 
   /**
-  * 禁用用户.
-  *
-  * @author  zeal
-  * @date 2018/11/24 14:27
-  */
-public Boolean markUserDisabled(Long userId) {
-      return updateById(User.builder()
-          .id(userId)
-          .status(UserStatus.DISABLED)
-          .build());
-}
+   * 禁用用户.
+   *
+   * @author zeal
+   * @date 2018/11/24 14:27
+   */
+  public Boolean markUserDisabled(Long userId) {
+    return updateById(User.builder()
+        .id(userId)
+        .status(UserStatus.DISABLED)
+        .build());
+  }
+
+  /**
+   * 批量禁用用户.
+   *
+   * @author zeal
+   * @date 2018/11/24 14:27
+   */
+  public Boolean markUserDisabledBatch(@NonNull Collection<Long> userIds) {
+    for (Long id : userIds) {
+      markUserDisabled(id);
+    }
+    return true;
+  }
+
+  /**
+   * 管理员添加用户.
+   *
+   * @author zeal
+   * @date 2018/11/24 14:27
+   */
+  public Boolean addUser(UserAddRequest userAddRequest) {
+    Integer count = baseMapper.selectCount(new QueryWrapper<User>()
+        .eq("username", userAddRequest.getUsername()));
+    if (count > 0) {
+      throw new ServiceException("用户名重复，无法添加");
+    }
+    User user = userHelper.initBeforeAdd(userAddRequest);
+    return save(user);
+  }
+
+  /**
+   * 更新用户信息.
+   *
+   * @author zeal
+   * @date 2018/11/24 14:27
+   */
+  public Boolean updateUser(UserUpdateRequest userUpdateRequest) {
+    User user = userHelper.initBeforeUpdate(userUpdateRequest);
+    return updateById(user);
+  }
 }
