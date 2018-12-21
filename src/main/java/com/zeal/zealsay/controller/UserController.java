@@ -55,6 +55,44 @@ public class UserController {
     return Result
         .of(userConvertMapper.toUserResponse(userService.getById(id)));
   }
+  /**
+   * 查询手机号是否已被使用.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("/use/phone/{phone}")
+  @ApiOperation(value = "查询手机号是否已被使用", notes = "查询手机号是否已被使用")
+  public Result<Boolean> getIsInUseByPhone(@PathVariable String phone) {
+    log.info("开始查询手机号码phone为 '{}' 是否被使用", phone);
+    return Result.of(userService.getIsInUseByPhone(phone));
+  }
+
+  /**
+   * 查询用户名是否已被使用.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("/use/username/{username}")
+  @ApiOperation(value = "查询手机号是否已被使用", notes = "查询手机号是否已被使用")
+  public Result<Boolean> getIsInUseByUsername(@PathVariable String username) {
+    log.info("开始查询用户名username为 '{}' 是否被使用", username);
+    return Result.of(userService.getIsInUseByUsername(username));
+  }
+  /**
+   * 查询邮箱是否已被使用.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("/use/email/{email}")
+  @ApiOperation(value = "查询手机号是否已被使用", notes = "查询手机号是否已被使用")
+  public Result<Boolean> getIsInUseByEmail(@PathVariable String email) {
+    log.info("开始查询邮箱email为 '{}' 是否被使用", email);
+    return Result.of(userService.getIsInUseByEmail(email));
+  }
+
 
   /**
    * 分页查询.

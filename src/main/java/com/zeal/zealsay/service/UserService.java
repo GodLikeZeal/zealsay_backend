@@ -119,4 +119,34 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     User user = userHelper.initBeforeUpdate(userUpdateRequest);
     return updateById(user);
   }
+
+    /**
+     * 查询手机号是否已被使用.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean getIsInUseByPhone(String phone) {
+        return count(new QueryWrapper<User>().eq("phone_number",phone))>0?true:false;
+    }
+
+    /**
+     * 查询用户名是否已被使用.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean getIsInUseByUsername(String username) {
+        return count(new QueryWrapper<User>().eq("username",username))>0?true:false;
+    }
+
+    /**
+     * 查询用户名是否已被使用.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean getIsInUseByEmail(String email) {
+        return count(new QueryWrapper<User>().eq("email",email))>0?true:false;
+    }
 }
