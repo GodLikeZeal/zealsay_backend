@@ -83,7 +83,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: ENC(Wa+tEwXe6Worg6mJA7Ktjw==)
     password: ENC(zX2UA1iFzq42U02URTxN66G0++GBtq1h)
-    url: jdbc:mysql://${spring.datasource.host}/zealsay?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://${spring.datasource.host}/zealsay?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true
     hikari:
       maxLifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上
       maximumPoolSize: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
@@ -111,7 +111,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: ENC(dTs6h30QzOZmreWAA7QnIg==)
     password: ENC(XqmR3L8xdd162L13u5Qcnwth3tldFaZn)
-    url: jdbc:mysql://${spring.datasource.host}:3306/zealsay?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://${spring.datasource.host}:3306/zealsay?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true
     hikari:
       maxLifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上
       maximumPoolSize: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
@@ -130,7 +130,7 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: ENC(uvPCQE8yRpcGZfNrtvZUGQ==)
     password: ENC(ipXR4HFMaykv+IdxyLxx+I9LqtgN7pnX)
-    url: jdbc:mysql://${spring.datasource.host}:3306/zealsay?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://${spring.datasource.host}:3306/zealsay?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=true
     hikari:
       maxLifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上
       maximumPoolSize: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
