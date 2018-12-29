@@ -34,9 +34,8 @@ public class RoleHelper {
    */
   public Role initBeforeUpdate(RoleUpdateRequest roleUpdateRequest){
     Role role = roleConvertMapper.toRole(roleUpdateRequest);
-    return role.toBuilder()
-        .updateAt(LocalDateTime.now())
-        .build();
+    role.setUpdateAt(LocalDateTime.now());
+    return role;
   }
 
   /**
@@ -47,9 +46,8 @@ public class RoleHelper {
    */
   public Role initBeforeAdd(RoleAddResquest roleAddResquest){
     Role role = roleConvertMapper.toRole(roleAddResquest);
-    return role.toBuilder()
-        .createAt(LocalDateTime.now())
-        .build();
+    role.setCreateAt(LocalDateTime.now());
+    return role;
   }
 
   /**

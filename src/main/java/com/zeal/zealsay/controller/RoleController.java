@@ -14,7 +14,6 @@ import com.zeal.zealsay.entity.Role;
 import com.zeal.zealsay.helper.RoleHelper;
 import com.zeal.zealsay.service.RoleService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,7 +83,7 @@ public class RoleController {
   @PostMapping("")
   @ApiOperation(value = "新增角色信息",notes = "新增角色信息")
   public Result<Boolean> addRole(@Validated RoleAddResquest roleAddResquest) {
-    log.info("开始进行分新增角色，新增参数为 '{}' ", roleAddResquest);
+    log.info("开始进行新增角色，新增参数为 '{}' ", roleAddResquest);
     return Result.of(roleService.addRole(roleAddResquest));
   }
 

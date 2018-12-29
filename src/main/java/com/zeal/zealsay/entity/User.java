@@ -30,7 +30,6 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("sys_user")
-@ApiModel(value = "User对象", description = "")
 public class User implements Serializable {
 
   private static final long serialVersionUID = 1L;
