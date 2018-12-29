@@ -49,7 +49,7 @@ public class GenneratorServiceTest {
         .setAuthor("zhanglei")
         .setSwagger2(true)
         .setIdType(IdType.ID_WORKER)
-        .setOutputDir("/Users/zhanglei/Documents/my/code/zealsay_backend/src/main/java")
+        .setOutputDir("/Users/zhanglei/Documents/my/github/zealsay_backend/src/main/java")
         .setFileOverride(true);
     if (!serviceNameStartWithI) {
       config.setServiceName("%sService");

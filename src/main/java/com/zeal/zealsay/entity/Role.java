@@ -23,14 +23,13 @@ import lombok.experimental.Accessors;
  * @author zhanglei
  * @date 2018/11/15  7:16 PM
  */
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder(toBuilder = true)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("sys_role")
-@ApiModel(value = "Role对象", description = "分页对象")
 public class Role implements Serializable {
 
   private static final long serialVersionUID = 1L;

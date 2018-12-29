@@ -70,11 +70,7 @@
         <appender-ref ref="error" />
     </root>
 
-    <logger name="sun.rmi.loader" level="WARN"/>
-    <logger name="com.zaxxer.hikari" level="WARN"/>
-    <logger name="org.springframework" level="INFO"/>
-    <logger name="org.springframework.security" level="INFO"/>
-    <logger name="com.mysql.jdbc" level="WARN"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.security" level="WARN"/>
     <logger name="com.zeal.zealsay" level="INFO"/>
-    <logger name="org.apache.http" level="WARN"/>
 </configuration>

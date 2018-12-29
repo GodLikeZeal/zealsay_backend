@@ -4,10 +4,11 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
+
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -18,7 +19,10 @@ import lombok.experimental.Accessors;
  * @author zhanglei
  * @since 2018-11-28
  */
+@Builder(toBuilder = true)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="Article对象", description="文章表")
@@ -39,6 +43,9 @@ public class Article implements Serializable {
     @ApiModelProperty(value = "内容")
     private String content;
 
+    @ApiModelProperty(value = "封面图片")
+    private String coverImage;
+
     @ApiModelProperty(value = "状态")
     private Integer status;
 
@@ -53,6 +60,10 @@ public class Article implements Serializable {
 
     @ApiModelProperty(value = "作者编号")
     private Long authorId;
+
+    @ApiModelProperty(value = "是否删除")
+    @TableLogic
+    private Boolean isDel;
 
     @ApiModelProperty(value = "创建时间")
     private LocalDateTime createAt;
