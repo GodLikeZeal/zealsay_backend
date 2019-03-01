@@ -40,6 +40,9 @@ public class UserResponse {
   @ApiModelProperty(value = "密码", example = "12345")
   private String password;
 
+  @ApiModelProperty(value = "标签", example = "宅男,潜力股")
+  private String label;
+
   @ApiModelProperty(value = "性别", example = "1")
   private Integer sex;
 
