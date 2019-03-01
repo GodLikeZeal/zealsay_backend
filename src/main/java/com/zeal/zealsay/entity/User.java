@@ -66,6 +66,11 @@ public class User implements Serializable {
   private Integer age;
 
   /**
+   * 标签.
+   */
+  private String label;
+
+  /**
    * 手机号.
    */
   private String phoneNumber;
