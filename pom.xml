@@ -84,6 +84,11 @@
             </exclusions>
         </dependency>
 
+        <!-- apache commons 语言工具包-->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
         <!--使用jetty作为默认容器-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

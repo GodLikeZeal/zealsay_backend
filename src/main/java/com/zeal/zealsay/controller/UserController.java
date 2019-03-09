@@ -107,7 +107,8 @@ public class UserController {
                                                       UserPageRequest userPageRequest) {
     log.info("开始进行分页查询用户列表，查询参数为 '{}' ", userPageRequest);
     Page<User> userPage = (Page<User>) userService
-        .page(new Page<>(pageNumber, pageSize), new QueryWrapper(userConvertMapper
+        .page(new Page<>(pageNumber, pageSize), userHelper
+            .buildVagueQuery(userConvertMapper
             .toUser(userPageRequest)));
     return Result
         .of(userHelper.toPageInfo(userPage));
