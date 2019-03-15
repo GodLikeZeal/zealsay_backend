@@ -16,6 +16,11 @@ jwt:
   expiration: 604800
   tokenHead: "Bearer "
 
+qiniu:
+  Bucket: +qiMEWIsExb2bCJ/+FeFAfFuTLkaFeMh
+  AccessKey: ENC(AnoQmoYGtHaw3J/Tdp9SVb9Gr0Gcl69bsCY0cDlqHUGD0mxt9FlGjvEXCB5qfqyDbNulQaZoROw=)
+  SecretKey: ENC(4sy78avC7S3AcP4uwOdmIMmQV1AM5ifwjhvvgSKIdfwlFJeEuUn0iRvoXFmsumYUwDSlb7mk2V8=)
+
 mybatis-plus:
   # 如果是放在src/main/java目录下 classpath:/com/yourpackage/*/mapper/*Mapper.xml
   # 如果是放在resource目录 classpath:/mappings/*Mapper.xml
