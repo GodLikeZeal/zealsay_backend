@@ -54,14 +54,14 @@ public class QiniuController {
    */
   @PostMapping("/upload")
   @ApiOperation(value = "上传文件", notes = "上传文件")
-  public Result<Response> upload(@RequestParam MultipartFile file) {
+  public Result<String> upload(@RequestParam MultipartFile file) {
     if (file.isEmpty()) {
       throw new ServiceException("上传文件失败");
     }
     try(InputStream in = file.getInputStream()) {
       log.info("开始上传文件到七牛云");
       return Result
-          .of(qiniuService.uploadFile(in));
+          .of(qiniuService.uploadFile(in,qiniuService.createFileName(file)));
     } catch (IOException e) {
       log.error("上传文件到七牛云失败!");
       throw new ServiceException("上传文件失败");

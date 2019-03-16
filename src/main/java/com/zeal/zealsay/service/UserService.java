@@ -1,10 +1,12 @@
 package com.zeal.zealsay.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
+import com.zeal.zealsay.entity.Role;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.common.entity.UserVo;
 import com.zeal.zealsay.exception.ServiceException;
@@ -17,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Objects;
 
 /**
  * <p>
@@ -29,96 +32,137 @@ import java.util.Collection;
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> implements IService<User> {
 
-  @Autowired
-  RoleMapper roleMapper;
-  @Autowired
-  UserHelper userHelper;
+    @Autowired
+    RoleMapper roleMapper;
+    @Autowired
+    UserHelper userHelper;
 
-  /**
-   * 通过手机号，用户名或者邮箱查询.
-   *
-   * @author zeal
-   * @date 2018/11/24 14:03
-   */
-  public UserVo userFind(String s) {
-    //判断是邮箱还是手机号的正则表达式
-    String em = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-    String ph = "^[1][34578]\\d{9}$";
-    User user = null;
-    QueryWrapper<User> qu = new QueryWrapper<>();
-    if (s.matches(ph)) {
-      //手机号登录
-      user = baseMapper.selectOne(qu.eq("phone_number", s));
-    } else if (s.matches(em)) {
-      //邮箱登录
-      user = baseMapper.selectOne(qu.eq("email", s));
-    } else {
-      //用户名
-      user = baseMapper.selectOne(qu.eq("username", s));
+    /**
+     * 通过手机号，用户名或者邮箱查询.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:03
+     */
+    public UserVo userFind(String s) {
+        //判断是邮箱还是手机号的正则表达式
+        String em = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
+        String ph = "^[1][34578]\\d{9}$";
+        User user = null;
+        QueryWrapper<User> qu = new QueryWrapper<>();
+        if (s.matches(ph)) {
+            //手机号登录
+            user = baseMapper.selectOne(qu.eq("phone_number", s));
+        } else if (s.matches(em)) {
+            //邮箱登录
+            user = baseMapper.selectOne(qu.eq("email", s));
+        } else {
+            //用户名
+            user = baseMapper.selectOne(qu.eq("username", s));
+        }
+        if (user != null) {
+            return UserVo.builder()
+                    .user(user)
+                    .role(roleMapper.selectOne(new QueryWrapper<Role>().eq("value", user.getRole())))
+                    .build();
+        }
+        return UserVo.builder()
+                .user(user)
+                .build();
     }
-    if (user != null) {
-      return UserVo.builder()
-          .user(user)
-          .role(roleMapper.selectById(user.getRoleId()))
-          .build();
+
+    /**
+     * 禁用用户.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean markUserDisabled(Long userId) {
+        return updateById(User.builder()
+                .id(userId)
+                .status(UserStatus.DISABLED)
+                .build());
     }
-    return UserVo.builder()
-        .user(user)
-        .build();
-  }
 
-  /**
-   * 禁用用户.
-   *
-   * @author zeal
-   * @date 2018/11/24 14:27
-   */
-  public Boolean markUserDisabled(Long userId) {
-    return updateById(User.builder()
-        .id(userId)
-        .status(UserStatus.DISABLED)
-        .build());
-  }
-
-  /**
-   * 批量禁用用户.
-   *
-   * @author zeal
-   * @date 2018/11/24 14:27
-   */
-  public Boolean markUserDisabledBatch(@NonNull Collection<Long> userIds) {
-    for (Long id : userIds) {
-      markUserDisabled(id);
+    /**
+     * 解封用户.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean markUnsealing(Long userId) {
+        return updateById(User.builder()
+                .id(userId)
+                .status(UserStatus.NORMAL)
+                .build());
     }
-    return true;
-  }
 
-  /**
-   * 管理员添加用户.
-   *
-   * @author zeal
-   * @date 2018/11/24 14:27
-   */
-  public Boolean addUser(UserAddRequest userAddRequest) {
-    Integer count = baseMapper.selectCount(new QueryWrapper<User>()
-        .eq("username", userAddRequest.getUsername()));
-    if (count > 0) {
-      throw new ServiceException("用户名重复，无法添加");
+    /**
+     * 批量禁用用户.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean markUserDisabledBatch(@NonNull Collection<Long> userIds) {
+        update(User.builder().status(UserStatus.DISABLED).build(), new UpdateWrapper<User>()
+                .in("id", userIds));
+        return true;
     }
-    User user = userHelper.initBeforeAdd(userAddRequest);
-    return save(user);
-  }
 
-  /**
-   * 更新用户信息.
-   *
-   * @author zeal
-   * @date 2018/11/24 14:27
-   */
-  public Boolean updateUser(UserUpdateRequest userUpdateRequest) {
-    User user = userHelper.initBeforeUpdate(userUpdateRequest);
-    return updateById(user);
-  }
+    /**
+     * 批量解封用户.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean markUnsealingBatch(@NonNull Collection<Long> userIds) {
+        update(User.builder().status(UserStatus.NORMAL).build(), new UpdateWrapper<User>()
+                .in("id", userIds));
+        return true;
+    }
+
+    /**
+     * 管理员添加用户.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean addUser(UserAddRequest userAddRequest) {
+        Integer count = baseMapper.selectCount(new QueryWrapper<User>()
+                .eq("username", userAddRequest.getUsername()));
+        if (count > 0) {
+            throw new ServiceException("用户名重复，无法添加");
+        }
+        User user = userHelper.initBeforeAdd(userAddRequest);
+        return save(user);
+    }
+
+    /**
+     * 更新用户信息.
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean updateUser(UserUpdateRequest userUpdateRequest) {
+        //检查是否可以被更新
+        checkBeforeUpdate(userUpdateRequest);
+        User user = userHelper.initBeforeUpdate(userUpdateRequest);
+        return updateById(user);
+    }
+
+    private void checkBeforeUpdate(UserUpdateRequest userUpdateRequest) {
+        //更新前用户名去重校验
+        if (getIsInUseByUsername(userUpdateRequest.getUsername(), userUpdateRequest.getId())) {
+            throw new ServiceException("用户名已被使用");
+        }
+        //更新前手机号去重校验
+        if (getIsInUseByPhone(userUpdateRequest.getPhoneNumber(), userUpdateRequest.getId())) {
+            throw new ServiceException("手机号已被使用");
+        }
+        //更新前邮箱去重校验
+        if (getIsInUseByPhone(userUpdateRequest.getEmail(), userUpdateRequest.getId())) {
+            throw new ServiceException("邮箱已被使用");
+        }
+    }
 
     /**
      * 查询手机号是否已被使用.
@@ -127,7 +171,23 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
      * @date 2018/11/24 14:27
      */
     public Boolean getIsInUseByPhone(String phone) {
-        return count(new QueryWrapper<User>().eq("phone_number",phone))>0?true:false;
+        return count(new QueryWrapper<User>().eq("phone_number", phone)) > 0 ? true : false;
+    }
+
+    /**
+     * 查询手机号是否已被使用(不包含自己本身).
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean getIsInUseByPhone(String phone, Long userId) {
+        if (Objects.isNull(userId)) {
+            return getIsInUseByPhone(phone);
+        } else {
+            return count(new QueryWrapper<User>()
+                    .eq("phone_number", phone)
+                    .ne("id", userId)) > 0 ? true : false;
+        }
     }
 
     /**
@@ -137,7 +197,23 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
      * @date 2018/11/24 14:27
      */
     public Boolean getIsInUseByUsername(String username) {
-        return count(new QueryWrapper<User>().eq("username",username))>0?true:false;
+        return count(new QueryWrapper<User>().eq("username", username)) > 0 ? true : false;
+    }
+
+    /**
+     * 查询用户名是否已被使用(不包含自己本身).
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean getIsInUseByUsername(String username, Long userId) {
+        if (Objects.isNull(userId)) {
+            return getIsInUseByUsername(username);
+        } else {
+            return count(new QueryWrapper<User>()
+                    .eq("username", username)
+                    .ne("id", userId)) > 0 ? true : false;
+        }
     }
 
     /**
@@ -147,6 +223,22 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
      * @date 2018/11/24 14:27
      */
     public Boolean getIsInUseByEmail(String email) {
-        return count(new QueryWrapper<User>().eq("email",email))>0?true:false;
+        return count(new QueryWrapper<User>().eq("email", email)) > 0 ? true : false;
+    }
+
+    /**
+     * 查询用户名是否已被使用(不包含自己本身).
+     *
+     * @author zeal
+     * @date 2018/11/24 14:27
+     */
+    public Boolean getIsInUseByEmail(String email, Long userId) {
+        if (Objects.isNull(userId)) {
+            return getIsInUseByEmail(email);
+        } else {
+            return count(new QueryWrapper<User>()
+                    .eq("email", email)
+                    .ne("id", userId)) > 0 ? true : false;
+        }
     }
 }

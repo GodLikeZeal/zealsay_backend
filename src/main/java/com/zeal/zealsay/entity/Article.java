@@ -26,9 +26,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="Article对象", description="文章表")
-public class Article implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Article {
 
     @ApiModelProperty(value = "主键")
     @TableId(value = "id", type = IdType.ID_WORKER)

@@ -63,9 +63,9 @@ public class UserController {
    */
   @GetMapping("/use/phone/{phone}")
   @ApiOperation(value = "查询手机号是否已被使用", notes = "查询手机号是否已被使用")
-  public Result<Boolean> getIsInUseByPhone(@PathVariable String phone) {
+  public Result<Boolean> getIsInUseByPhone(@PathVariable String phone,@RequestParam(required = false) Long userId ) {
     log.info("开始查询手机号码phone为 '{}' 是否被使用", phone);
-    return Result.of(userService.getIsInUseByPhone(phone));
+    return Result.of(userService.getIsInUseByPhone(phone,userId));
   }
 
   /**
@@ -75,10 +75,10 @@ public class UserController {
    * @date 2018/9/7  下午6:00
    */
   @GetMapping("/use/username/{username}")
-  @ApiOperation(value = "查询手机号是否已被使用", notes = "查询手机号是否已被使用")
-  public Result<Boolean> getIsInUseByUsername(@PathVariable String username) {
+  @ApiOperation(value = "查询用户名是否已被使用", notes = "查询用户名是否已被使用")
+  public Result<Boolean> getIsInUseByUsername(@PathVariable String username,@RequestParam(required = false) Long userId) {
     log.info("开始查询用户名username为 '{}' 是否被使用", username);
-    return Result.of(userService.getIsInUseByUsername(username));
+    return Result.of(userService.getIsInUseByUsername(username,userId));
   }
   /**
    * 查询邮箱是否已被使用.
@@ -87,10 +87,10 @@ public class UserController {
    * @date 2018/9/7  下午6:00
    */
   @GetMapping("/use/email/{email}")
-  @ApiOperation(value = "查询手机号是否已被使用", notes = "查询手机号是否已被使用")
-  public Result<Boolean> getIsInUseByEmail(@PathVariable String email) {
+  @ApiOperation(value = "查询邮箱是否已被使用", notes = "查询邮箱是否已被使用")
+  public Result<Boolean> getIsInUseByEmail(@PathVariable String email,@RequestParam(required = false) Long userId) {
     log.info("开始查询邮箱email为 '{}' 是否被使用", email);
-    return Result.of(userService.getIsInUseByEmail(email));
+    return Result.of(userService.getIsInUseByEmail(email,userId));
   }
 
 
@@ -128,6 +128,19 @@ public class UserController {
   }
 
   /**
+   * 批量解封用户.
+   *
+   * @author zhanglei
+   * @date 2018/11/15  8:24 PM
+   */
+  @PutMapping("unsealing/batch")
+  @ApiOperation(value = "根据id列表批量解封用户", notes = "根据id列表批量解封用户")
+  public Result<Boolean> markUserUnsealingBatch(@RequestBody Collection<Long> ids) {
+    log.info("开始执行对用户 id 在 '{}' 内的用户执行批量解封操作", ids.toString());
+    return Result.of(userService.markUnsealingBatch(ids));
+  }
+
+  /**
    * 禁用单条用户.
    *
    * @author zhanglei
@@ -138,6 +151,19 @@ public class UserController {
   public Result<Boolean> markUserDisabled(@PathVariable Long id) {
     log.info("开始执行对用户 id 为 '{}' 的用户执行封禁操作", id);
     return Result.of(userService.markUserDisabled(id));
+  }
+
+  /**
+   * 解封单条用户.
+   *
+   * @author zhanglei
+   * @date 2018/11/15  8:24 PM
+   */
+  @PutMapping("unsealing/{id}")
+  @ApiOperation(value = "根据id解封用户", notes = "根据id解封用户")
+  public Result<Boolean> markUnsealing(@PathVariable Long id) {
+    log.info("开始执行对用户 id 为 '{}' 的用户执行解封操作", id);
+    return Result.of(userService.markUnsealing(id));
   }
 
   /**

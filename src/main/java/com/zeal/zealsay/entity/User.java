@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
@@ -30,9 +31,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("sys_user")
-public class User implements Serializable {
-
-  private static final long serialVersionUID = 1L;
+public class User {
 
   /**
    * id.
@@ -108,7 +107,7 @@ public class User implements Serializable {
   /**
    * 角色.
    */
-  private Long roleId;
+  private Role role;
 
   /**
    * 部门id.
@@ -130,4 +129,8 @@ public class User implements Serializable {
    */
   private Date lastPasswordResetDate;
 
+  /**
+   * 更新时间.
+   */
+  private  LocalDateTime updateDate;
 }

@@ -22,9 +22,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="ArticleCategory对象", description="分类目录表")
-public class ArticleCategory implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class ArticleCategory {
 
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;

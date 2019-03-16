@@ -1,6 +1,5 @@
 package com.zeal.zealsay.dto.request;
 
-import com.zeal.zealsay.common.constant.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 
 /**
- * 用户注册请求对象.
+ * 用户封禁请求对象.
  *
  * @author zhanglei
  * @date 2018/11/15  7:08 PM
@@ -18,7 +17,7 @@ import javax.validation.constraints.NotBlank;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserAddRequest {
+public class UserBlockRequest {
 
   /**
    * 用户名.
@@ -84,7 +83,7 @@ public class UserAddRequest {
   /**
    * 角色.
    */
-  private Role role;
+  private Long roleId;
 
   /**
    * 部门id.

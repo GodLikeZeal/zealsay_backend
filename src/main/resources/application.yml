@@ -17,7 +17,8 @@ jwt:
   tokenHead: "Bearer "
 
 qiniu:
-  Bucket: +qiMEWIsExb2bCJ/+FeFAfFuTLkaFeMh
+  Domain: https://pan.zealsay.com/
+  Bucket: ENC(+qiMEWIsExb2bCJ/+FeFAfFuTLkaFeMh)
   AccessKey: ENC(AnoQmoYGtHaw3J/Tdp9SVb9Gr0Gcl69bsCY0cDlqHUGD0mxt9FlGjvEXCB5qfqyDbNulQaZoROw=)
   SecretKey: ENC(4sy78avC7S3AcP4uwOdmIMmQV1AM5ifwjhvvgSKIdfwlFJeEuUn0iRvoXFmsumYUwDSlb7mk2V8=)
 
