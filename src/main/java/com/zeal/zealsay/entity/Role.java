@@ -30,9 +30,8 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @TableName("sys_role")
-public class Role implements Serializable {
+public class Role{
 
-  private static final long serialVersionUID = 1L;
 
   /**
    * id.

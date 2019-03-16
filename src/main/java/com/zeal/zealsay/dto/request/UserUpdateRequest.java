@@ -1,5 +1,6 @@
 package com.zeal.zealsay.dto.request;
 
+import com.zeal.zealsay.common.constant.enums.Role;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,9 @@ public class UserUpdateRequest {
 
   @ApiModelProperty(value = "id", example = "123")
   private Long id;
+
+  @ApiModelProperty(value = "用户名", example = "zhangsan")
+  private String username;
 
   @ApiModelProperty(value = "真实名称", example = "张三")
   private String name;
@@ -53,7 +57,7 @@ public class UserUpdateRequest {
   private String area;
 
   @ApiModelProperty(value = "角色", example = "USER")
-  private Long roleId;
+  private Role role;
 
   @ApiModelProperty(value = "部门id")
   private Long deptId;

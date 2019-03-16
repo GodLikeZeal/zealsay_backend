@@ -3,6 +3,7 @@ package com.zeal.zealsay.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.zeal.zealsay.common.constant.enums.Role;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,7 +59,7 @@ public class UserPageRequest {
   private String area;
 
   @ApiModelProperty(value = "角色", example = "USER")
-  private Long roleId;
+  private Role role;
 
   @ApiModelProperty(value = "部门id")
   private Long deptId;

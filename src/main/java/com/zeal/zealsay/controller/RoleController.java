@@ -55,6 +55,19 @@ public class RoleController {
     return Result
         .of(roleConvertMapper.toRoleResponse(roleService.getById(id)));
   }
+  /**
+   * 根据id来查询.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("")
+  @ApiOperation(value = "查询角色列表",notes = "查询角色列表")
+  public Result<RoleResponse> getByList() {
+    log.info("开始查询角色列表");
+    return Result
+            .of(roleConvertMapper.toRoleResponseList(roleService.list(new QueryWrapper<Role>())));
+  }
 
   /**
    * 分页查询.

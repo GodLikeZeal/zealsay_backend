@@ -7,6 +7,8 @@ import com.zeal.zealsay.dto.response.RoleResponse;
 import com.zeal.zealsay.entity.Role;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 /**
  * role相关转换器.
  *
@@ -17,6 +19,8 @@ import org.mapstruct.Mapper;
 public interface RoleConvertMapper {
 
   RoleResponse toRoleResponse(Role role);
+
+  List<RoleResponse> toRoleResponseList(List<Role> roles);
 
   Role toRole(RoleUpdateRequest roleUpdateRequest);
 
