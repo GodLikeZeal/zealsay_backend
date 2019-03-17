@@ -36,7 +36,7 @@ public class ArticleCategoryResponse {
   @ApiModelProperty(value = "说明",example = "记录技术分享")
   private String description;
 
-  @ApiModelProperty(value = "父层id",example = "")
+  @ApiModelProperty(value = "父层id",example = "1")
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long parentId;
 

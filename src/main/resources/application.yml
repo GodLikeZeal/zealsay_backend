@@ -21,9 +21,9 @@ swagger:
     ## 开启Swagger的Basic认证功能,默认是false
     enable: true
     ## Basic认证用户名
-    username: ENC(2jJjvsvrOAHu8rpca3xBYA==)
+    username: zealsay
     ## Basic认证密码
-    password: ENC(aQFUq38TRRuwzFq/RaDOf/7k1Y1ikYVc)
+    password: api123456
 
 
 qiniu:

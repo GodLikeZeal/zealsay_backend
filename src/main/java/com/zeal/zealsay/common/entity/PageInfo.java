@@ -25,11 +25,11 @@ public class PageInfo<T> {
   public static final Long DEFAULT_PAGE_SIZE = 10L;
   public static final Long DEFAULT_PAGE_NUMBER = 1L;
 
-  @ApiModelProperty(value = "pageSize",example = "页面大小")
+  @ApiModelProperty(value = "pageSize",example = "1")
   private Long pageSize;
-  @ApiModelProperty(value = "currentPage",example = "当前页面")
+  @ApiModelProperty(value = "currentPage",example = "2")
   private Long currentPage;
-  @ApiModelProperty(value = "total",example = "总页面数")
+  @ApiModelProperty(value = "total",example = "12")
   private Long total;
 
   @Builder.Default

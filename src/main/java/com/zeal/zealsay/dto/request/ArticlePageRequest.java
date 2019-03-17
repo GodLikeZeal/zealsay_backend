@@ -41,7 +41,7 @@ public class ArticlePageRequest {
   @ApiModelProperty(value = "分类目录id",example = "1231")
   private Long categoryId;
 
-  @ApiModelProperty(value = "作者编号")
+  @ApiModelProperty(value = "作者编号",example = "1")
   private Long authorId;
 
   @ApiModelProperty(value = "创建时间")

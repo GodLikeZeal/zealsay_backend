@@ -17,7 +17,7 @@ public class RoleUpdateRequest {
   /**
    * id.
    */
-  @ApiModelProperty(value = "id",example = "12331 ")
+  @ApiModelProperty(value = "id",example = "12331")
   @NotBlank(message = "id不能为空")
   private Long id;
 

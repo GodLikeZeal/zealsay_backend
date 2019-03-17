@@ -59,7 +59,7 @@ public class UserUpdateRequest {
   @ApiModelProperty(value = "角色", example = "USER")
   private Role role;
 
-  @ApiModelProperty(value = "部门id")
+  @ApiModelProperty(value = "部门id",example = "1")
   private Long deptId;
 
 }
