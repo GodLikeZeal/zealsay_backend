@@ -5,6 +5,7 @@ import com.zeal.zealsay.converter.ArticleConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleAddRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
 import com.zeal.zealsay.entity.Article;
+import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.ArticleHelper;
 import com.zeal.zealsay.mapper.ArticleMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -24,6 +26,7 @@ import java.time.LocalDateTime;
  * @author zhanglei
  * @since 2018-11-28
  */
+@Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
 public class ArticleService extends ServiceImpl<ArticleMapper, Article> implements IService<Article> {
 

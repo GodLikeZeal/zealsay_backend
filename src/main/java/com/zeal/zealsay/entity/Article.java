@@ -3,7 +3,6 @@ package com.zeal.zealsay.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import io.swagger.annotations.ApiModel;

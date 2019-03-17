@@ -3,6 +3,7 @@ package com.zeal.zealsay.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zeal.zealsay.common.constant.enums.BlockAction;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
@@ -17,8 +18,10 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -29,6 +32,7 @@ import java.util.Objects;
  * @author zhanglei
  * @since 2018-09-14
  */
+@Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> implements IService<User> {
 
@@ -36,6 +40,8 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     RoleMapper roleMapper;
     @Autowired
     UserHelper userHelper;
+    @Autowired
+    BlockLogService blockLogService;
 
     /**
      * 通过手机号，用户名或者邮箱查询.
@@ -77,6 +83,10 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
      * @date 2018/11/24 14:27
      */
     public Boolean markUserDisabled(Long userId) {
+        //记录
+        User user = getById(userId);
+        blockLogService.saveBlocak(user, BlockAction.BAN,"违禁");
+
         return updateById(User.builder()
                 .id(userId)
                 .status(UserStatus.DISABLED)
@@ -90,6 +100,10 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
      * @date 2018/11/24 14:27
      */
     public Boolean markUnsealing(Long userId) {
+        //记录
+        User user = getById(userId);
+        blockLogService.saveBlocak(user, BlockAction.UNSEALING,"");
+
         return updateById(User.builder()
                 .id(userId)
                 .status(UserStatus.NORMAL)
@@ -103,6 +117,10 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
      * @date 2018/11/24 14:27
      */
     public Boolean markUserDisabledBatch(@NonNull Collection<Long> userIds) {
+        //记录
+        List<User> users = (List<User>) listByIds(userIds);
+        blockLogService.saveBlocakBatch(users,BlockAction.BAN,"违禁");
+
         update(User.builder().status(UserStatus.DISABLED).build(), new UpdateWrapper<User>()
                 .in("id", userIds));
         return true;
@@ -115,6 +133,10 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
      * @date 2018/11/24 14:27
      */
     public Boolean markUnsealingBatch(@NonNull Collection<Long> userIds) {
+        //记录
+        List<User> users = (List<User>) listByIds(userIds);
+        blockLogService.saveBlocakBatch(users,BlockAction.UNSEALING,"");
+
         update(User.builder().status(UserStatus.NORMAL).build(), new UpdateWrapper<User>()
                 .in("id", userIds));
         return true;
