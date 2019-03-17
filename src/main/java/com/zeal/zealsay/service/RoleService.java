@@ -12,6 +12,7 @@ import com.zeal.zealsay.mapper.RoleMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -24,6 +25,7 @@ import java.util.List;
  * @author zhanglei
  * @since 2018-09-14
  */
+@Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
 public class RoleService extends ServiceImpl<RoleMapper, Role> implements IService<Role> {
 

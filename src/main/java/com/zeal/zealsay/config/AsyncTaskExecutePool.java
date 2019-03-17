@@ -43,7 +43,7 @@ public class AsyncTaskExecutePool implements AsyncConfigurer {
   /**
    * 线程名称前缀.
    */
-  private static final String threadNamePrefix = "Notification-";
+  private static final String threadNamePrefix = "zealsay-";
 
 
   /**

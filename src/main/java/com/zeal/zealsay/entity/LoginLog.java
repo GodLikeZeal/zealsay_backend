@@ -3,7 +3,7 @@ package com.zeal.zealsay.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -60,15 +60,6 @@ public class LoginLog {
 
     @ApiModelProperty(value = "坐标")
     private String coordinate;
-
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createDate;
-
-    @ApiModelProperty(value = "状态")
-    private String status;
-
-    @ApiModelProperty(value = "原因")
-    private String reason;
 
 
 }

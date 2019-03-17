@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.service.LoginLogService;
 import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
   @Autowired
   JwtTokenUtil jwtTokenUtil;
 
+  @Autowired
+  LoginLogService loginLogService;
+
   @Override
   public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
                                       HttpServletResponse httpServletResponse,
@@ -50,5 +54,7 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
                 .message(OK.getMessage())
                 .data(ImmutableMap.of("token", token))
                 .build()));
+    //记录登录信息
+    loginLogService.saveLog(httpServletRequest,secuityUser);
   }
 }

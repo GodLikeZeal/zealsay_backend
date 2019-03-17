@@ -3,7 +3,8 @@ package com.zeal.zealsay.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
+
+import com.zeal.zealsay.common.constant.enums.BlockAction;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -30,8 +31,11 @@ public class BlockLog {
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
 
-    @ApiModelProperty(value = "类型 1-封禁 2-解封")
-    private String action;
+    @ApiModelProperty(value = "动作 UNSEALING-封禁 BAN-解封")
+    private BlockAction action;
+
+    @ApiModelProperty(value = "类型")
+    private String type;
 
     @ApiModelProperty(value = "目标id")
     private Long targetId;
