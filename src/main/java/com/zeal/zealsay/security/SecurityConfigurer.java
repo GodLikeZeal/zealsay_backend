@@ -67,9 +67,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
             .csrf().disable()// 去掉 CSRF
             .cors()
             .and()
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 使用 JWT，关闭token
-            .and()
-            .httpBasic().authenticationEntryPoint(myAuthenticationEntryPoint)
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // 使用 JWT，关闭token
             .and()
             .formLogin()  //开启登录
             .loginPage("/api/v1/authentication/require")
