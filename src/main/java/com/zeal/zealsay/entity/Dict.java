@@ -29,29 +29,45 @@ public class Dict implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键")
+    /**
+     * 主键.
+     */
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
 
-    @ApiModelProperty(value = "编码")
+    /**
+     * 编码.
+     */
     private Integer code;
 
-    @ApiModelProperty(value = "名称")
+    /**
+     * 名称.
+     */
     private String name;
 
-    @ApiModelProperty(value = "拼音简称")
+    /**
+     * 拼音简称.
+     */
     private String enShort;
 
-    @ApiModelProperty(value = "父层code")
+    /**
+     * 父层code.
+     */
     private Integer parentCode;
 
-    @ApiModelProperty(value = "类型")
+    /**
+     * 类型.
+     */
     private String type;
 
-    @ApiModelProperty(value = "描述")
+    /**
+     * 描述.
+     */
     private String description;
 
-    @ApiModelProperty(value = "顺序")
+    /**
+     * 顺序.
+     */
     private Integer sort;
 
 

@@ -16,4 +16,5 @@ import org.springframework.stereotype.Service;
 @Service
 public class DictService extends ServiceImpl<DictMapper, Dict> {
 
+
 }
