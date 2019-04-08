@@ -5,6 +5,8 @@ import com.zeal.zealsay.dto.response.DictResponse;
 import com.zeal.zealsay.entity.Dict;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 /**
  * user相关转换器.
  *
@@ -18,4 +20,5 @@ public interface DictConvertMapper {
 
   Dict toDict(DictRequest dictRequest);
 
+  List<DictResponse> toDictResponseList(List<Dict> dicts);
 }

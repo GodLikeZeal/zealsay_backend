@@ -1,7 +1,6 @@
 package com.zeal.zealsay.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.common.entity.Result;

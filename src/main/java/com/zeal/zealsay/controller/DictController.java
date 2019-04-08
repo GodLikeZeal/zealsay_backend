@@ -9,8 +9,10 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.io.Resources;
 import com.zeal.zealsay.common.entity.Result;
+import com.zeal.zealsay.converter.DictConvertMapper;
 import com.zeal.zealsay.entity.Dict;
 import com.zeal.zealsay.service.DictService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +32,7 @@ import java.util.Objects;
  * @author zhanglei
  * @since 2019-03-27
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/dict")
 public class DictController {
@@ -38,6 +41,8 @@ public class DictController {
   ObjectMapper objectMapper;
   @Autowired
   DictService dictService;
+  @Autowired
+  DictConvertMapper dictConvertMapper;
 
   @GetMapping("test")
   public Result generateDict() throws IOException {
@@ -49,6 +54,45 @@ public class DictController {
     setArray(dicts,array,null,sort,level);
     dictService.saveBatch(dicts);
     return Result.ok();
+  }
+
+  /**
+   * 查询地区列表的省级别.
+   *
+   * @author  zhanglei
+   * @date 2019-04-08  18:03
+   */
+  @GetMapping("region/province")
+  public Result getProvinceList() {
+    log.info("开始查询地区省的数据信息");
+    return Result.of(dictConvertMapper
+        .toDictResponseList(dictService.getProvinceList()));
+  }
+
+  /**
+   * 查询地区列表的市级别.
+   *
+   * @author  zhanglei
+   * @date 2019-04-08  18:03
+   */
+  @GetMapping("region/city")
+  public Result getCityList(String code) {
+    log.info("开始根据code{}查询地区市的数据信息",code);
+    return Result.of(dictConvertMapper
+        .toDictResponseList(dictService.getRegionList(code)));
+  }
+
+  /**
+   * 查询地区列表的城市区区级别.
+   *
+   * @author  zhanglei
+   * @date 2019-04-08  18:03
+   */
+  @GetMapping("region/area")
+  public Result getAreaList(String code) {
+    log.info("开始根据code{}查询地区城市区的数据信息",code);
+    return Result.of(dictConvertMapper
+        .toDictResponseList(dictService.getRegionList(code)));
   }
 
   private void setArray(List<Dict> dicts,JSONArray array,Integer parentId, int sort, Integer level) {
