@@ -46,16 +46,16 @@ public class UserHelper {
    * @date 2018/11/15  9:25 PM
    */
   public PageInfo<UserResponse> toPageInfo(Page<User> userPage) {
-    PageInfo<User> userPageInfo = new PageInfo(userPage);
-    List<UserResponse> userResponses = userPageInfo.getRecords()
+    PageInfo<User> userPageInfo = new PageInfo();
+    List<UserResponse> userResponses = userPage.getRecords()
         .stream()
         .map(s -> userConvertMapper.toUserResponse(s))
         .collect(Collectors.toList());
     return PageInfo.<UserResponse>builder()
         .records(userResponses)
-        .currentPage(userPageInfo.getCurrentPage())
-        .pageSize(userPageInfo.getPageSize())
-        .total(userPageInfo.getTotal())
+        .currentPage(userPage.getCurrent())
+        .pageSize(userPage.getSize())
+        .total(userPage.getTotal())
         .build();
   }
 
