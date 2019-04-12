@@ -63,6 +63,11 @@ public class User {
   private Integer age;
 
   /**
+   * 简介.
+   */
+  private String introduction;
+
+  /**
    * 标签.
    */
   private String label;

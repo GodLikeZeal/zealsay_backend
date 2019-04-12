@@ -1,7 +1,9 @@
 package com.zeal.zealsay.common.constant.enums;
 
 public enum  Role {
-    ADMIN("系统管理员")
+    ADMIN("系统管理员"),
+    EDITOR("作者"),
+    USER("用户")
     ;
 
     private String description;

@@ -41,6 +41,9 @@ public class UserResponse {
   @ApiModelProperty(value = "密码", example = "12345")
   private String password;
 
+  @ApiModelProperty(value = "简介", example = "一位低调的足球爱好者")
+  private String introduction;
+
   @ApiModelProperty(value = "标签", example = "宅男,潜力股")
   private String label;
 
@@ -81,7 +84,6 @@ public class UserResponse {
   private UserStatus status;
 
   @ApiModelProperty(value = "注册时间", example = "2018.9.26 12:12:12")
-  @TableField("registerAt")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   private LocalDateTime registerAt;

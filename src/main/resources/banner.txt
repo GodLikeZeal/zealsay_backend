@@ -11,5 +11,5 @@ ${AnsiColor.YELLOW}
 
 Spring Boot Version: ${spring-boot.version} ${spring-boot.formatted-version}
 
-${AnsiColor.BLUE}::::    😊 smile 😀 辛苦啦！ zeal     ::::
+${AnsiColor.BLUE}::::    😊 smile 😀  zeal 一位对代码有洁癖的程序员！    ::::
 
