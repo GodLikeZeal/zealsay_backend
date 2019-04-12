@@ -2,6 +2,7 @@ package com.zeal.zealsay.helper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.converter.UserConvertMapper;
 import com.zeal.zealsay.dto.request.UserAddRequest;
@@ -13,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -66,7 +68,10 @@ public class UserHelper {
    * @date 2018/11/15  7:46 PM
    */
   public User initBeforeAdd(UserAddRequest userAddRequest) {
-    return userConvertMapper.toUser(userAddRequest);
+    return userConvertMapper.toUser(userAddRequest).toBuilder()
+            .status(UserStatus.NORMAL)
+            .registerDate(LocalDateTime.now())
+            .build();
   }
 
   /**
