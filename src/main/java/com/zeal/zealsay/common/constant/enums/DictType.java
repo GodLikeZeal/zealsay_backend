@@ -1,14 +1,12 @@
 package com.zeal.zealsay.common.constant.enums;
 
-public enum  Role {
-    ADMIN("系统管理员"),
-    EDITOR("作者"),
-    USER("用户")
+public enum DictType {
+    REGION("省市区")
     ;
 
     private String description;
 
-    Role(String description) {
+    DictType(String description) {
         this.description = description;
     }
 

@@ -34,6 +34,7 @@ public class UserAddRequest {
   /**
    * 密码.
    */
+  @NotBlank(message = "密码不能为空")
   private String password;
 
   /**
@@ -45,6 +46,11 @@ public class UserAddRequest {
    * 年龄.
    */
   private Integer age;
+
+  /**
+   * 简介.
+   */
+  private String introduction;
 
   /**
    * 手机号.

@@ -45,9 +45,13 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<Result> handleMethodArgumentException(Exception e, WebRequest request){
+        MethodArgumentNotValidException exception = (MethodArgumentNotValidException) e;
+        StringBuffer sb = new StringBuffer();
+        exception.getBindingResult().getAllErrors()
+            .forEach(s -> sb.append(s.getDefaultMessage()).append(";"));
         return ResponseEntity.ok(Result.builder()
             .code(METHOD_ARGUMENT_NOT_VALID.getCode())
-            .data(e.getMessage())
+            .data(sb.toString())
             .build());
     }
 

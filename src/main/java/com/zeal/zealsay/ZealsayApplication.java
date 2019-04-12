@@ -2,6 +2,7 @@ package com.zeal.zealsay;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 /**
@@ -10,7 +11,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
 *@date 2018-04-25 21:54
 *@version 1.0.0
 */
-@EnableAsync
+@EnableAsync    //开启异步线程池
+@EnableCaching  //开启缓存
 @SpringBootApplication
 public class ZealsayApplication {
     public static void main(String[] args) {

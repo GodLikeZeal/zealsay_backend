@@ -9,6 +9,7 @@ import lombok.Data;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * 分页封装.
@@ -19,7 +20,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-@ApiModel(value="Role对象", description="")
+@ApiModel(value="分页包装对象", description="分页包装对象")
 public class PageInfo<T> {
 
   public static final Long DEFAULT_PAGE_SIZE = 10L;
@@ -54,13 +55,22 @@ public class PageInfo<T> {
    * @author zhanglei
    * @date 2018/9/21  下午5:20
    */
+  public PageInfo() {
+
+  }
+  /**
+   * 构造器.
+   *
+   * @author zhanglei
+   * @date 2018/9/21  下午5:20
+   */
   public PageInfo(Long currentPage, Long pageSize) {
-    if (null != currentPage) {
+    if (Objects.nonNull(currentPage)) {
       this.currentPage = currentPage;
     } else {
       this.currentPage = DEFAULT_PAGE_NUMBER;
     }
-    if (null != pageSize) {
+    if (Objects.nonNull(pageSize)) {
       this.pageSize = pageSize;
     } else {
       this.pageSize = DEFAULT_PAGE_SIZE;
