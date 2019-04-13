@@ -95,7 +95,7 @@ public class RoleController {
    */
   @PostMapping("")
   @ApiOperation(value = "新增角色信息",notes = "新增角色信息")
-  public Result<Boolean> addRole(@Validated RoleAddResquest roleAddResquest) {
+  public Result<Boolean> addRole(@RequestBody @Validated RoleAddResquest roleAddResquest) {
     log.info("开始进行新增角色，新增参数为 '{}' ", roleAddResquest);
     return Result.of(roleService.addRole(roleAddResquest));
   }
@@ -108,7 +108,7 @@ public class RoleController {
    */
   @PutMapping("")
   @ApiOperation(value = "修改角色信息",notes = "修改角色信息")
-  public Result<Boolean> updateRole(@Validated RoleUpdateRequest roleUpdateRequest) {
+  public Result<Boolean> updateRole(@RequestBody @Validated RoleUpdateRequest roleUpdateRequest) {
     log.info("开始进行分新增角色，新增参数为 '{}' ", roleUpdateRequest);
     return Result.of(roleService.updateRole(roleUpdateRequest));
   }

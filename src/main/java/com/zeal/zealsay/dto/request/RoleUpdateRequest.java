@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Builder(toBuilder = true)
 @Data
@@ -18,7 +19,7 @@ public class RoleUpdateRequest {
    * id.
    */
   @ApiModelProperty(value = "id",example = "12331")
-  @NotBlank(message = "id不能为空")
+  @NotNull(message = "id不能为空")
   private Long id;
 
   /**
