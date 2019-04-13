@@ -4,9 +4,12 @@ import com.zeal.zealsay.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+
+import javax.validation.UnexpectedTypeException;
 
 import static com.zeal.zealsay.common.constant.enums.ResultCode.INTERNAL_SERVER_ERROR;
 import static com.zeal.zealsay.common.constant.enums.ResultCode.METHOD_ARGUMENT_NOT_VALID;
@@ -51,7 +54,25 @@ public class ExceptionAdvice {
             .forEach(s -> sb.append(s.getDefaultMessage()).append(";"));
         return ResponseEntity.ok(Result.builder()
             .code(METHOD_ARGUMENT_NOT_VALID.getCode())
-            .data(sb.toString())
+            .message(sb.toString())
+            .build());
+    }
+
+    /**
+     *@description 参数校验失败时异常
+     *@author zeal
+     *@date 2018-05-09 20:07
+     *@version 1.0.0
+     */
+    @ExceptionHandler(value = BindException.class)
+    public ResponseEntity<Result> handleBindException(Exception e, WebRequest request){
+        BindException exception = (BindException) e;
+        StringBuffer sb = new StringBuffer();
+        exception.getBindingResult().getAllErrors()
+            .forEach(s -> sb.append(s.getDefaultMessage()).append(";"));
+        return ResponseEntity.ok(Result.builder()
+            .code(METHOD_ARGUMENT_NOT_VALID.getCode())
+            .message(sb.toString())
             .build());
     }
 

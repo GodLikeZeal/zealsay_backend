@@ -149,10 +149,20 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
      * @date 2018/11/24 14:27
      */
     public Boolean addUser(UserAddRequest userAddRequest) {
-        Integer count = baseMapper.selectCount(new QueryWrapper<User>()
+        Integer countName = baseMapper.selectCount(new QueryWrapper<User>()
                 .eq("username", userAddRequest.getUsername()));
-        if (count > 0) {
-            throw new ServiceException("用户名重复，无法添加");
+        if (countName > 0) {
+            throw new ServiceException("该用户名已经被使用，无法添加");
+        }
+        Integer countPhone = baseMapper.selectCount(new QueryWrapper<User>()
+            .eq("phone_number", userAddRequest.getPhoneNumber()));
+        if (countPhone > 0) {
+            throw new ServiceException("该手机号已经注册，无法添加");
+        }
+        Integer countEmail = baseMapper.selectCount(new QueryWrapper<User>()
+            .eq("email", userAddRequest.getPhoneNumber()));
+        if (countEmail > 0) {
+            throw new ServiceException("该邮箱已经注册，无法添加");
         }
         User user = userHelper.initBeforeAdd(userAddRequest);
         return save(user);
@@ -167,8 +177,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     public Boolean updateUser(UserUpdateRequest userUpdateRequest) {
         //检查是否可以被更新
         checkBeforeUpdate(userUpdateRequest);
-        User user = userHelper.initBeforeUpdate(userUpdateRequest);
-        return updateById(user);
+        return update(User.builder().build(), userHelper.initBeforeUpdate(userUpdateRequest));
     }
 
     private void checkBeforeUpdate(UserUpdateRequest userUpdateRequest) {
