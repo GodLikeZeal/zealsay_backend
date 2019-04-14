@@ -1,9 +1,12 @@
 package com.zeal.zealsay.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.google.common.collect.Lists;
 import com.zeal.zealsay.converter.ArticleCategoryConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleCategoryAddRequest;
 import com.zeal.zealsay.dto.request.ArticleCategoryUpdateRequest;
+import com.zeal.zealsay.dto.response.ArticleCategoryResponse;
 import com.zeal.zealsay.entity.ArticleCategory;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.ArticleCategoryHelper;
@@ -12,6 +15,11 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -38,6 +46,8 @@ public class ArticleCategoryService extends ServiceImpl<ArticleCategoryMapper, A
   public Boolean addArticleCategory(ArticleCategoryAddRequest articleCategoryAddRequest) {
     ArticleCategory articleCategory = articleCategoryHelper
         .initBeforeAdd(articleCategoryAddRequest);
+    //验重复
+    checkCategoryRepeat(articleCategory);
     return save(articleCategory);
   }
 
@@ -50,6 +60,69 @@ public class ArticleCategoryService extends ServiceImpl<ArticleCategoryMapper, A
   public Boolean updateArticleCategory(ArticleCategoryUpdateRequest articleCategoryUpdateRequest) {
     ArticleCategory articleCategory = articleCategoryHelper
         .initBeforeUpdate(articleCategoryUpdateRequest);
+    //验重复
+    checkCategoryRepeat(articleCategory);
     return updateById(articleCategory);
+  }
+
+  /**
+  * 获取分类目录列表.
+  *
+  * @author  zeal
+  * @date 2019/4/14 21:51
+  */
+  public List<ArticleCategoryResponse> getCategoryList() {
+    List<ArticleCategoryResponse> categoryResponses = articleCategoryConvertMapper
+            .toArticleCategoryResponseList(list(new QueryWrapper<>()));
+    //递归设置子节点
+    if (!CollectionUtils.isEmpty(categoryResponses)) {
+      for(ArticleCategoryResponse categoryResponse:categoryResponses) {
+        categoryResponse.setChildren(recursionChildren(categoryResponses,categoryResponse));
+      }
+    }
+    return categoryResponses;
+  }
+
+  /**
+  * 递归生成树.
+  *
+  * @author  zeal
+  * @date 2019/4/14 21:49
+  */
+  private List<ArticleCategoryResponse> recursionChildren(List<ArticleCategoryResponse> categoryResponses,ArticleCategoryResponse category) {
+    if (!CollectionUtils.isEmpty(categoryResponses) && Objects.nonNull(category)) {
+      List<ArticleCategoryResponse> children = Lists.newArrayList();
+      Iterator iterator = categoryResponses.iterator();
+      while (iterator.hasNext()) {
+        ArticleCategoryResponse categoryResponse = (ArticleCategoryResponse) iterator.next();
+        if (category.getId().equals(categoryResponse.getParentId())) {
+          categoryResponse.setChildren(recursionChildren(categoryResponses,categoryResponse));
+          children.add(categoryResponse);
+          iterator.remove();
+        }
+      }
+      return children;
+    }
+    return null;
+  }
+
+  /**
+   * 校验是否有重复的角色信息.
+   *
+   * @author  zeal
+   * @date 2019/4/14 11:28
+   */
+  private void checkCategoryRepeat(ArticleCategory category) {
+    QueryWrapper<ArticleCategory> queryWrapper = new QueryWrapper<ArticleCategory>()
+            .and(wrapper -> wrapper.eq("name", category.getName())
+                    .or()
+                    .eq("alias", category.getAlias()));
+    if (Objects.nonNull(category.getId())) {
+      queryWrapper.ne("id",category.getId());
+    }
+    List<ArticleCategory  > articleCategories = list(queryWrapper);
+    if (!CollectionUtils.isEmpty(articleCategories)) {
+      throw new ServiceException("系统已存在相同分类信息！");
+    }
   }
 }

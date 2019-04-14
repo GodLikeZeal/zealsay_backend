@@ -18,9 +18,11 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -58,6 +60,19 @@ public class ArticleCategoryController {
   }
 
   /**
+   * 根据id来查询.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("")
+  @ApiOperation(value = "获取分类目录信息", notes = "获取分类目录信息")
+  public Result<List<ArticleCategoryResponse>> getCategoryList() {
+    log.info("开始查询分类目录列表");
+    return Result.of(articleCategoryService.getCategoryList());
+  }
+
+  /**
    * 分页查询.
    *
    * @author zhanglei
@@ -82,8 +97,8 @@ public class ArticleCategoryController {
    * @date 2018/9/7  下午6:00
    */
   @PostMapping("")
-  @ApiOperation(value = "分类目录添加", notes = "根据id获取分类目录信息")
-  public Result<Boolean> addArticleCategory(@RequestBody ArticleCategoryAddRequest articleCategoryAddRequest) {
+  @ApiOperation(value = "分类目录添加", notes = "分类目录添加")
+  public Result<Boolean> addArticleCategory(@RequestBody @Validated ArticleCategoryAddRequest articleCategoryAddRequest) {
     log.info("开始添加分类目录，新增参数为 '{}' ", articleCategoryAddRequest);
     return Result
         .of(articleCategoryService.addArticleCategory(articleCategoryAddRequest));
@@ -96,8 +111,8 @@ public class ArticleCategoryController {
    * @date 2018/9/7  下午6:00
    */
   @PutMapping("")
-  @ApiOperation(value = "分类目录修改", notes = "根据id修改分类目录信息")
-  public Result<Boolean> updateArticle(@RequestBody ArticleCategoryUpdateRequest articleCategoryUpdateRequest) {
+  @ApiOperation(value = "分类目录修改", notes = "分类目录修改")
+  public Result<Boolean> updateArticle(@RequestBody @Validated ArticleCategoryUpdateRequest articleCategoryUpdateRequest) {
     log.info("开始修改分类目录，修改参数为 '{}' ", articleCategoryUpdateRequest);
     return Result
         .of(articleCategoryService.updateArticleCategory(articleCategoryUpdateRequest));
@@ -124,7 +139,7 @@ public class ArticleCategoryController {
    */
   @DeleteMapping("/batch")
   @ApiOperation(value = "根据id列表批量删除角色信息",notes = "根据id列表批量删除角色信息")
-  public Result<Boolean> deleteArticleBatch(Collection<String> ids) {
+  public Result<Boolean> deleteArticleBatch(@RequestBody Collection<String> ids) {
     log.info("开始批量删除id在 '{}' 的分类目录信息", ids.toString());
     return Result.of(articleCategoryService.removeByIds(ids));
   }

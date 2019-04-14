@@ -24,48 +24,84 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="Article对象", description="文章表")
 public class Article {
 
-    @ApiModelProperty(value = "主键")
+    /**
+     * id.
+     */
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
 
-    @ApiModelProperty(value = "标题")
+
+    /**
+     * 标题.
+     */
     private String title;
 
-    @ApiModelProperty(value = "副标题")
+
+    /**
+     * 副标题.
+     */
     private String subheading;
 
-    @ApiModelProperty(value = "内容")
-    private String content;
 
-    @ApiModelProperty(value = "封面图片")
+    /**
+     * markdown内容.
+     */
+    private String contentMd;
+
+
+    /**
+     * html内容.
+     */
+    private String contentHtml;
+
+    /**
+     * 封面图片.
+     */
     private String coverImage;
 
-    @ApiModelProperty(value = "状态")
+
+    /**
+     * 状态.
+     */
     private Integer status;
 
-    @ApiModelProperty(value = "公开度")
+
+    /**
+     * 公开度.
+     */
     private Integer openness;
 
-    @ApiModelProperty(value = "标签")
+    /**
+     * 标签.
+     */
     private String label;
 
-    @ApiModelProperty(value = "分类目录id")
+    /**
+     * 分类目录id.
+     */
     private Long categoryId;
 
-    @ApiModelProperty(value = "作者编号")
+    /**
+     * 作者编号.
+     */
     private Long authorId;
 
-    @ApiModelProperty(value = "是否删除")
+    /**
+     * 是否删除.
+     */
     @TableLogic
     private Boolean isDel;
 
-    @ApiModelProperty(value = "创建时间")
+    /**
+     * 创建时间.
+     */
     private LocalDateTime createAt;
 
-    @ApiModelProperty(value = "更新时间")
+    /**
+     * 更新时间.
+     */
     private LocalDateTime updateAt;
 
 

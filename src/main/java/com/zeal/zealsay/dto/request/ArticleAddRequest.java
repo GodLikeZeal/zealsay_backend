@@ -24,8 +24,11 @@ public class ArticleAddRequest {
   @ApiModelProperty(value = "副标题",example = "某男子半夜不回家竟然在办公室加班")
   private String subheading;
 
-  @ApiModelProperty(value = "内容",example = "男子加班成瘾，最后成为人生赢家")
-  private String content;
+  @ApiModelProperty(value = "md格式内容",example = "男子加班成瘾，最后成为人生赢家")
+  private String contentMd;
+
+  @ApiModelProperty(value = "html格式内容",example = "男子加班成瘾，最后成为人生赢家")
+  private String contentHtml;
 
   @ApiModelProperty(value = "封面图片",example = "https://pan.zealsay.com/20150318211630_stncE.jpeg")
   private String coverImage;

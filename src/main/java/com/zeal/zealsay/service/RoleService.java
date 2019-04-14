@@ -1,7 +1,6 @@
 package com.zeal.zealsay.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.converter.RoleConvertMapper;
 import com.zeal.zealsay.dto.request.RoleAddResquest;
@@ -14,8 +13,8 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -73,7 +72,7 @@ public class RoleService extends ServiceImpl<RoleMapper, Role> implements IServi
       queryWrapper.ne("id",role.getId());
     }
     List<Role> roles = list(queryWrapper);
-    if (CollectionUtils.isNotEmpty(roles)) {
+    if (!CollectionUtils.isEmpty(roles)) {
       throw new ServiceException("系统已存在相同角色信息！");
     }
   }
