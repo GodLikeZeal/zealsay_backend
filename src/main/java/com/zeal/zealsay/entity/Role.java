@@ -63,13 +63,13 @@ public class Role{
    */
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  private LocalDateTime createAt;
+  private LocalDateTime createDate;
 
   /**
    * 更新时间.
    */
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  private LocalDateTime updateAt;
+  private LocalDateTime updateDate;
 
 }

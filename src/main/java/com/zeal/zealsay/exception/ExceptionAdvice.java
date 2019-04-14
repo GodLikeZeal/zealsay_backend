@@ -36,7 +36,7 @@ public class ExceptionAdvice {
     public ResponseEntity<Result> handleServiceException(Exception e, WebRequest request, ServiceException exception){
         return ResponseEntity.ok(Result.builder()
             .code(exception.getCode())
-            .data(e.getMessage())
+            .message(e.getMessage())
             .build());
     }
 
@@ -86,7 +86,7 @@ public class ExceptionAdvice {
     public ResponseEntity<Result> handleRuntimeException(Exception e, WebRequest request){
         return ResponseEntity.ok(Result.builder()
             .code(INTERNAL_SERVER_ERROR.getCode())
-            .data(INTERNAL_SERVER_ERROR.getMessage())
+            .message(INTERNAL_SERVER_ERROR.getMessage())
             .build());
     }
 

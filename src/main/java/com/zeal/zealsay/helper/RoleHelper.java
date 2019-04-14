@@ -34,7 +34,6 @@ public class RoleHelper {
    */
   public Role initBeforeUpdate(RoleUpdateRequest roleUpdateRequest){
     Role role = roleConvertMapper.toRole(roleUpdateRequest);
-    role.setUpdateAt(LocalDateTime.now());
     return role;
   }
 
@@ -46,7 +45,8 @@ public class RoleHelper {
    */
   public Role initBeforeAdd(RoleAddResquest roleAddResquest){
     Role role = roleConvertMapper.toRole(roleAddResquest);
-    role.setCreateAt(LocalDateTime.now());
+    role.setCreateDate(LocalDateTime.now());
+    role.setIsDel(false);
     return role;
   }
 
