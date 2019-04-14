@@ -39,11 +39,11 @@ public class RoleResponse {
   @ApiModelProperty(value = "创建时间",example = "2018-09-25")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  private LocalDateTime createAt;
+  private LocalDateTime createDate;
 
   @ApiModelProperty(value = "更新时间",example = "2018-09-26")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  private LocalDateTime updateAt;
+  private LocalDateTime updateDate;
 
 }

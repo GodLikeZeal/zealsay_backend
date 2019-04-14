@@ -121,7 +121,7 @@ public class RoleController {
    */
   @DeleteMapping("/{id}")
   @ApiOperation(value = "根据id删除角色信息",notes = "根据id删除角色信息")
-  public Result<Boolean> deleteRole(@PathVariable String id) {
+  public Result<Boolean> deleteRole(@PathVariable Long id) {
     log.info("开始删除id为 '{}' 的角色信息", id);
     return Result.of(roleService.removeById(id));
   }
@@ -134,7 +134,7 @@ public class RoleController {
    */
   @DeleteMapping("/batch")
   @ApiOperation(value = "根据id列表批量删除角色信息",notes = "根据id列表批量删除角色信息")
-  public Result<Boolean> deleteRoleBatch(Collection<String> ids) {
+  public Result<Boolean> deleteRoleBatch(@RequestBody Collection<String> ids) {
     log.info("开始批量删除id在 '{}' 的角色信息", ids.toString());
     return Result.of(roleService.removeByIds(ids));
   }
