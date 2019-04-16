@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 角色返回对象.
@@ -40,5 +41,7 @@ public class ArticleCategoryResponse {
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long parentId;
 
+  @ApiModelProperty(value = "子层目录")
+  List<ArticleCategoryResponse> children;
 
 }

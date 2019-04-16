@@ -5,6 +5,8 @@ import com.zeal.zealsay.dto.response.ArticleCategoryResponse;
 import com.zeal.zealsay.entity.ArticleCategory;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 /**
  * role相关转换器.
  *
@@ -15,6 +17,8 @@ import org.mapstruct.Mapper;
 public interface ArticleCategoryConvertMapper {
 
   ArticleCategoryResponse toArticleCategoryResponse(ArticleCategory articleCategory);
+
+  List<ArticleCategoryResponse> toArticleCategoryResponseList(List<ArticleCategory> articleCategorys);
 
   ArticleCategory toArticleCategory(ArticleCategoryAddRequest articleCategoryAddRequest);
 

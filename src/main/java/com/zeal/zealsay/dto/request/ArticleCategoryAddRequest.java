@@ -24,6 +24,7 @@ public class ArticleCategoryAddRequest {
   @ApiModelProperty(value = "名称",example = "奇淫技巧")
   private String name;
 
+  @NotBlank(message = "别称不能为空")
   @ApiModelProperty(value = "别名",example = "tec")
   private String alias;
 
