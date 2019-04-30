@@ -3,6 +3,7 @@ package com.zeal.zealsay.controller;
 
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.common.third.qiniu.QiniuService;
 import com.zeal.zealsay.exception.ServiceException;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -65,15 +67,18 @@ public class QiniuController {
    */
   @PostMapping("/upload/multiple")
   @ApiOperation(value = "批量上传文件", notes = "上传文件")
-  public Result<List<String>> uploadMultiple(@RequestParam MultipartFile[] files) {
+  public Result<List<Map<String,String>>> uploadMultiple(@RequestParam MultipartFile[] files) {
     if (files.length <= 0) {
       throw new ServiceException("上传文件失败");
     }
-    List<String> results = Lists.newArrayList();
+    List<Map<String,String>> results = Lists.newArrayList();
     for (MultipartFile file : files) {
       try (InputStream in = file.getInputStream()) {
         log.info("开始上传文件到七牛云");
-        results.add(qiniuService.uploadFile(in, qiniuService.createFileName(file)));
+        Map<String,String> map = Maps.newHashMap();
+        map.put("pos",file.getOriginalFilename());
+        map.put("url",qiniuService.uploadFile(in, qiniuService.createFileName(file)));
+        results.add(map);
       } catch (IOException e) {
         log.error("上传文件到七牛云失败!");
         throw new ServiceException("上传文件失败");
