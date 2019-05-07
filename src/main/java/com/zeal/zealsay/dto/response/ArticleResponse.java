@@ -3,6 +3,8 @@ package com.zeal.zealsay.dto.response;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.zeal.zealsay.common.constant.enums.ArticleStatus;
+import com.zeal.zealsay.common.constant.enums.Openness;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -40,10 +42,10 @@ public class ArticleResponse {
   private String contentHtml;
 
   @ApiModelProperty(value = "状态",example = "1")
-  private Integer status;
+  private ArticleStatus status;
 
   @ApiModelProperty(value = "公开度",example = "1")
-  private Integer openness;
+  private Openness openness;
 
   @ApiModelProperty(value = "标签",example = "java,IT,云计算,大数据")
   private String label;
@@ -59,12 +61,12 @@ public class ArticleResponse {
   @ApiModelProperty(value = "创建时间")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  private LocalDateTime createAt;
+  private LocalDateTime createDate;
 
   @ApiModelProperty(value = "更新时间")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
-  private LocalDateTime updateAt;
+  private LocalDateTime updateDate;
 
 
 }

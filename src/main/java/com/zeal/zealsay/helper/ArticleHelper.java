@@ -42,7 +42,7 @@ public class ArticleHelper {
    */
   public Article initBeforeUpdate(ArticleUpdateRequest articleUpdateRequest){
     Article article = articleConvertMapper.toArticle(articleUpdateRequest);
-    article.setUpdateAt(LocalDateTime.now());
+    article.setUpdateDate(LocalDateTime.now());
     return article;
   }
 
@@ -54,8 +54,9 @@ public class ArticleHelper {
    */
   public Article initBeforeAdd(ArticleAddRequest articleAddRequest){
     Article article = articleConvertMapper.toArticle(articleAddRequest);
-    article.setCreateAt(LocalDateTime.now());
+    article.setCreateDate(LocalDateTime.now());
     article.setAuthorId(userDetailService.getCurrentUser().getUserId());
+    article.setIsDel(false);
     return article;
   }
 

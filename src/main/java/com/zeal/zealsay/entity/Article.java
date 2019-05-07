@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.zeal.zealsay.common.constant.enums.ArticleStatus;
+import com.zeal.zealsay.common.constant.enums.Openness;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -65,13 +67,13 @@ public class Article {
     /**
      * 状态.
      */
-    private Integer status;
+    private ArticleStatus status;
 
 
     /**
      * 公开度.
      */
-    private Integer openness;
+    private Openness openness;
 
     /**
      * 标签.
@@ -97,12 +99,12 @@ public class Article {
     /**
      * 创建时间.
      */
-    private LocalDateTime createAt;
+    private LocalDateTime createDate;
 
     /**
      * 更新时间.
      */
-    private LocalDateTime updateAt;
+    private LocalDateTime updateDate;
 
 
 }

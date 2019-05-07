@@ -1,20 +1,19 @@
 package com.zeal.zealsay.common.constant.enums;
 
 /**
- * 这里是注释.
+ * 用户状态枚举.
  *
  * @author  zhanglei
- * @date 2019-05-07  15:34
+ * @date 2019-05-07  15:32
  */
-public enum  Role {
-    ADMIN("系统管理员"),
-    EDITOR("作者"),
-    USER("用户")
+public enum ArticleStatus {
+    DRAFT("草稿"),
+    FORMAL("正式发布")
     ;
 
     private String description;
 
-    Role(String description) {
+    ArticleStatus(String description) {
         this.description = description;
     }
 

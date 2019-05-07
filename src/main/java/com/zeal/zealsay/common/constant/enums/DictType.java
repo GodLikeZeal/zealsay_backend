@@ -1,5 +1,11 @@
 package com.zeal.zealsay.common.constant.enums;
 
+/**
+ * 省市区枚举.
+ *
+ * @author  zhanglei
+ * @date 2019-05-07  15:42
+ */
 public enum DictType {
     REGION("省市区")
     ;

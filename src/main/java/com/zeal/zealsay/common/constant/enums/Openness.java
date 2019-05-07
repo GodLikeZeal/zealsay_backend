@@ -1,20 +1,19 @@
 package com.zeal.zealsay.common.constant.enums;
 
 /**
- * 这里是注释.
+ * 公开度.
  *
  * @author  zhanglei
- * @date 2019-05-07  15:34
+ * @date 2019-05-07  15:32
  */
-public enum  Role {
-    ADMIN("系统管理员"),
-    EDITOR("作者"),
-    USER("用户")
+public enum Openness {
+    SELFONLY("仅自己"),
+    ALL("所有人")
     ;
 
     private String description;
 
-    Role(String description) {
+    Openness(String description) {
         this.description = description;
     }
 
