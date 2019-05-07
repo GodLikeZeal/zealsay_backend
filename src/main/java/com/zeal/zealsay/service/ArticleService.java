@@ -1,6 +1,8 @@
 package com.zeal.zealsay.service;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.zeal.zealsay.common.constant.enums.ResultCode;
 import com.zeal.zealsay.converter.ArticleConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleAddRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
@@ -15,8 +17,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -45,6 +50,11 @@ public class ArticleService extends ServiceImpl<ArticleMapper, Article> implemen
    */
   public Boolean addArticle(ArticleAddRequest articleAddRequest) {
     Article article = articleHelper.initBeforeAdd(articleAddRequest);
+    List<Article> articles = list(new QueryWrapper<Article>().lambda()
+        .eq(Article::getTitle,articleAddRequest.getTitle()));
+    if (Objects.nonNull(articles) && articles.size() > 0) {
+      throw new ServiceException("请勿重复添加文章");
+    }
     return save(article);
   }
 

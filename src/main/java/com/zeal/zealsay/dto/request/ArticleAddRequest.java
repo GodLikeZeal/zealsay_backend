@@ -1,10 +1,14 @@
 package com.zeal.zealsay.dto.request;
 
+import com.zeal.zealsay.common.constant.enums.ArticleStatus;
+import com.zeal.zealsay.common.constant.enums.Openness;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * 文章添加请求对象.
@@ -34,13 +38,13 @@ public class ArticleAddRequest {
   private String coverImage;
 
   @ApiModelProperty(value = "状态",example = "1")
-  private Integer status;
+  private ArticleStatus status;
 
   @ApiModelProperty(value = "公开度",example = "1")
-  private Integer openness;
+  private Openness openness;
 
   @ApiModelProperty(value = "标签",example = "java,IT,云计算,大数据")
-  private String label;
+  private List<String> label;
 
   @ApiModelProperty(value = "分类目录id",example = "1231")
   private Long categoryId;

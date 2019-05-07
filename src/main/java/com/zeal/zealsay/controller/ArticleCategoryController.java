@@ -126,7 +126,7 @@ public class ArticleCategoryController {
    */
   @DeleteMapping("/{id}")
   @ApiOperation(value = "根据id删除分类目录信息",notes = "根据id删除分类目录信息")
-  public Result<Boolean> deleteArticle(@PathVariable String id) {
+  public Result<Boolean> deleteArticle(@PathVariable Long id) {
     log.info("开始删除id为 '{}' 的分类目录信息", id);
     return Result.of(articleCategoryService.removeById(id));
   }
@@ -139,7 +139,7 @@ public class ArticleCategoryController {
    */
   @DeleteMapping("/batch")
   @ApiOperation(value = "根据id列表批量删除角色信息",notes = "根据id列表批量删除角色信息")
-  public Result<Boolean> deleteArticleBatch(@RequestBody Collection<String> ids) {
+  public Result<Boolean> deleteArticleBatch(@RequestBody Collection<Long> ids) {
     log.info("开始批量删除id在 '{}' 的分类目录信息", ids.toString());
     return Result.of(articleCategoryService.removeByIds(ids));
   }
