@@ -41,6 +41,9 @@ public class ArticleResponse {
   @ApiModelProperty(value = "html格式内容",example = "男子加班成瘾，最后成为人生赢家")
   private String contentHtml;
 
+  @ApiModelProperty(value = "封面图片")
+  private String coverImage;
+
   @ApiModelProperty(value = "状态",example = "1")
   private ArticleStatus status;
 
@@ -54,9 +57,16 @@ public class ArticleResponse {
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long categoryId;
 
+  @ApiModelProperty(value = "分类目录名称",example = "杂谈游记")
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  private String categoryName;
+
   @ApiModelProperty(value = "作者编号")
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long authorId;
+
+  @ApiModelProperty(value = "作者编号",example = "张三")
+  private String authorName;
 
   @ApiModelProperty(value = "创建时间")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

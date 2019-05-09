@@ -8,7 +8,8 @@ package com.zeal.zealsay.common.constant.enums;
  */
 public enum ArticleStatus {
     DRAFT("草稿"),
-    FORMAL("正式发布")
+    FORMAL("正式发布"),
+    DOWN("下架")
     ;
 
     private String description;
