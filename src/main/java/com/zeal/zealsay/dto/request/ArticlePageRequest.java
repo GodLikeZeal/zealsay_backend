@@ -28,8 +28,11 @@ public class ArticlePageRequest {
   @ApiModelProperty(value = "副标题",example = "某男子半夜不回家竟然在办公室加班")
   private String subheading;
 
-  @ApiModelProperty(value = "md格式内容",example = "男子加班成瘾，最后成为人生赢家")
-  private String contentMd;
+  @ApiModelProperty(value = "作者名称",example = "张三")
+  private String authorName;
+
+  @ApiModelProperty(value = "作者手机号",example = "15171643230")
+  private String authorPhone;
 
   @ApiModelProperty(value = "html格式内容",example = "男子加班成瘾，最后成为人生赢家")
   private String contentHtml;
