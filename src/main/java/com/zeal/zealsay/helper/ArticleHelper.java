@@ -1,9 +1,11 @@
 package com.zeal.zealsay.helper;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.converter.ArticleConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleAddRequest;
+import com.zeal.zealsay.dto.request.ArticlePageRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
@@ -12,11 +14,14 @@ import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.service.ArticleCategoryService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
+import lombok.NonNull;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -99,5 +104,43 @@ public class ArticleHelper {
         .pageSize(articlePageInfo.getPageSize())
         .total(articlePageInfo.getTotal())
         .build();
+  }
+
+  /**
+   * 构造文章列表分页查询条件.
+   *
+   * @author  zhanglei
+   * @date 2019-05-10  11:25
+   */
+  public QueryWrapper<Article> toAeticlePageRequestWrapper(@NonNull ArticlePageRequest pageRequest) {
+    //构造分页查询条件
+    QueryWrapper<Article> wrapper = new QueryWrapper<>();
+    //模糊检索标题
+    if (StringUtils.isNotBlank(pageRequest.getTitle())) {
+      wrapper.lambda().like(Article::getTitle,pageRequest.getTitle());
+    }
+    //模糊检索标签
+    if (StringUtils.isNotBlank(pageRequest.getLabel())) {
+      wrapper.lambda().like(Article::getLabel,pageRequest.getLabel());
+    }
+    //检索分类目录
+    if (Objects.nonNull(pageRequest.getCategoryId())) {
+      wrapper.lambda().eq(Article::getCategoryId,pageRequest.getCategoryId());
+    }
+    //模糊检索作者名称或者手机号
+    if (StringUtils.isNotBlank(pageRequest.getAuthorName()) || StringUtils.isNotBlank(pageRequest.getAuthorPhone())) {
+      List<User> users = userService.list(new QueryWrapper<User>().lambda()
+          .like(User::getUsername,pageRequest.getAuthorName())
+          .like(User::getPhoneNumber,pageRequest.getAuthorPhone()));
+      wrapper.lambda().in(Article::getAuthorId,users.stream().map(u -> u.getId()).collect(Collectors.toList()));
+    }
+    //检索时间段
+    if (Objects.nonNull(pageRequest.getStartDate())) {
+      wrapper.lambda().ge(Article::getCreateDate,pageRequest.getStartDate());
+    }
+    if (Objects.nonNull(pageRequest.getEndDate())) {
+      wrapper.lambda().le(Article::getCreateDate,pageRequest.getEndDate());
+    }
+    return wrapper;
   }
 }
