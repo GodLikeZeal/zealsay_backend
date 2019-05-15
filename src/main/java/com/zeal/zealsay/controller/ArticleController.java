@@ -2,7 +2,11 @@ package com.zeal.zealsay.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zeal.zealsay.common.constant.enums.BlockAction;
+import com.zeal.zealsay.common.constant.enums.BlockType;
+import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.converter.ArticleConvertMapper;
@@ -11,16 +15,19 @@ import com.zeal.zealsay.dto.request.ArticlePageRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
+import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.helper.ArticleHelper;
 import com.zeal.zealsay.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.List;
 
 /**
  * <p>
@@ -70,8 +77,7 @@ public class ArticleController {
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
     Page<Article> rolePage = (Page<Article>) articleService
-        .page(new Page<>(pageNumber, pageSize), new QueryWrapper(articleConvertMapper
-            .toArticle(articlePageRequest)));
+        .page(new Page<>(pageNumber, pageSize), articleHelper.toAeticlePageRequestWrapper(articlePageRequest));
     return Result.of(articleHelper.toPageInfo(rolePage));
   }
 
@@ -101,6 +107,45 @@ public class ArticleController {
     log.info("开始修改文章，修改参数为 '{}' ", articleUpdateRequest);
     return Result
         .of(articleService.updateArticle(articleUpdateRequest));
+  }
+
+  /**
+   * 批量下架文章作品.
+   *
+   * @author zhanglei
+   * @date 2018/11/15  8:24 PM
+   */
+  @PutMapping("down/batch")
+  @ApiOperation(value = "根据id列表批量下架文章作品", notes = "根据id列表批量下架文章作品")
+  public Result<Boolean> markArticleDownBatch(@RequestBody Collection<Long> ids) {
+    log.info("开始执行对文章作品 id 在 '{}' 内的文章执行批量下架操作", ids.toString());
+    return Result.of(articleService.markArticleDown(ids));
+  }
+
+  /**
+   * 根据id下架文章作品.
+   *
+   * @author zhanglei
+   * @date 2018/11/15  8:24 PM
+   */
+  @PutMapping("down/{id}")
+  @ApiOperation(value = "根据id下架文章作品", notes = "根据id下架文章作品")
+  public Result<Boolean> markArticleDown(@PathVariable Long id) {
+    log.info("开始执行对文章作品 id 为 '{}' 的文章执行下架操作", id);
+    return Result.of(articleService.markArticleDown(id));
+  }
+
+  /**
+   * 根据id上架文章作品.
+   *
+   * @author zhanglei
+   * @date 2018/11/15  8:24 PM
+   */
+  @PutMapping("up/{id}")
+  @ApiOperation(value = "根据id列表上架文章作品", notes = "根据id上架文章作品")
+  public Result<Boolean> markArticleUp(@PathVariable Long id) {
+    log.info("开始执行对文章作品 id 为 '{}' 的文章执行上架操作", id);
+    return Result.of(articleService.markArticleUp(id));
   }
 
   /**

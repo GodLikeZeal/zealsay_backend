@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.common.constant.enums.BlockAction;
+import com.zeal.zealsay.common.constant.enums.BlockType;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
@@ -85,7 +86,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     public Boolean markUserDisabled(Long userId) {
         //记录
         User user = getById(userId);
-        blockLogService.saveBlocak(user, BlockAction.BAN,"违禁");
+        blockLogService.saveBlocak(user, BlockType.USER, BlockAction.BAN,"违禁");
 
         return updateById(User.builder()
                 .id(userId)
@@ -102,7 +103,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     public Boolean markUnsealing(Long userId) {
         //记录
         User user = getById(userId);
-        blockLogService.saveBlocak(user, BlockAction.UNSEALING,"");
+        blockLogService.saveBlocak(user,BlockType.USER, BlockAction.UNSEALING,"");
 
         return updateById(User.builder()
                 .id(userId)
@@ -119,7 +120,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     public Boolean markUserDisabledBatch(@NonNull Collection<Long> userIds) {
         //记录
         List<User> users = (List<User>) listByIds(userIds);
-        blockLogService.saveBlocakBatch(users,BlockAction.BAN,"违禁");
+        blockLogService.saveBlocakUserBatch(users, BlockType.USER, BlockAction.BAN,"违禁");
 
         update(User.builder().status(UserStatus.DISABLED).build(), new UpdateWrapper<User>()
                 .in("id", userIds));
@@ -135,7 +136,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     public Boolean markUnsealingBatch(@NonNull Collection<Long> userIds) {
         //记录
         List<User> users = (List<User>) listByIds(userIds);
-        blockLogService.saveBlocakBatch(users,BlockAction.UNSEALING,"");
+        blockLogService.saveBlocakUserBatch(users, BlockType.USER, BlockAction.UNSEALING,"");
 
         update(User.builder().status(UserStatus.NORMAL).build(), new UpdateWrapper<User>()
                 .in("id", userIds));
