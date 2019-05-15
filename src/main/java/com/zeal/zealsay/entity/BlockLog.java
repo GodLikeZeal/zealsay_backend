@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import com.zeal.zealsay.common.constant.enums.BlockAction;
+import com.zeal.zealsay.common.constant.enums.BlockType;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
@@ -35,7 +36,7 @@ public class BlockLog {
     private BlockAction action;
 
     @ApiModelProperty(value = "类型")
-    private String type;
+    private BlockType type;
 
     @ApiModelProperty(value = "目标id")
     private Long targetId;

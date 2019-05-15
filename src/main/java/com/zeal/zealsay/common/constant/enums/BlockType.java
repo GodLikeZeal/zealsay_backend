@@ -6,16 +6,14 @@ package com.zeal.zealsay.common.constant.enums;
  * @author  zhanglei
  * @date 2019-05-07  15:42
  */
-public enum BlockAction {
-    UNSEALING("解封"),
-    BAN("封禁"),
-    UP("上架"),
-    DOWN("下架"),
+public enum BlockType {
+    USER("用户"),
+    ARTICLE("文章作品"),
     ;
 
     private String description;
 
-    BlockAction(String description) {
+    BlockType(String description) {
         this.description = description;
     }
 
