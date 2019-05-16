@@ -43,6 +43,7 @@ public class UserHelper {
     return new UpdateWrapper<User>()
         .set("username", userUpdateRequest.getUsername())
         .set("name", userUpdateRequest.getName())
+        .set("avatar", userUpdateRequest.getAvatar())
         .set("phone_number", userUpdateRequest.getPhoneNumber())
         .set("email", userUpdateRequest.getEmail())
         .set("age", userUpdateRequest.getAge())
