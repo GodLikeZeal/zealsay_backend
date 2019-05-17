@@ -38,5 +38,11 @@ public class ArticleLabel implements Serializable {
     @ApiModelProperty(value = "热度")
     private Long hot;
 
+    @ApiModelProperty(value = "外层颜色")
+    private String outColor;
+
+    @ApiModelProperty(value = "头像颜色")
+    private String avatarColor;
+
 
 }
