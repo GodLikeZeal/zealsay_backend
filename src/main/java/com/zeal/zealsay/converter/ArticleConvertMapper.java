@@ -23,8 +23,6 @@ public interface ArticleConvertMapper {
 
   Article toArticle(ArticleUpdateRequest roleAddResquest);
 
-  Article toArticle(ArticlePageRequest articlePageRequest);
-
   default String toLabel(List<String> label){
     if (CollectionUtils.isEmpty(label)) {
       return null;

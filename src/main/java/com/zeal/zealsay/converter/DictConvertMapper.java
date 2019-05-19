@@ -18,7 +18,5 @@ public interface DictConvertMapper {
 
   DictResponse toDictResponse(Dict dict);
 
-  Dict toDict(DictRequest dictRequest);
-
   List<DictResponse> toDictResponseList(List<Dict> dicts);
 }
