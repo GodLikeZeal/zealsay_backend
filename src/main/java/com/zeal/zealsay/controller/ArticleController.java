@@ -72,8 +72,8 @@ public class ArticleController {
    */
   @GetMapping("/page")
   @ApiOperation(value = "分页查询文章信息列表",notes = "分页查询文章信息列表")
-  public Result<PageInfo<ArticleResponse>> getByPaginate(@Value("1") Long pageNumber,
-                                                         @Value("10") Long pageSize,
+  public Result<PageInfo<ArticleResponse>> getByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
+                                                         @RequestParam(defaultValue = "10") Long pageSize,
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
     Page<Article> rolePage = (Page<Article>) articleService
