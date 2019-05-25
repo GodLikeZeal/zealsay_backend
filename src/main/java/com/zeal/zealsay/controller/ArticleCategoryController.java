@@ -35,7 +35,7 @@ import java.util.List;
 @Api(tags = "角色模块")
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/articleCategory")
+@RequestMapping("/api/v1/article/category")
 public class ArticleCategoryController {
 
   @Autowired

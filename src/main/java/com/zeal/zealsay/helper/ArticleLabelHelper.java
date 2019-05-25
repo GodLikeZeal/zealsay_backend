@@ -16,6 +16,7 @@ import com.zeal.zealsay.entity.Role;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -90,5 +91,15 @@ public class ArticleLabelHelper {
         .pageSize(articleLabelInfo.getPageSize())
         .total(articleLabelInfo.getTotal())
         .build();
+  }
+
+  /**
+  * 转换成返回参数.
+  *
+  * @author  zeal
+  * @date 2019/5/25 21:59
+  */
+  public List<ArticleLabelResponse> toArticleLabelResponseList(List<ArticleLabel> articleLabels) {
+    return articleLabelConvertMapper.toArticleLabelResponseList(articleLabels);
   }
 }
