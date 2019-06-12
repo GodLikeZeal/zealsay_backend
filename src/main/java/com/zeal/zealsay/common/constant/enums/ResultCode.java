@@ -11,7 +11,7 @@ public enum ResultCode {
   OK("200","请求成功"),
   FAILED("400","请求异常"),
   ACCESS_DENIED("401","您无权进行此操作"),
-  FORBIDDEN("403","访问该资源需要先进行权限认证"),
+  FORBIDDEN("403","您无权访问该资源"),
   NOT_FOUND("404","找不到该页面"),
   INTERNAL_SERVER_ERROR("500","服务器异常"),
   BAD_GATEWAY("502","网关异常"),
