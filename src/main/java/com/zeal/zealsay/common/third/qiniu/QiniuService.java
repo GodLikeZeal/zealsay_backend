@@ -7,7 +7,6 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +17,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import static org.apache.http.entity.ContentType.*;
 
 /**
  * 七牛云对象云存储服务.
@@ -113,9 +114,22 @@ public class QiniuService implements InitializingBean {
     StringBuffer sb = new StringBuffer();
     sb.append(now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")))
             .append(now.getNano());
-    if (StringUtils.isNotBlank(file.getOriginalFilename())
-            && file.getOriginalFilename().indexOf(".") >= 0) {
-      sb.append(file.getOriginalFilename().substring(file.getOriginalFilename().indexOf(".")));
+    //设置后缀
+    String contentType = file.getContentType();
+    if (IMAGE_JPEG.getMimeType().equals(contentType)) {
+      sb.append(".jpg");
+    } else if (IMAGE_BMP.getMimeType().equals(contentType)) {
+      sb.append(".bmp");
+    } else if (IMAGE_SVG.getMimeType().equals(contentType)) {
+      sb.append(".svg");
+    } else if (IMAGE_GIF.getMimeType().equals(contentType)) {
+      sb.append(".gif");
+    } else if (IMAGE_PNG.getMimeType().equals(contentType)) {
+      sb.append(".png");
+    } else if (IMAGE_TIFF.getMimeType().equals(contentType)) {
+      sb.append(".tiff");
+    } else if (IMAGE_WEBP.getMimeType().equals(contentType)) {
+      sb.append(".webp");
     }
     return sb.toString();
   }
