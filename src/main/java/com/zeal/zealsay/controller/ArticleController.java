@@ -1,12 +1,7 @@
 package com.zeal.zealsay.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.zeal.zealsay.common.constant.enums.BlockAction;
-import com.zeal.zealsay.common.constant.enums.BlockType;
-import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.converter.ArticleConvertMapper;
@@ -15,19 +10,15 @@ import com.zeal.zealsay.dto.request.ArticlePageRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
-import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.helper.ArticleHelper;
 import com.zeal.zealsay.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * <p>

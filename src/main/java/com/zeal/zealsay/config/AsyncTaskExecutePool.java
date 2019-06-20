@@ -84,9 +84,7 @@ public class AsyncTaskExecutePool implements AsyncConfigurer {
   @Override
   public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
     // 异步任务中异常处理
-    return (arg0, arg1, arg2) -> {
-      log.error("when execute '{}'  occurred an exception ", arg1.getName());
-    };
+    return (arg0, arg1, arg2) -> log.error("when execute '{}'  occurred an exception ", arg1.getName());
   }
 
 }

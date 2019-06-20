@@ -3,14 +3,13 @@ package com.zeal.zealsay.exception;
 import com.zeal.zealsay.common.entity.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
-
-import static com.zeal.zealsay.common.constant.enums.ResultCode.INTERNAL_SERVER_ERROR;
-import static com.zeal.zealsay.common.constant.enums.ResultCode.METHOD_ARGUMENT_NOT_VALID;
+import static com.zeal.zealsay.common.constant.enums.ResultCode.*;
 
 /**
  *@description 自定义异常切面
@@ -36,6 +35,16 @@ public class ExceptionAdvice {
         return Result.builder()
             .code(exception.getCode())
             .message(e.getMessage())
+            .build();
+    }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    @ResponseStatus(value = HttpStatus.OK)     //权限不足异常
+    public Result handleAccessDeniedException(Exception e, WebRequest request, AccessDeniedException exception){
+        log.error("捕获异常 code : {},异常信息为 {}",ACCESS_DENIED.getCode(),e.getMessage());
+        return Result.builder()
+            .code(ACCESS_DENIED.getCode())
+            .message(ACCESS_DENIED.getMessage())
             .build();
     }
 
