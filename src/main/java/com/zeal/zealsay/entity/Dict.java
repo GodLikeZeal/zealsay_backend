@@ -25,9 +25,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("sys_dict")
 @ApiModel(value="Dict对象", description="全局字典表")
-public class Dict implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class Dict {
 
     /**
      * 主键.
