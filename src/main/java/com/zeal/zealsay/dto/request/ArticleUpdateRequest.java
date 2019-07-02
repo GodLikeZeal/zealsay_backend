@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * 文章更新请求对象.
  *
@@ -45,7 +47,7 @@ public class ArticleUpdateRequest {
   private Openness openness;
 
   @ApiModelProperty(value = "标签",example = "java,IT,云计算,大数据")
-  private String label;
+  private List<String> label;
 
   @ApiModelProperty(value = "分类目录id",example = "1231")
   private Long categoryId;
