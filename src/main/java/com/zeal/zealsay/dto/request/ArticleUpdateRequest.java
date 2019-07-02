@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ import java.util.List;
 public class ArticleUpdateRequest {
 
   @ApiModelProperty(value = "主键",example = "11233")
+  @NotEmpty(message = "主键不能为空")
   private Long id;
 
   @ApiModelProperty(value = "标题",example = "震惊，男子半夜不回家竟然是在...")

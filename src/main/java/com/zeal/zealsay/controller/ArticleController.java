@@ -79,7 +79,7 @@ public class ArticleController {
    * @date 2018/9/7  下午6:00
    */
   @PostMapping("")
-  @ApiOperation(value = "文章添加", notes = "根据id获取文章信息")
+  @ApiOperation(value = "文章添加", notes = "文章添加")
   public Result<Boolean> addArticle(@RequestBody ArticleAddRequest articleAddRequest) {
     log.info("开始添加文章，新增参数为 '{}' ", articleAddRequest);
     return Result
@@ -93,7 +93,7 @@ public class ArticleController {
    * @date 2018/9/7  下午6:00
    */
   @PutMapping("")
-  @ApiOperation(value = "文章修改", notes = "根据id修改文章信息")
+  @ApiOperation(value = "文章修改", notes = "文章修改")
   public Result<Boolean> updateArticle(@RequestBody ArticleUpdateRequest articleUpdateRequest) {
     log.info("开始修改文章，修改参数为 '{}' ", articleUpdateRequest);
     return Result

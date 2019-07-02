@@ -65,7 +65,7 @@ public class ArticleResponse {
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long authorId;
 
-  @ApiModelProperty(value = "作者编号",example = "张三")
+  @ApiModelProperty(value = "作者名称",example = "张三")
   private String authorName;
 
   @ApiModelProperty(value = "创建时间")
