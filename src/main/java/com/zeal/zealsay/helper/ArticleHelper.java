@@ -141,6 +141,8 @@ public class ArticleHelper {
     if (Objects.nonNull(pageRequest.getEndDate())) {
       wrapper.lambda().le(Article::getCreateDate,pageRequest.getEndDate());
     }
+    //按照创建时间倒叙排序
+    wrapper.orderByDesc("create_date");
     return wrapper;
   }
 }

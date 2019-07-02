@@ -8,6 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 /**
@@ -23,6 +24,7 @@ import java.util.List;
 public class ArticleAddRequest {
 
   @ApiModelProperty(value = "标题",example = "震惊，男子半夜不回家竟然是在...")
+  @NotBlank(message = "标题不能为空")
   private String title;
 
   @ApiModelProperty(value = "副标题",example = "某男子半夜不回家竟然在办公室加班")
