@@ -74,6 +74,7 @@ ignore:
       - /api/v1/authentication/logout
       - /api/v1/service/hitokoto
       - /api/v1/article/page
+      - /api/v1/article/*
       - /**/*.css
       - /social
       - /signin
