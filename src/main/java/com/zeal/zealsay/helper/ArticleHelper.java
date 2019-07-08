@@ -2,6 +2,7 @@ package com.zeal.zealsay.helper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zeal.zealsay.common.constant.enums.ArticleStatus;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.converter.ArticleConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleAddRequest;
@@ -143,6 +144,19 @@ public class ArticleHelper {
     }
     //按照创建时间倒叙排序
     wrapper.orderByDesc("create_date");
+    return wrapper;
+  }
+
+  /**
+   * 博客端需要过滤掉未上架的.
+   *
+   * @author  zhanglei
+   * @date 2019-07-05  16:17
+   */
+  public QueryWrapper<Article> toAeticlePageRequestWrapperForC(@NonNull ArticlePageRequest pageRequest) {
+    QueryWrapper<Article> wrapper = toAeticlePageRequestWrapper(pageRequest);
+    //过滤掉下架的和草稿
+    wrapper.lambda().eq(Article::getStatus, ArticleStatus.FORMAL);
     return wrapper;
   }
 }
