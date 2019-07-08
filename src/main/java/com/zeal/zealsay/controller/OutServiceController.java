@@ -31,6 +31,9 @@ public class OutServiceController {
     */
     @GetMapping("hitokoto")
     Result<HitokotoResponse> getHitokoto() {
-        return Result.of(phraseService.get());
+        log.info("开始查询一言接口");
+        HitokotoResponse response = phraseService.get();
+        log.info("本次返回一言为{}",response);
+        return Result.of(response);
     }
 }
