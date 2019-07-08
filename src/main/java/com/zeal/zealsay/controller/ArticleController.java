@@ -16,9 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PostFilter;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -70,9 +67,9 @@ public class ArticleController {
                                                          @RequestParam(defaultValue = "10") Long pageSize,
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
-    Page<Article> rolePage = (Page<Article>) articleService
+    Page<Article> articlePage = (Page<Article>) articleService
         .page(new Page<>(pageNumber, pageSize), articleHelper.toAeticlePageRequestWrapper(articlePageRequest));
-    return Result.of(articleHelper.toPageInfo(rolePage));
+    return Result.of(articleHelper.toPageInfo(articlePage));
   }
 
   /**
@@ -83,14 +80,13 @@ public class ArticleController {
    */
   @GetMapping("/c/page")
   @ApiOperation(value = "分页查询文章信息列表",notes = "分页查询文章信息列表")
-  @PostFilter(value = "")
   public Result<PageInfo<ArticleResponse>> getByPaginateByUser(@RequestParam(defaultValue = "1") Long pageNumber,
                                                          @RequestParam(defaultValue = "10") Long pageSize,
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
-    Page<Article> rolePage = (Page<Article>) articleService
+    Page<Article> articlePage = (Page<Article>) articleService
         .page(new Page<>(pageNumber, pageSize), articleHelper.toAeticlePageRequestWrapperForC(articlePageRequest));
-    return Result.of(articleHelper.toPageInfo(rolePage));
+    return Result.of(articleHelper.toPageInfo(articlePage));
   }
 
   /**
