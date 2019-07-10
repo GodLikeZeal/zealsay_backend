@@ -66,6 +66,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
   }
 
   public SecuityUser getCurrentUser(){
-    return (SecuityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    if (principal instanceof SecuityUser) {
+      return (SecuityUser)principal;
+    }
+    return null;
   }
 }

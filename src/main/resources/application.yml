@@ -8,6 +8,14 @@ spring:
     active: dev
   application:
     name: zealsay
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: 123
+            client-secret: 123
+
 
 
 jwt:
