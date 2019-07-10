@@ -82,6 +82,8 @@ ignore:
       - /api/v1/authentication/logout
       - /api/v1/service/hitokoto
       - /api/v1/article/c/page
+      - /api/v1/article/category
+      - /api/v1/article/label/page
       - /api/v1/article/*
       - /**/*.css
       - /social
