@@ -190,8 +190,8 @@ markdown编辑器
 ### 反馈
 欢迎大家在使用的过程中提出宝贵的意见和反馈问题，也可以直接提issue。
 ### 交流群
-欢迎加入zealsay交流群一起交流和学习
-![WechatIMG3.jpeg](https://pan.zealsay.com/20190716214941558000000.jpg)
+* 欢迎加入zealsay交流群一起交流和学习
+* ![WechatIMG3.jpeg](https://pan.zealsay.com/20190716214941558000000.jpg){:height="200" width="100"}
 ### 鸣谢
 
 - :kissing_heart::kissing_heart:感谢前端大佬[jinjinyike](https://github.com/jinjinyike)的顾问级别的帮助。
