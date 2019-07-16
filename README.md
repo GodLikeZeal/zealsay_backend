@@ -2,7 +2,8 @@
 ------
  ![beta 1.0.0](https://img.shields.io/badge/beta-1.0.0-ff69b4.svg)
 ![spring boot 2.0.4](https://img.shields.io/badge/spring%20boot-2.0.4-green.svg) ![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) ![License MPL-2.0](https://img.shields.io/badge/license-MPL--2.0-green.svg)  [![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) [![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') [![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub')
-
+## 开发指南
+请参考 [开发文档](https://www.zealsay.com)
 ## 介绍
    zealsay是一套前后端分离的快速开发脚手架，后台采用的是最新的`Spring Boot 2.1.6.RELEASE`最新版本，
    前端使用vue,搭载比较火热的`nuxt.js`服务器端渲染框架，截止到目前,使用的是`nuxt.js`最新`2.8.1`版本,
@@ -108,7 +109,26 @@
 #### 在线预览
 [项目在线预览地址](https://beta.zealsay.com)
 #### 页面展示
-
+博客首页
+![image.png](1)
+首页文章列表
+![image.png](2)
+博客详情页
+![image.png](3)
+后台登录页面
+![image.png](4)
+dashboard
+![image.png](5)
+用户列表
+![image.png](6)
+文章添加
+![image.png](7)
+markdown编辑器
+![image.png](8)
+标签云管理
+![image.png](9)
+主题设置
+![image.png](10)
 #### TODO LIST
 *  登录模块
 * [x] 用户名密码登录 
@@ -154,9 +174,15 @@
 * [ ] 解决sweetalert2弹窗按钮颜色不能马上生效
 * [x] 增加markdown编辑器
 * [x] 首页鼠标hover图片变大动画效果
+* [ ] 博客端文章增加点赞功能
+* [ ] 博客端文章增加浏览量功能
 * [ ] 博客端关于页面，个人信息展示
+* [ ] 博客端评论系统
+* [ ] 用户自定义站点资源，如站点名称,meta,以及seo优化等
 * [ ] 博客端友链页面card展示
 * [ ] 后台dashboard流量，访问统计以及最新动态
+### 交流群
+![image.png](11)
 ### 鸣谢
 
 :kissing_heart::kissing_heart:感谢前端大佬[jinjinyike](https://github.com/jinjinyike)的顾问级别的帮助。
