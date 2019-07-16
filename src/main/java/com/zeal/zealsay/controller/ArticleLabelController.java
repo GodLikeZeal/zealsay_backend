@@ -12,6 +12,7 @@ import com.zeal.zealsay.dto.response.ArticleLabelResponse;
 import com.zeal.zealsay.entity.ArticleLabel;
 import com.zeal.zealsay.helper.ArticleLabelHelper;
 import com.zeal.zealsay.service.ArticleLabelService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ import java.util.List;
 * @author  zeal
 * @date 2019/5/19 23:07
 */
+@Api(tags = "标签模块")
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/article/label")

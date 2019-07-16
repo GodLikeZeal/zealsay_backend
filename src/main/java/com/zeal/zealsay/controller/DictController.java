@@ -12,6 +12,7 @@ import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.converter.DictConvertMapper;
 import com.zeal.zealsay.entity.Dict;
 import com.zeal.zealsay.service.DictService;
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,6 +33,7 @@ import java.util.Objects;
  * @author zhanglei
  * @since 2019-03-27
  */
+@Api(tags = "数据字典模块")
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/dict")
