@@ -7,7 +7,6 @@ import org.junit.Test;
 
 public class JasyptEncryptorTest {
 
-  @Test
   public void testEncrypt() throws Exception {
     PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
     SimpleStringPBEConfig config = new SimpleStringPBEConfig();
@@ -25,7 +24,6 @@ public class JasyptEncryptorTest {
     Assert.assertNotNull(encryptedText);
   }
 
-  @Test
   public void testDe() throws Exception {
     PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
     SimpleStringPBEConfig config = new SimpleStringPBEConfig();
