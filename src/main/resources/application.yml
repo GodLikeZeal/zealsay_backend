@@ -99,15 +99,15 @@ ignore:
 spring:
   profiles: prod
   redis:
-    host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
-    port: 6379
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
   rabbitmq:
-    host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
+    host: ${MQ_HOST}
   datasource:
-    host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
+    host: ${MYSQL_HOST}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ENC(E190EwXhkbGxHcPBWhVz6Q==)
-    password: ENC(vB31HVjy7jKr2CzL57DEp7AfEnJslkmN)
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
     url: jdbc:mysql://${spring.datasource.host}/zealsay?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
     hikari:
       maxLifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上
@@ -126,10 +126,10 @@ spring:
 #      password: ENC(0WMifrrUxCi9dOgrn9mG17X6yxsjt14B)
 #      authentication-database: admin
 qiniu:
-  Domain: https://pan.zealsay.com/
-  Bucket: ENC(+qiMEWIsExb2bCJ/+FeFAfFuTLkaFeMh)
-  AccessKey: ENC(AnoQmoYGtHaw3J/Tdp9SVb9Gr0Gcl69bsCY0cDlqHUGD0mxt9FlGjvEXCB5qfqyDbNulQaZoROw=)
-  SecretKey: ENC(4sy78avC7S3AcP4uwOdmIMmQV1AM5ifwjhvvgSKIdfwlFJeEuUn0iRvoXFmsumYUwDSlb7mk2V8=)
+  Domain: ${QINIU_DOMAIN}
+  Bucket: ${QINIU_BUCKET}
+  AccessKey: ${QINIU_ACCESSKEY}
+  SecretKey: ${QINIU_SECRETKEY}
 
 ---
 spring:
