@@ -10,7 +10,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class ZealsayApplicationTests {
 
-    @Test
     public void contextLoads() {
         System.out.println("------------>"+new BCryptPasswordEncoder().encode("123456"));
     }
