@@ -30,9 +30,9 @@ before_install:
 
 after_success:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
-  - docker build --build-arg key="$ENCRYP_PASSWORD" --build-arg java_file=./target/zealsay-1.0.0.jar -t zealsay/zealsay_backend:$TRAVIS_BRANCH .
-  - docker push zealsay/zealsay_backend:$TRAVIS_BRANCH;
-  - sshpass -p $VPS_PASSWORD ssh -o stricthostkeychecking=no travis@$HOST "/home/travis/zealsay/travis-deploy.sh $TRAVIS_BRANCH"
+  - docker build --build-arg key="$ENCRYP_PASSWORD" --build-arg java_file=./target/zealsay-1.0.0.jar -t zealsay/zealsay_backend:latest .
+  - docker push zealsay/zealsay_backend:latest;
+  - sshpass -p $VPS_PASSWORD ssh -o stricthostkeychecking=no travis@$HOST "/home/zeal/docker/zealsay/deploy.sh"
 
 notifications:
   email:
