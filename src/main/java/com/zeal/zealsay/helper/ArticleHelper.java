@@ -83,23 +83,7 @@ public class ArticleHelper {
     PageInfo<Article> articlePageInfo = new PageInfo(articlePage);
     List<ArticleResponse> articleResponses = articlePage.getRecords()
         .stream()
-        .map(s -> {
-          ArticleResponse articleResponse = articleConvertMapper.toArticleResponse(s);
-          //解析分类目录
-          ArticleCategory articleCategory = Optional
-              .ofNullable(articleCategoryService.getById(s.getCategoryId()))
-              .orElse(ArticleCategory.builder()
-                  .name("无")
-                  .build());
-          articleResponse.setCategoryName(articleCategory.getName());
-          //解析作者
-          User user = Optional.ofNullable(userService.getById(s.getAuthorId()))
-              .orElse(User.builder()
-                  .username("佚名")
-                  .build());
-          articleResponse.setAuthorName(user.getUsername());
-          return articleResponse;
-        })
+        .map(this::apply)
         .collect(Collectors.toList());
     return PageInfo.<ArticleResponse>builder()
         .records(articleResponses)
@@ -168,5 +152,39 @@ public class ArticleHelper {
           .eq("openness", Openness.SELFONLY));
     }
     return wrapper;
+  }
+
+  /**
+   * 构建返回对象.
+   *
+   * @author  zhanglei
+   * @date 2019-07-29  18:19
+   */
+  public ArticleResponse toArticleResponse(Article article){
+    return this.apply(article);
+  }
+
+  /**
+   * 解析分类目录和作者信息.
+   *
+   * @author  zhanglei
+   * @date 2019-07-29  18:22
+   */
+  private ArticleResponse apply(Article s) {
+    ArticleResponse articleResponse = articleConvertMapper.toArticleResponse(s);
+    //解析分类目录
+    ArticleCategory articleCategory = Optional
+        .ofNullable(articleCategoryService.getById(s.getCategoryId()))
+        .orElse(ArticleCategory.builder()
+            .name("无")
+            .build());
+    articleResponse.setCategoryName(articleCategory.getName());
+    //解析作者
+    User user = Optional.ofNullable(userService.getById(s.getAuthorId()))
+        .orElse(User.builder()
+            .username("佚名")
+            .build());
+    articleResponse.setAuthorName(user.getUsername());
+    return articleResponse;
   }
 }

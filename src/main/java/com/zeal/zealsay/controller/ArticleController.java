@@ -52,7 +52,7 @@ public class ArticleController {
   public Result<ArticleResponse> getById(@PathVariable String id) {
     log.info("开始查询文章id为 '{}' 的文章信息", id);
     return Result
-        .of(articleConvertMapper.toArticleResponse(articleService.getById(id)));
+        .of(articleHelper.toArticleResponse(articleService.getById(id)));
   }
 
   /**
