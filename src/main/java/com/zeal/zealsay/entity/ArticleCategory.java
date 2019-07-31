@@ -2,7 +2,6 @@ package com.zeal.zealsay.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModel;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -20,18 +19,32 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ArticleCategory对象", description="分类目录表")
 public class ArticleCategory {
 
+    /**
+     * 主键id.
+     */
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
 
+    /**
+     * 名称.
+     */
     private String name;
 
+    /**
+     * 别名.
+     */
     private String alias;
 
+    /**
+     * 描述.
+     */
     private String description;
 
+    /**
+     * 父类id.
+     */
     private Long parentId;
 
 

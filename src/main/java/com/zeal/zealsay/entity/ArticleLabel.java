@@ -2,10 +2,7 @@ package com.zeal.zealsay.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -16,29 +13,43 @@ import lombok.experimental.Accessors;
  * @author zhanglei
  * @since 2019-05-16
  */
+@Builder(toBuilder = true)
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@ApiModel(value="ArticleLabel对象", description="分类目录表")
 public class ArticleLabel {
 
-    @ApiModelProperty(value = "id")
+    /**
+     * id.
+     */
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
 
-    @ApiModelProperty(value = "名称")
+    /**
+     * 名称.
+     */
     private String name;
 
-    @ApiModelProperty(value = "图标")
+    /**
+     * 图标.
+     */
     private String icon;
 
-    @ApiModelProperty(value = "热度")
+    /**
+     * 热度.
+     */
     private Long hot;
 
-    @ApiModelProperty(value = "外层颜色")
+    /**
+     * 外层颜色.
+     */
     private String outColor;
 
-    @ApiModelProperty(value = "头像颜色")
+    /**
+     * 头像颜色.
+     */
     private String avatarColor;
 
 

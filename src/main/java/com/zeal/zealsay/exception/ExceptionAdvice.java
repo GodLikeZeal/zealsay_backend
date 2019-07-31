@@ -1,6 +1,7 @@
 package com.zeal.zealsay.exception;
 
 import com.zeal.zealsay.common.entity.Result;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -38,6 +39,12 @@ public class ExceptionAdvice {
             .build();
     }
 
+    /**
+    * 访问拒绝异常.
+    *
+    * @author  zeal
+    * @date 2019/7/28 12:24
+    */
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(value = HttpStatus.OK)     //权限不足异常
     public Result handleAccessDeniedException(Exception e, WebRequest request, AccessDeniedException exception){
