@@ -1,11 +1,7 @@
 package com.zeal.zealsay.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import java.io.Serializable;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -17,14 +13,12 @@ import lombok.experimental.Accessors;
  * @author zhanglei
  * @since 2019-03-27
  */
-@Builder
+@Builder(toBuilder = true)
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-@TableName("sys_dict")
-@ApiModel(value="Dict对象", description="全局字典表")
 public class Dict {
 
     /**
