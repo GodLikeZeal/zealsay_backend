@@ -3,7 +3,7 @@ package com.zeal.zealsay.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * <p>
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Controller;
  * @author zhanglei
  * @since 2019-07-31
  */
-@Controller
+@RestController
 @RequestMapping("/friendLink")
 public class FriendLinkController {
 
