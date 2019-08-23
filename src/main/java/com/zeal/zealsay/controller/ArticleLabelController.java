@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.common.entity.Result;
-import com.zeal.zealsay.converter.ArticleLabelConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleLabelAddRequest;
 import com.zeal.zealsay.dto.request.ArticleLabelUpdateRequest;
 import com.zeal.zealsay.dto.response.ArticleLabelResponse;
@@ -16,16 +15,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -81,8 +72,8 @@ public class ArticleLabelController {
     */
     @GetMapping("/page")
     @ApiOperation(value = "分页获取标签云信息列表", notes = "分页获取标签云信息列表")
-    public Result<PageInfo<ArticleLabelResponse>> getByPaginate(@Value("1") Long pageNumber,
-                                                                @Value("500") Long pageSize,
+    public Result<PageInfo<ArticleLabelResponse>> getByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
+                                                                @RequestParam(defaultValue = "500") Long pageSize,
                                                                 String name) {
         log.info("开始进行分页查询标签云列表，查询参数为 '{}' ", name);
         Page<ArticleLabel> articleLabelPage = (Page<ArticleLabel>) articleLabelService

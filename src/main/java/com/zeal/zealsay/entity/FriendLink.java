@@ -1,19 +1,19 @@
 package com.zeal.zealsay.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDate;
-import com.baomidou.mybatisplus.annotation.TableId;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import java.time.LocalDateTime;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ * 友链记录表
  * </p>
  *
  * @author zhanglei
- * @since 2019-06-30
+ * @since 2019-07-31
  */
 @Builder(toBuilder = true)
 @Data
@@ -21,35 +21,44 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Phrase {
+public class FriendLink {
 
+    /**
+     * 主键.
+     */
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;
 
     /**
-     * 正文
+     * 头像.
      */
-    private String hitokoto;
+    private String avatar;
 
     /**
-     * 类型
+     * 友链名称.
      */
-    private String type;
+    private String friendName;
 
     /**
-     * 来源
+     * 友链介绍.
      */
-    private String source;
+    private String friendInfo;
 
     /**
-     * 创建者
+     * 链接地址.
      */
-    private String creator;
+    private String link;
 
     /**
-     * 创建时间
+     * 印象颜色.
      */
-    private LocalDate createdAt;
+    private String color;
+
+    /**
+     * 创建时间.
+     *
+     */
+    private LocalDateTime createDate;
 
 
 }

@@ -16,7 +16,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -101,8 +100,8 @@ public class UserController {
    */
   @GetMapping("/page")
   @ApiOperation(value = "分页获取用户信息列表", notes = "分页获取用户信息列表")
-  public Result<PageInfo<UserResponse>> getByPaginate(@Value("1") Long pageNumber,
-                                                      @Value("10") Long pageSize,
+  public Result<PageInfo<UserResponse>> getByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
+                                                      @RequestParam(defaultValue = "10") Long pageSize,
                                                       UserPageRequest userPageRequest) {
     log.info("开始进行分页查询用户列表，查询参数为 '{}' ", userPageRequest);
     Page<User> userPage = (Page<User>) userService
