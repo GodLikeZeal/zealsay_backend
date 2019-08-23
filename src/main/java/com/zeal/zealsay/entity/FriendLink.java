@@ -32,7 +32,7 @@ public class FriendLink {
     /**
      * 头像.
      */
-    private String avator;
+    private String avatar;
 
     /**
      * 友链名称.
