@@ -78,7 +78,7 @@ public class FriendLinkController {
   @ApiOperation(value = "修改友链信息", notes = "修改一条友链信息")
   public Result<Boolean> updateFriendLink(@RequestBody FriendLinkRequest request) {
     log.info("开始修改增一条友链信息,参数为{}", request);
-    return Result.of(friendLinkService.saveFriendLink(request));
+    return Result.of(friendLinkService.updateFriendLink(request));
   }
 
   /**

@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <p>
@@ -54,8 +54,13 @@ public class FriendLinkService extends ServiceImpl<FriendLinkMapper, FriendLink>
    * @date 2019-08-23  14:55
    */
   public Boolean updateFriendLink(FriendLinkRequest friendLinkRequest) {
+    //判断是否可更新
+    if (checkBeforeUpdate(friendLinkRequest)) {
+      throw new ServiceException("友链名称重复了,怎么回事,小老弟？");
+    }
+
     //参数转换
-    FriendLink friendLink = friendLinkHelper.initBeforeAdd(friendLinkRequest);
+    FriendLink friendLink = friendLinkHelper.initBeforeUpdate(friendLinkRequest);
 
     //保存入库
     return updateById(friendLink);
@@ -74,5 +79,24 @@ public class FriendLinkService extends ServiceImpl<FriendLinkMapper, FriendLink>
     }
     return false;
   }
+
+  /**
+   * 判断友链是否重复.
+   *
+   * @author  zhanglei
+   * @date 2019-09-03  15:03
+   */
+  private Boolean checkBeforeUpdate(FriendLinkRequest friendLinkRequest) {
+    //判断友链名字是否重复
+    if (Objects.isNull(friendLinkRequest.getId())) {
+      return count(new QueryWrapper<FriendLink>()
+          .eq("friend_name", friendLinkRequest.getFriendName())) > 0 ? true : false;
+    } else {
+      return count(new QueryWrapper<FriendLink>()
+          .eq("friend_name", friendLinkRequest.getFriendName())
+          .ne("id", friendLinkRequest.getId())) > 0 ? true : false;
+    }
+  }
+
 
 }
