@@ -3,6 +3,7 @@ package com.zeal.zealsay.dto.request;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
@@ -26,7 +27,7 @@ public class FriendLinkRequest {
     /**
      * 主键.
      */
-    @TableId(value = "id", type = IdType.ID_WORKER)
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private Long id;
 
     /**
