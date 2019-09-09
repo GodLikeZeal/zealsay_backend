@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/friend/link")
 public class FriendLinkController {
 
+
   @Autowired
   FriendLinkService friendLinkService;
   @Autowired
