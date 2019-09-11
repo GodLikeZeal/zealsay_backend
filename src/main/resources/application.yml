@@ -139,7 +139,7 @@ justauth:
     github:
       client-id: ENC(2Yn+IGbaGgy7l9lZIIfTHzBoSAT9PRsqUv7BjBJ7RaA=)
       client-secret: ENC(IqKWhEX8c35fmdFtcTtxPpB9OCmHb6KDd12k647+lSM2Wo7Xz6isevkl5PegKvF+FC0Zc7xYebI=)
-      redirect-uri: https://blog.zealsay.com/api/v1/oauth/github/callback
+      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
   cache:
     type: default
 ---
@@ -176,9 +176,10 @@ justauth:
     github:
       client-id: ENC(2Yn+IGbaGgy7l9lZIIfTHzBoSAT9PRsqUv7BjBJ7RaA=)
       client-secret: ENC(IqKWhEX8c35fmdFtcTtxPpB9OCmHb6KDd12k647+lSM2Wo7Xz6isevkl5PegKvF+FC0Zc7xYebI=)
-      redirect-uri: https://blog.zealsay.com/api/v1/oauth/github/callback
+      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
   cache:
     type: default
+
 ---
 spring:
   profiles: test
@@ -210,6 +211,6 @@ justauth:
     github:
       client-id: ENC(2Yn+IGbaGgy7l9lZIIfTHzBoSAT9PRsqUv7BjBJ7RaA=)
       client-secret: ENC(IqKWhEX8c35fmdFtcTtxPpB9OCmHb6KDd12k647+lSM2Wo7Xz6isevkl5PegKvF+FC0Zc7xYebI=)
-      redirect-uri: https://blog.zealsay.com/api/v1/oauth/github/callback
+      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
   cache:
     type: default
