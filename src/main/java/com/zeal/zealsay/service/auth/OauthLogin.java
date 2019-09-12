@@ -2,7 +2,7 @@ package com.zeal.zealsay.service.auth;
 
 import me.zhyd.oauth.model.AuthResponse;
 
-import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
 * 登录相关逻辑.
@@ -17,5 +17,5 @@ public interface OauthLogin {
      * 登录.
      * @return
      */
-    HttpServletResponse login(AuthResponse authResponse);
+    Map<String,Object> login(AuthResponse authResponse);
 }
