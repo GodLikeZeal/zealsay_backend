@@ -5,9 +5,11 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.common.constant.enums.BlockAction;
 import com.zeal.zealsay.common.constant.enums.BlockType;
+import com.zeal.zealsay.common.constant.enums.OauthSource;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
+import com.zeal.zealsay.entity.AuthUser;
 import com.zeal.zealsay.entity.Role;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.common.entity.UserVo;
@@ -20,6 +22,7 @@ import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.Collection;
 import java.util.List;
@@ -43,6 +46,8 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     UserHelper userHelper;
     @Autowired
     BlockLogService blockLogService;
+    @Autowired
+    AuthUserService authUserService;
 
     /**
      * 通过手机号，用户名或者邮箱查询.
@@ -271,6 +276,25 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
             return count(new QueryWrapper<User>()
                     .eq("email", email)
                     .ne("id", userId)) > 0 ? true : false;
+        }
+    }
+
+    /**
+     * 通过第三方用户获取Id.
+     *
+     * @author  zhanglei
+     * @date 2019-09-12  15:00
+     */
+    public User getByAuthUser(String uid, OauthSource source) {
+        List<AuthUser> authUsers = authUserService
+            .list(new QueryWrapper<AuthUser>()
+                .eq("uid", uid)
+                .eq("source",source));
+        if (CollectionUtils.isEmpty(authUsers)) {
+            return null;
+        } else {
+            AuthUser authUser = authUsers.get(0);
+            return getById(authUser.getUserId());
         }
     }
 }

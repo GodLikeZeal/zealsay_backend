@@ -3,6 +3,8 @@ package com.zeal.zealsay.controller;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.xkcoding.justauth.AuthRequestFactory;
+import com.zeal.zealsay.common.constant.enums.OauthSource;
+import com.zeal.zealsay.service.auth.OauthLoginFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthSource;
@@ -34,6 +36,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class OauthController {
   private final AuthRequestFactory factory;
+
+  @Autowired
+  private OauthLoginFactory oauthLoginFactory;
 
   /**
    * 登录类型
@@ -69,12 +74,21 @@ public class OauthController {
     AuthRequest authRequest = factory.get(getAuthSource(oauthType));
     AuthResponse response = authRequest.login(callback);
     log.info("【response】= {}", JSONUtil.toJsonStr(response));
+    //执行登录逻辑
+    oauthLoginFactory.getOauthLogin(getOauthSource(oauthType)).login(response);
     return response;
   }
 
   private AuthSource getAuthSource(String type) {
     if (StrUtil.isNotBlank(type)) {
       return AuthSource.valueOf(type.toUpperCase());
+    } else {
+      throw new RuntimeException("不支持的类型");
+    }
+  }
+  private OauthSource getOauthSource(String type) {
+    if (StrUtil.isNotBlank(type)) {
+      return OauthSource.valueOf(type.toUpperCase());
     } else {
       throw new RuntimeException("不支持的类型");
     }
