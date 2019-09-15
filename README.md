@@ -3,7 +3,7 @@
  ![beta 1.0.0](https://img.shields.io/badge/beta-1.0.0-ff69b4.svg)
 ![spring boot 2.0.4](https://img.shields.io/badge/spring%20boot-2.0.4-green.svg) ![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) ![License MPL-2.0](https://img.shields.io/badge/license-MPL--2.0-green.svg)  [![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) [![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') [![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub')
 ## 开发指南
-请参考 [开发文档](https://www.zealsay.com)
+请参考 [开发文档](https://docs.zealsay.com)
 ## 介绍
    zealsay是一套前后端分离的快速开发脚手架，后台采用的是最新的`Spring Boot 2.1.6.RELEASE`最新版本，
    前端使用vue,搭载比较火热的`nuxt.js`服务器端渲染框架，截止到目前,使用的是`nuxt.js`最新`2.8.1`版本,
@@ -40,6 +40,7 @@
   - QQ第三方登录
   - Hitokoto 一言接口
   - 阿里云短信服务
+  - 图灵机器人
   
 
 ## 系统架构
@@ -107,34 +108,13 @@
 ### zealsay blog
 基于zealsay快应用框架构建的博客系统,包含一个blog前端和对应的后台管理系统,为简约,美观和高性能而生。已实现部分功能,项目目前仍在开发中。
 #### 在线预览
-[项目在线预览地址](https://beta.zealsay.com)
-#### 页面展示
-博客首页
-![image.png](https://pan.zealsay.com/20190716214935236000000.png)
-首页文章列表
-![image.png](https://pan.zealsay.com/20190716214936313000000.png)
-博客详情页
-![image.png](https://pan.zealsay.com/20190716214936530000000.png)
-后台登录页面
-![image.png](https://pan.zealsay.com/20190716214936631000000.png)
-dashboard
-![image.png](https://pan.zealsay.com/20190716214937367000000.png)
-用户列表
-![image.png](https://pan.zealsay.com/20190716214937929000000.png)
-文章添加
-![image.png](https://pan.zealsay.com/20190716214938738000000.png)
-markdown编辑器
-![image.png](https://pan.zealsay.com/20190716214939591000000.png)
-标签云管理
-![image.png](https://pan.zealsay.com/2019071621494080000000.png)
-主题设置
-![image.png](https://pan.zealsay.com/20190716214940767000000.png)
+[项目在线预览地址](https://blog.zealsay.com)
 #### TODO LIST
 *  登录模块
 * [x] 用户名密码登录 
-* [ ] Github第三方登录 
-* [ ] 微信第三方登录 
-* [ ] QQ第三方登录 
+* [x] Github第三方登录 
+* [ ] <s>微信第三方登录[个人难申请] </s>
+* [x] QQ第三方登录 
 * [x] 登录背景动态气泡效果
 *  用户模块
 * [x] 后台用户列表条件搜索
@@ -162,7 +142,7 @@ markdown编辑器
 * [x] 标签列表条件搜索
 * [x] 标签添加,删除
 * [x] blog端标签云展示
-* [ ] blog端标签云动态气泡效果
+* [x] blog端标签云动态气泡效果
 * 分类目录模块
 * [x] 分类目录树
 * [x] 分类目录添加,删除
@@ -176,17 +156,17 @@ markdown编辑器
 * [x] 首页鼠标hover图片变大动画效果
 * [ ] 博客端文章增加点赞功能
 * [ ] 博客端文章增加浏览量功能
-* [ ] 博客端关于页面，个人信息展示
+* [x] 博客端关于页面，个人信息展示
 * [ ] 博客端评论系统
 * [ ] 用户自定义站点资源，如站点名称,meta,以及seo优化等
-* [ ] 博客端友链页面card展示
+* [x] 博客端友链页面card展示
 * [ ] 后台dashboard流量，访问统计以及最新动态
-* [ ] 页脚优化
+* [x] 页脚优化
 * [ ] 文章浏览量展示
 * [ ] 文章点赞/喜欢功能
 * [ ] 文章分享转载功能
 * [ ] 站点资源配置，如站点名称，meta以及seo等
-* [ ] 博客端标签云气泡展示
+* [x] 博客端标签云气泡展示
 ### 反馈
 欢迎大家在使用的过程中提出宝贵的意见和反馈问题，也可以直接提issue。
 ### 交流群
@@ -197,5 +177,5 @@ markdown编辑器
 ### 鸣谢
 
 - :kissing_heart::kissing_heart:感谢前端大佬[jinjinyike](https://github.com/jinjinyike)的顾问级别的帮助。
-- :heart::heart:最后感谢兜兜里有糖的理解和支持,没有她我完不成此项目,别问为什么,晚上不睡觉写代码会被打。
-- 更多关于nuxt文档,可以访问 [Nuxt.js docs](https://nuxtjs.org).
+- :heart::heart:兜兜里有糖。
+- 作为一位后台开发者,接触前端时间不长，熟悉了vue后，便使用nuxt.js来开发此项目,刚使用nuxt,踩了不少坑,更多关于nuxt文档,可以访问 [Nuxt.js docs](https://nuxtjs.org).
