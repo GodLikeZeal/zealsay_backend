@@ -39,6 +39,8 @@ public abstract class AbstractOauthLogin implements OauthLogin {
         // 执行登录逻辑
         me.zhyd.oauth.model.AuthUser authUser = (me.zhyd.oauth.model.AuthUser) authResponse.getData();
         //判断是否注册
+        //首先保存授权用户记录
+        AuthUser user = toAuthUser(authUser);
         if (isRegister(authUser.getUuid(),getSource())) {
             //生成token并且登录
             SecuityUser secuityUser = userDetailsService
@@ -48,11 +50,11 @@ public abstract class AbstractOauthLogin implements OauthLogin {
             map.put("redirect","");
             map.put("register",true);
         } else {
-            //首先保存授权用户记录
-            AuthUser user = toAuthUser(authUser);
             authUserService.save(user);
-
+            map.put("key",user.getId());
+            map.put("register",false);
         }
+        map.put("bind",user.getBind());
         return map;
     }
 

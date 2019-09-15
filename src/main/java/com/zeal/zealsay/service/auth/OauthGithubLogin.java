@@ -1,5 +1,6 @@
 package com.zeal.zealsay.service.auth;
 
+import com.zeal.zealsay.common.constant.enums.OauthSource;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,5 +15,10 @@ public class OauthGithubLogin extends AbstractOauthLogin{
     @Override
     protected String getRedirectUrl() {
         return null;
+    }
+
+    @Override
+    protected OauthSource getSource() {
+        return OauthSource.GITHUB;
     }
 }
