@@ -76,6 +76,7 @@ ignore:
       - /api/v1/authentication/login
       - /api/v1/authentication/require
       - /api/v1/authentication/logout
+      - /api/v1/oauth/**
       - /api/v1/service/hitokoto
       - /api/v1/article/c/page
       - /api/v1/article/category
@@ -132,6 +133,15 @@ qiniu:
   AccessKey: ${QINIU_ACCESSKEY}
   SecretKey: ${QINIU_SECRETKEY}
 
+justauth:
+  enabled: true
+  type:
+    github:
+      client-id: ENC(2Yn+IGbaGgy7l9lZIIfTHzBoSAT9PRsqUv7BjBJ7RaA=)
+      client-secret: ENC(IqKWhEX8c35fmdFtcTtxPpB9OCmHb6KDd12k647+lSM2Wo7Xz6isevkl5PegKvF+FC0Zc7xYebI=)
+      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
+  cache:
+    type: default
 ---
 spring:
   profiles: dev
@@ -160,6 +170,16 @@ qiniu:
   AccessKey: ENC(l7FGA3cDMF91mw0Pahc0TO0thE0sXz4C07Ha41tYQkzKAt4hgoF4hLJzmgM8NkK/IPMG8hbDR10=)
   SecretKey: ENC(ptJFuHYe8PtaP+i64Vu+D6QiEUgc+zeTGjzp+d57gn9jtIAJsFwjLLK0IxsmdnN+yma86BmbpF8=)
 
+justauth:
+  enabled: true
+  type:
+    github:
+      client-id: ENC(2Yn+IGbaGgy7l9lZIIfTHzBoSAT9PRsqUv7BjBJ7RaA=)
+      client-secret: ENC(IqKWhEX8c35fmdFtcTtxPpB9OCmHb6KDd12k647+lSM2Wo7Xz6isevkl5PegKvF+FC0Zc7xYebI=)
+      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
+  cache:
+    type: default
+
 ---
 spring:
   profiles: test
@@ -184,3 +204,13 @@ qiniu:
   Bucket: ENC(URCSSAswx1fYpIxBXzMkmHi8XGVAxqrXL0OXy4w1y+I=)
   AccessKey: ENC(l7FGA3cDMF91mw0Pahc0TO0thE0sXz4C07Ha41tYQkzKAt4hgoF4hLJzmgM8NkK/IPMG8hbDR10=)
   SecretKey: ENC(ptJFuHYe8PtaP+i64Vu+D6QiEUgc+zeTGjzp+d57gn9jtIAJsFwjLLK0IxsmdnN+yma86BmbpF8=)
+
+justauth:
+  enabled: true
+  type:
+    github:
+      client-id: ENC(2Yn+IGbaGgy7l9lZIIfTHzBoSAT9PRsqUv7BjBJ7RaA=)
+      client-secret: ENC(IqKWhEX8c35fmdFtcTtxPpB9OCmHb6KDd12k647+lSM2Wo7Xz6isevkl5PegKvF+FC0Zc7xYebI=)
+      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
+  cache:
+    type: default

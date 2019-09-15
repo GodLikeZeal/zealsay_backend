@@ -26,7 +26,7 @@
         <docker.image.prefix>zealsay</docker.image.prefix>
 
         <jwt.version>0.9.0</jwt.version>
-        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.version>1.2.60</fastjson.version>
         <commons-io.version>2.6</commons-io.version>
         <mybatis-plus.version>3.0.1</mybatis-plus.version>
         <swagger2.version>2.9.2</swagger2.version>
@@ -90,6 +90,12 @@
             </exclusions>
         </dependency>
 
+        <!-- justauth第三方授权登录-->
+        <dependency>
+            <groupId>com.xkcoding</groupId>
+            <artifactId>justauth-spring-boot-starter</artifactId>
+            <version>1.1.0</version>
+        </dependency>
         <!-- apache commons 语言工具包-->
         <dependency>
             <groupId>org.apache.commons</groupId>

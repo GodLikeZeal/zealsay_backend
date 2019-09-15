@@ -4,6 +4,9 @@ import com.google.common.collect.ImmutableList;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.common.entity.UserVo;
+import com.zeal.zealsay.entity.Role;
+import com.zeal.zealsay.entity.User;
+import com.zeal.zealsay.service.RoleService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -30,26 +33,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
   @Autowired
   UserService userService;
   @Autowired
+  RoleService roleService;
+  @Autowired
   JwtTokenUtil jwtTokenUtil;
 
   @Override
   public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
     UserVo userVo = userService.userFind(s);
     if (userVo.getUser() != null) {
-      Collection<GrantedAuthority> grantedAuthorities = Collections
-          .singleton(new SimpleGrantedAuthority(userVo.getRole().getValue()));
-      return new SecuityUser(userVo.getUser().getLastPasswordResetDate(),
-          userVo.getUser().getId(),
-          userVo.getUser().getUsername(),
-          userVo.getUser().getPassword(),
-          userVo.getUser().getAvatar(),
-          userVo.getUser().getSex(),
-          userVo.getUser().getAge(),
-          ImmutableList.of(userVo.getRole().getValue()),
-           UserStatus.NORMAL.equals(userVo.getUser().getStatus()),
-          true, true,
-          !UserStatus.LOCK.equals(userVo.getUser().getStatus()),
-          grantedAuthorities);
+      return toSecuityUser(userVo.getUser());
     } else {
       throw new UsernameNotFoundException("该用户不存在");
     }
@@ -71,5 +63,28 @@ public class UserDetailServiceImpl implements UserDetailsService {
       return (SecuityUser)principal;
     }
     return null;
+  }
+
+  /**
+   * 转换成SecuityUser.
+   *
+   * @author  zhanglei
+   * @date 2019-09-12  15:12
+   */
+  public SecuityUser toSecuityUser(User user) {
+    Collection<GrantedAuthority> grantedAuthorities = Collections
+        .singleton(new SimpleGrantedAuthority(user.getRole().name()));
+    return new SecuityUser(user.getLastPasswordResetDate(),
+        user.getId(),
+        user.getUsername(),
+        user.getPassword(),
+        user.getAvatar(),
+        user.getSex(),
+        user.getAge(),
+        ImmutableList.of(user.getRole().name()),
+        UserStatus.NORMAL.equals(user.getStatus()),
+        true, true,
+        !UserStatus.LOCK.equals(user.getStatus()),
+        grantedAuthorities);
   }
 }
