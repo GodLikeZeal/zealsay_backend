@@ -1,58 +1,161 @@
-package com.zeal.zealsay;
+package com.zeal.zealsay.service;
 
-import com.zeal.zealsay.service.EmailService;
-import org.jasypt.encryption.pbe.PooledPBEStringEncryptor;
-import org.jasypt.encryption.pbe.config.SimpleStringPBEConfig;
-import org.junit.Assert;
-import org.junit.Test;
+import com.zeal.zealsay.common.constant.SystemConstants;
+import com.zeal.zealsay.util.SimpleEncryptionUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
 
-public class JasyptEncryptorTest extends ZealsayApplicationTests{
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
+/**
+ * 邮箱发送服务.
+ *
+ * @author zhanglei
+ * @date 2019-09-25  17:59
+ */
+@Slf4j
+@Service
+public class EmailService {
+
+  @Value("${spring.mail.username}")
+  private String whoAmI;
 
   @Autowired
-  EmailService emailService;
+  private JavaMailSender mailSender;
+  @Autowired
+  SystemConstants systemConstants;
 
-  @Test
-  public void testEncrypt() throws Exception {
-    PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
-    SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-    config.setPassword("jinjinyike");
-    config.setAlgorithm("PBEWithMD5AndDES");
-    config.setKeyObtentionIterations("1000");
-    config.setPoolSize("1");
-    config.setProviderName("SunJCE");
-    config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
-    config.setStringOutputType("base64");
-    encryptor.setConfig(config);
-    String plainText = "7a47188564c74cea621918344b83c3d2b185dcc5";
-    String encryptedText = encryptor.encrypt(plainText);
-    System.out.println(encryptedText);
-    Assert.assertNotNull(encryptedText);
+  private static final int TIMELIMIT = 1000 * 60 * 60 * 24; //激活邮件过期时间24小时
+
+  /**
+   * 发送简单邮件
+   *
+   * @param to      发送给谁
+   * @param subject 邮件主题
+   * @param content 邮件内容
+   */
+  public void sendSimpleMail(String to, String subject, String content) {
+    SimpleMailMessage message = new SimpleMailMessage();
+    message.setTo(to);
+    message.setSubject(subject);
+    message.setText(content);
+    message.setFrom(whoAmI);
+    mailSender.send(message);
   }
 
-  @Test
-  public void testDe() throws Exception {
-    PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
-    SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-    config.setPassword("password");
-    config.setAlgorithm("PBEWithMD5AndDES");
-    config.setKeyObtentionIterations("1000");
-    config.setPoolSize("1");
-    config.setProviderName("SunJCE");
-    config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
-    config.setStringOutputType("base64");
-    encryptor.setConfig(config);
-    String encryptedText = "Ftw+Zk1K1TlGOwNsKDbYiQ==";
-    String plainText = encryptor.decrypt(encryptedText);
-    Assert.assertEquals("test",plainText);
+  /**
+   * 发送html邮件
+   *
+   * @param to      发送给谁
+   * @param subject 邮件主题
+   * @param content 邮件内容
+   */
+  public void sendHtmlMail(String to, String subject, String content) {
+    MimeMessage message = mailSender.createMimeMessage();
+    try {
+      MimeMessageHelper helper = new MimeMessageHelper(message, true);
+      helper.setTo(to);
+      helper.setFrom(whoAmI);
+      helper.setSubject(subject);
+      helper.setText(content, true);
+      mailSender.send(message);
+    } catch (MessagingException e) {
+      e.printStackTrace();
+    }
+
   }
 
-  @Test
-  public void testSendEmail() throws Exception {
-    //发送简单邮件
-//    emailService.sendSimpleMail("zhangleifor@163.com","标题","内容");
-    //发送html邮件
-    String content = "<html>\n" +
+  /**
+   * 发送附件邮件
+   *
+   * @param to       发送给谁
+   * @param subject  邮件主题
+   * @param content  邮件内容
+   * @param filePath 文件路径
+   */
+  public void sendAttachmentsMail(String to, String subject, String content, String filePath) {
+    MimeMessage message = mailSender.createMimeMessage();
+    MimeMessageHelper helper = null;
+    try {
+      helper = new MimeMessageHelper(message, true);
+      helper.setTo(to);
+      helper.setFrom(whoAmI);
+      helper.setSubject(subject);
+      helper.setText(content, true);
+
+      FileSystemResource file = new FileSystemResource(new File(filePath));
+      String fileName = file.getFilename();
+      //此处可以添加多个附件 zjy0910
+      helper.addAttachment(fileName, file);
+
+      mailSender.send(message);
+    } catch (MessagingException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * 发送图片邮件
+   *
+   * @param to      发送给谁
+   * @param subject 邮件主题
+   * @param content 邮件内容
+   * @param rscPath 图片路径
+   * @param rscId
+   */
+  public void sendInlinResourceMail(String to, String subject, String content,
+                                    String rscPath, String rscId) {
+    MimeMessage message = mailSender.createMimeMessage();
+    try {
+      MimeMessageHelper helper = new MimeMessageHelper(message, true);
+      helper.setTo(to);
+      helper.setFrom(whoAmI);
+      helper.setSubject(subject);
+      helper.setText(content, true);
+
+      //可以添加多个图片
+      FileSystemResource res = new FileSystemResource(new File(rscPath));
+      helper.addInline(rscId, res);
+
+      mailSender.send(message);
+    } catch (MessagingException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * 发送注册邮件
+   *
+   * @param username 用户名
+   * @param email    邮件
+   */
+  public void sendRegisterEmail(String username, String email) throws UnsupportedEncodingException {
+    String token = buildToken(email);
+    String url = URLEncoder.encode(systemConstants.getDomain()+"admin/register/confirm?token="+token+"&email="+email,"UTF-8");
+    String content = buildRegisterEmail(username, email, url);
+    sendHtmlMail(email, "账号注册激活邮件", content);
+  }
+
+  /**
+   * 构造注册邮件内容.
+   *
+   * @param username 用户名称
+   * @param email    邮件
+   * @param url      链接
+   * @return 邮件内容
+   */
+  private String buildRegisterEmail(String username, String email, String url) {
+    return "<html>\n" +
         "    \n" +
         "<head>\n" +
         "<base target=\"_blank\" />\n" +
@@ -79,7 +182,7 @@ public class JasyptEncryptorTest extends ZealsayApplicationTests{
         "    </tr>\n" +
         "    <tr>\n" +
         "        <td style=\"height: 33px;padding: 10px 20px 10px 20px;font-size: 24px;color: #212e40;\">\n" +
-        "            Hi zeal，\n" +
+        "            Hi " + username + "，\n" +
         "        </td>\n" +
         "    </tr>\n" +
         "    <tr>\n" +
@@ -96,10 +199,10 @@ public class JasyptEncryptorTest extends ZealsayApplicationTests{
         "        <td valign=\"left\" style=\"font-size: 36px;color: #323A45;\">\n" +
         "            <div style=\"background: #F2F2F7;border-radius: 2px;margin: 10px 20px;\">\n" +
         "                <div style=\"font-size: 14px;line-height: 14px; padding: 20px 20px 10px 20px;\">\n" +
-        "                    用户名称：jinjinyike\n" +
+        "                    用户名称：" + username + "\n" +
         "                </div>\n" +
         "                <div style=\"font-size: 14px;line-height: 14px; padding: 10px 20px 20px 20px;\">\n" +
-        "                    登录账户：<A data-auto-link=1 href=\"mailto:zhangleifor@163.com\">jinjinyike@163.com</A>            </div>\n" +
+        "                    登录账户：<A data-auto-link=1 href=\"mailto:" + email + "\">" + email + "</A>            </div>\n" +
         "            </div>\n" +
         "        </td>\n" +
         "    </tr>\n" +
@@ -111,8 +214,8 @@ public class JasyptEncryptorTest extends ZealsayApplicationTests{
         "    <tr>\n" +
         "        <td style=\"height: 50px;color: white;\" valign=\"middle\">\n" +
         "            <div style=\"padding:10px 20px;border-radius:5px;background: rgb(64, 69, 77);margin-left:20px;margin-right:20px\">\n" +
-        "                <a style=\"word-break:break-all;line-height:23px;color:white;font-size:15px;text-decoration:none;\" href=\"https://zealsay.coding.net/app/detect?link=https%3A%2F%2Fzealsay.coding.net%2Fsignup%2Factivate%3Femail%3Dzhangleifor%40163.com%26key%3Db8a0012cf2be1eaf372bb83f1ab6f5d47542fcb2\">\n" +
-        "                    https://blog.zealsay.com/app/detect?link=https%3A%2F%2Fzealsay.coding.net%2Fsignup%2Factivate%3Femail%3Dzhangleifor%40163.com%26key%3Db8a0012cf2be1eaf372bb83f1ab6f5d47542fcb2\n" +
+        "                <a style=\"word-break:break-all;line-height:23px;color:white;font-size:15px;text-decoration:none;\" href=\"" + url + "\">\n" +
+        "                    " + url + "\n" +
         "                </a>\n" +
         "            </div>\n" +
         "        </td>\n" +
@@ -121,7 +224,7 @@ public class JasyptEncryptorTest extends ZealsayApplicationTests{
         "        <td style=\"padding: 20px 20px 20px 20px;font-size: 12px;\">\n" +
         "            <p style=\"margin: 8px 0;\">如果点击以上链接无效，请尝试将链接复制到浏览器地址栏访问。</p>\n" +
         "            <p style=\"margin: 8px 0;\">假如您没有进行注册操作，请忽略此邮件，不要点击上面链接。</p>\n" +
-        "            <p style=\"margin: 8px 0;\">若您有任何疑问，请随时联系我们：<a style=\"color:#5098E8;text-decoration:none\" href=\"admin@zealsay.com\">admin@zealsay.com</a></p>\n" +
+        "            <p style=\"margin: 8px 0;\">注册链接只在24小时内有效，若您有任何疑问，请随时联系我们：<a style=\"color:#5098E8;text-decoration:none\" href=\"admin@zealsay.com\">admin@zealsay.com</a></p>\n" +
         "        </td>\n" +
         "    </tr>\n" +
         "    <tr>\n" +
@@ -169,17 +272,23 @@ public class JasyptEncryptorTest extends ZealsayApplicationTests{
         "\n" +
         "</body>\n" +
         "</html>";
-    emailService.sendHtmlMail("zhangleifor@163.com","账号注册激活邮件",content);
-//    //发送附件邮件示例
-//    emailService.sendAttachmentsMail("117***86@qq.com","给你的",content,"C:\\Users\\Administrator\\Pictures\\999.jpg");
-//
-//    //发送图片邮件示例
-//    String resId ="id001";
-//    String content = "<html>\n" +
-//        "<body><h2>html邮件内容</h2><br><img src=\'cid:"+resId+"\'></img></body>" +
-//        "</html>";
-//    //发图片邮件
-//    emailService.sendInlinResourceMail("ai*****2@126.com","标题",
-//        content,"C:\\Users\\Administrator\\Pictures\\\\999.jpg",resId);
   }
+
+  /**
+   * 加密token.
+   *
+   * @param email 邮箱
+   * @return
+   */
+  private String buildToken(String email) {
+    //当前时间戳
+    Long curTime = System.currentTimeMillis();
+    //激活的有效时间
+    Long activateTime = curTime + TIMELIMIT;
+    //激活码--用于激活邮箱账号
+    String token = email + "_" + activateTime;
+
+    return SimpleEncryptionUtil.encrypt(token);
+  }
+
 }

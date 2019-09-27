@@ -48,6 +48,7 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
     AntPathMatcher pathMatcher = new AntPathMatcher();
     for (String url : filterIgnorePropertiesConfig.getUrls()) {
       if (pathMatcher.match(url, request.getRequestURI())) {
+        log.info("this path authentication unnecessary!");
         access = true;
       }
     }
@@ -66,12 +67,12 @@ public class JwtAuthorizationTokenFilter extends OncePerRequestFilter {
           log.warn("the token is expired and not valid anymore", e);
         }
       } else {
-        log.debug("couldn't find bearer string, will ignore the header");
+        log.info("couldn't find bearer string, will ignore the header");
       }
 
-      log.debug("checking authentication for user '{}'", username);
+      log.info("checking authentication for user '{}'", username);
       if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-        log.debug("security context was null, so authorizating user");
+        log.info("security context was null, so authorizating user");
 
         // It is not compelling necessary to load the use details from the database. You could also store the information
         // in the token and read it from it. It's up to you ;)

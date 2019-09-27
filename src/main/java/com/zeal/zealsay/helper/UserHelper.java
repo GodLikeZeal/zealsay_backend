@@ -81,6 +81,7 @@ public class UserHelper {
     return userConvertMapper.toUser(userAddRequest).toBuilder()
         .password(new BCryptPasswordEncoder().encode(userAddRequest.getPassword()))
         .status(UserStatus.NORMAL)
+        .emailConfirm(true)
         .registerDate(LocalDateTime.now())
         .build();
   }

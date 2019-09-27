@@ -83,6 +83,11 @@ public class User {
   private String email;
 
   /**
+   * 邮箱是否验证过.
+   */
+  private Boolean emailConfirm;
+
+  /**
    * 头像.
    */
   private String avatar;
