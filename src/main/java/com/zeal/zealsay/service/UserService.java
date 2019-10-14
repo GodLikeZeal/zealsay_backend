@@ -3,22 +3,24 @@ package com.zeal.zealsay.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zeal.zealsay.common.constant.enums.BlockAction;
 import com.zeal.zealsay.common.constant.enums.BlockType;
 import com.zeal.zealsay.common.constant.enums.OauthSource;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
+import com.zeal.zealsay.common.entity.UserVo;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.entity.AuthUser;
 import com.zeal.zealsay.entity.Role;
 import com.zeal.zealsay.entity.User;
-import com.zeal.zealsay.common.entity.UserVo;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.UserHelper;
 import com.zeal.zealsay.mapper.RoleMapper;
 import com.zeal.zealsay.mapper.UserMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zeal.zealsay.util.SimpleEncryptionUtil;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,7 @@ import java.util.Objects;
  * @author zhanglei
  * @since 2018-09-14
  */
+@Slf4j
 @Transactional(rollbackFor = {ServiceException.class, RuntimeException.class, Exception.class})
 @Service
 public class UserService extends ServiceImpl<UserMapper, User> implements IService<User> {
@@ -298,5 +301,37 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
       AuthUser authUser = authUsers.get(0);
       return getById(authUser.getUserId());
     }
+  }
+
+  /**
+  * 校验注册邮件.
+  *
+  * @author  zeal
+  * @date 2019/10/14 22:53
+  */
+  public Boolean confirmEmailRegister(String email,String key) {
+    //解析key
+    String value = SimpleEncryptionUtil.dencrypt(key);
+    String values[] = value.split(":");
+    if (values.length!=2) {
+      log.error("注册邮件为:{}的key:{}不合法",email,key);
+      throw new ServiceException("key无效");
+    }
+    String ckEmail = values[0];
+    long ckTime;
+    try {
+      ckTime = Long.parseLong(values[1]);
+    } catch (Exception e) {
+      throw new ServiceException("key无效");
+    }
+    //校验是否过期
+    if (ckTime> System.currentTimeMillis()) {
+      throw new ServiceException("注册邮件已过期");
+    }
+    //校验邮件是否相同
+    if (!email.equals(ckEmail)) {
+      throw new ServiceException("注册邮件校验不一致");
+    }
+    return true;
   }
 }

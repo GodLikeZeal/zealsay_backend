@@ -286,7 +286,7 @@ public class EmailService {
     //激活的有效时间
     Long activateTime = curTime + TIMELIMIT;
     //激活码--用于激活邮箱账号
-    String token = email + "_" + activateTime;
+    String token = email + ":" + activateTime;
 
     return SimpleEncryptionUtil.encrypt(token);
   }

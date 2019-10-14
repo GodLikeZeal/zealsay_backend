@@ -195,6 +195,18 @@ public class UserController {
   }
 
   /**
+  * 开始校验注册邮件.
+  *
+  * @author  zeal
+  * @date 2019/10/14 22:56
+   * @return
+  */
+  @PostMapping("confirm/email")
+  public Result<Boolean> conformRegisterEmail(@RequestParam String email, @RequestParam String key) {
+    log.info("开始校验用户{}的注册邮件信息",email);
+    return Result.of(userService.confirmEmailRegister(email,key));
+  }
+  /**
    * 发送注册邮件.
    *
    * @author  zhanglei
