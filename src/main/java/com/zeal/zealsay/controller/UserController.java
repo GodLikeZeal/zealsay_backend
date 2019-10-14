@@ -11,6 +11,7 @@ import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.helper.UserHelper;
+import com.zeal.zealsay.service.EmailService;
 import com.zeal.zealsay.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 
 /**
@@ -35,6 +37,8 @@ public class UserController {
 
   @Autowired
   UserService userService;
+  @Autowired
+  EmailService emailService;
   @Autowired
   UserHelper userHelper;
   @Autowired
@@ -188,6 +192,23 @@ public class UserController {
   public Result<Boolean> updateUser(@RequestBody @Validated UserUpdateRequest userUpdateRequest) {
     log.info("开始执行修改用户信息逻辑,需要修改的用户的参数为：‘{}’", userUpdateRequest);
     return Result.of(userService.updateUser(userUpdateRequest));
+  }
+
+  /**
+   * 发送注册邮件.
+   *
+   * @author  zhanglei
+   * @date 2019-10-08  17:26
+   */
+  @PostMapping("register/email")
+  public Result sendRegisterEmail(@RequestParam String username, @RequestParam String email) {
+    log.info("开始执行发送注册邮件服务");
+    try {
+      emailService.sendRegisterEmail(username,email);
+    } catch (UnsupportedEncodingException e) {
+      log.error("发送注册邮件出错！出错信息为:{}",e.getMessage());
+    }
+    return Result.ok();
   }
 }
 

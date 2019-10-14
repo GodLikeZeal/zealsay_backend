@@ -177,7 +177,7 @@ public class EmailService {
         "    <tbody>\n" +
         "    <tr style=\"text-align: center\">\n" +
         "        <td style=\"color:#000\">\n" +
-        "            <img width=\"180px\" height=\"120px\" src=\"https://pan.zealsay.com/logo.png\" alt=\"Coding.net\">\n" +
+        "            <img width=\"180px\" height=\"140px\" src=\"https://pan.zealsay.com/logo.png\" alt=\"Coding.net\">\n" +
         "                    </td>\n" +
         "    </tr>\n" +
         "    <tr>\n" +
