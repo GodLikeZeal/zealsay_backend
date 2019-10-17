@@ -3,13 +3,16 @@ package com.zeal.zealsay.helper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.converter.UserConvertMapper;
 import com.zeal.zealsay.dto.request.UserAddRequest;
+import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.User;
+import com.zeal.zealsay.exception.ServiceException;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,6 +84,25 @@ public class UserHelper {
     return userConvertMapper.toUser(userAddRequest).toBuilder()
         .password(new BCryptPasswordEncoder().encode(userAddRequest.getPassword()))
         .status(UserStatus.NORMAL)
+        .emailConfirm(true)
+        .introduction("这人懒死了，什么都没有写⊙﹏⊙∥∣°")
+        .registerDate(LocalDateTime.now())
+        .build();
+  }
+
+  /**
+   * 自主注册，添加之前通过请求参数转换成user.
+   *
+   * @author zhanglei
+   * @date 2018/11/15  7:46 PM
+   */
+  public User initBeforeAdd(UserRegisterRequest userRegisterRequest) {
+    return userConvertMapper.toUser(userRegisterRequest).toBuilder()
+        .password(new BCryptPasswordEncoder().encode(userRegisterRequest.getPassword()))
+        .status(UserStatus.NORMAL)
+        .emailConfirm(false)
+        .role(Role.USER)
+        .introduction("这人懒死了，什么都没有写⊙﹏⊙∥∣°")
         .registerDate(LocalDateTime.now())
         .build();
   }
