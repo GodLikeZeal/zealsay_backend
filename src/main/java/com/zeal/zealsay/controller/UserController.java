@@ -7,6 +7,7 @@ import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.converter.UserConvertMapper;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserPageRequest;
+import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.User;
@@ -57,6 +58,7 @@ public class UserController {
     return Result
         .of(userConvertMapper.toUserResponse(userService.getById(id)));
   }
+
   /**
    * 查询手机号是否已被使用.
    *
@@ -65,9 +67,9 @@ public class UserController {
    */
   @GetMapping("/use/phone/{phone}")
   @ApiOperation(value = "查询手机号是否已被使用", notes = "查询手机号是否已被使用")
-  public Result<Boolean> getIsInUseByPhone(@PathVariable String phone,@RequestParam(required = false) Long userId ) {
+  public Result<Boolean> getIsInUseByPhone(@PathVariable String phone, @RequestParam(required = false) Long userId) {
     log.info("开始查询手机号码phone为 '{}' 是否被使用", phone);
-    return Result.of(userService.getIsInUseByPhone(phone,userId));
+    return Result.of(userService.getIsInUseByPhone(phone, userId));
   }
 
   /**
@@ -78,10 +80,11 @@ public class UserController {
    */
   @GetMapping("/use/username/{username}")
   @ApiOperation(value = "查询用户名是否已被使用", notes = "查询用户名是否已被使用")
-  public Result<Boolean> getIsInUseByUsername(@PathVariable String username,@RequestParam(required = false) Long userId) {
+  public Result<Boolean> getIsInUseByUsername(@PathVariable String username, @RequestParam(required = false) Long userId) {
     log.info("开始查询用户名username为 '{}' 是否被使用", username);
-    return Result.of(userService.getIsInUseByUsername(username,userId));
+    return Result.of(userService.getIsInUseByUsername(username, userId));
   }
+
   /**
    * 查询邮箱是否已被使用.
    *
@@ -90,9 +93,9 @@ public class UserController {
    */
   @GetMapping("/use/email/{email}")
   @ApiOperation(value = "查询邮箱是否已被使用", notes = "查询邮箱是否已被使用")
-  public Result<Boolean> getIsInUseByEmail(@PathVariable String email,@RequestParam(required = false) Long userId) {
+  public Result<Boolean> getIsInUseByEmail(@PathVariable String email, @RequestParam(required = false) Long userId) {
     log.info("开始查询邮箱email为 '{}' 是否被使用", email);
-    return Result.of(userService.getIsInUseByEmail(email,userId));
+    return Result.of(userService.getIsInUseByEmail(email, userId));
   }
 
 
@@ -111,7 +114,7 @@ public class UserController {
     Page<User> userPage = (Page<User>) userService
         .page(new Page<>(pageNumber, pageSize), userHelper
             .buildVagueQuery(userConvertMapper
-            .toUser(userPageRequest)));
+                .toUser(userPageRequest)));
     return Result
         .of(userHelper.toPageInfo(userPage));
   }
@@ -195,32 +198,45 @@ public class UserController {
   }
 
   /**
-  * 开始校验注册邮件.
-  *
-  * @author  zeal
-  * @date 2019/10/14 22:56
+   * 开始校验注册邮件.
+   *
    * @return
-  */
+   * @author zeal
+   * @date 2019/10/14 22:56
+   */
   @PostMapping("confirm/email")
   public Result<Boolean> conformRegisterEmail(@RequestParam String email, @RequestParam String key) {
-    log.info("开始校验用户{}的注册邮件信息",email);
-    return Result.of(userService.confirmEmailRegister(email,key));
+    log.info("开始校验用户{}的注册邮件信息", email);
+    return Result.of(userService.confirmEmailRegister(email, key));
   }
+
   /**
    * 发送注册邮件.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2019-10-08  17:26
    */
   @PostMapping("register/email")
   public Result sendRegisterEmail(@RequestParam String username, @RequestParam String email) {
     log.info("开始执行发送注册邮件服务");
     try {
-      emailService.sendRegisterEmail(username,email);
+      emailService.sendRegisterEmail(username, email);
     } catch (UnsupportedEncodingException e) {
-      log.error("发送注册邮件出错！出错信息为:{}",e.getMessage());
+      log.error("发送注册邮件出错！出错信息为:{}", e.getMessage());
     }
     return Result.ok();
+  }
+
+  /**
+   * 用户自主注册.
+   *
+   * @author zhanglei
+   * @date 2019-10-08  17:26
+   */
+  @PostMapping("register")
+  public Result register(@RequestBody @Validated UserRegisterRequest userRegisterRequest) {
+    log.info("开始执行用户注册服务");
+    return Result.of(userService.userRegister(userRegisterRequest));
   }
 }
 

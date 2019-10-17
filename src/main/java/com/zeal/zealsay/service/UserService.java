@@ -10,6 +10,7 @@ import com.zeal.zealsay.common.constant.enums.OauthSource;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.UserVo;
 import com.zeal.zealsay.dto.request.UserAddRequest;
+import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.entity.AuthUser;
 import com.zeal.zealsay.entity.Role;
@@ -26,6 +27,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -51,6 +53,8 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
   BlockLogService blockLogService;
   @Autowired
   AuthUserService authUserService;
+  @Autowired
+  EmailService emailService;
 
   /**
    * 通过手机号，用户名或者邮箱查询.
@@ -304,6 +308,28 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
   }
 
   /**
+   * 用户自主注册.
+   *
+   * @author  zhanglei
+   * @date 2019-10-17  17:35
+   */
+  public Boolean userRegister(UserRegisterRequest userRegisterRequest) {
+    //首先校验是否重复
+    checkDuplicate(userRegisterRequest.getUsername(),userRegisterRequest.getPhoneNumber(),userRegisterRequest.getEmail());
+    //初始化参数
+    User user = userHelper.initBeforeAdd(userRegisterRequest);
+    //发送邮件
+    if (Objects.nonNull(userRegisterRequest.getEmail())) {
+      try {
+        emailService.sendRegisterEmail(userRegisterRequest.getUsername(), userRegisterRequest.getEmail());
+      } catch (UnsupportedEncodingException e) {
+        log.error("发送注册邮件异常，异常信息为{}",e.getMessage());
+      }
+    }
+    //保存
+    return save(user);
+  }
+  /**
   * 校验注册邮件.
   *
   * @author  zeal
@@ -333,5 +359,29 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
       throw new ServiceException("注册邮件校验不一致");
     }
     return true;
+  }
+
+  /**
+   * 校验是否重复.
+   *
+   * @author  zhanglei
+   * @date 2019-10-17  17:23
+   */
+  private void checkDuplicate(String username,String phone,String email) {
+    Integer countName = baseMapper.selectCount(new QueryWrapper<User>()
+        .eq("username", username));
+    if (countName > 0) {
+      throw new ServiceException("该用户名已经被使用，无法添加");
+    }
+    Integer countPhone = baseMapper.selectCount(new QueryWrapper<User>()
+        .eq("phone_number", phone));
+    if (countPhone > 0) {
+      throw new ServiceException("该手机号已经注册，无法添加");
+    }
+    Integer countEmail = baseMapper.selectCount(new QueryWrapper<User>()
+        .eq("email", email));
+    if (countEmail > 0) {
+      throw new ServiceException("该邮箱已经注册，无法添加");
+    }
   }
 }

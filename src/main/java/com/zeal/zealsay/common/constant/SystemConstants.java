@@ -16,4 +16,7 @@ public class SystemConstants {
 
   @Value("${web.domain}")
   private String domain;
+
+  @Value("${web.name}")
+  private String name;
 }

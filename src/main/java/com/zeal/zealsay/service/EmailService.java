@@ -68,6 +68,7 @@ public class EmailService {
       helper.setFrom(whoAmI);
       helper.setSubject(subject);
       helper.setText(content, true);
+      log.info("开始发送邮件{}",message);
       mailSender.send(message);
     } catch (MessagingException e) {
       e.printStackTrace();
