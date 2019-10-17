@@ -124,8 +124,8 @@ spring:
       max-request-size: 50MB
   mail:
     host: smtp.mxhichina.com
-    username: admin@zealsay.com
-    password: kanbujian_123
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
     default-encoding: UTF-8
 #    password: ENC(bdIOy20mX8QA2TZwsAF0SdguRKrw3TQo)
 #  data:
@@ -179,8 +179,8 @@ spring:
       max-request-size: 50MB
   mail:
     host: smtp.mxhichina.com
-    username: admin@zealsay.com
-    password: kanbujian_123
+    username: xxx@zealsay.com
+    password: 123
     default-encoding: UTF-8
 
 web:
@@ -224,8 +224,8 @@ spring:
       max-request-size: 50MB
   mail:
     host: smtp.mxhichina.com
-    username: admin@zealsay.com
-    password: kanbujian_123
+    username: xxx@zealsay.com
+    password: 123
     default-encoding: UTF-8
 
 jwt:

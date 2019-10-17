@@ -65,12 +65,13 @@ public class EmailService {
     try {
       MimeMessageHelper helper = new MimeMessageHelper(message, true);
       helper.setTo(to);
-      helper.setFrom(whoAmI);
+      helper.setFrom(whoAmI,systemConstants.getName());
       helper.setSubject(subject);
       helper.setText(content, true);
-      log.info("开始发送邮件{}",message);
       mailSender.send(message);
     } catch (MessagingException e) {
+      e.printStackTrace();
+    } catch (UnsupportedEncodingException e) {
       e.printStackTrace();
     }
 
