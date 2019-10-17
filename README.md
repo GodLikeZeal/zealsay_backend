@@ -1,11 +1,12 @@
-<div style="text-align: center;"><img style="width:120px;height:80px" src="https://pan.zealsay.com/2019091615686216710547.png"  alt="真棒" /> </div>
+<p align="center"><a href="https://vuejs.org" target="_blank" rel="noopener noreferrer"><img width="100" src="https://pan.zealsay.com/2019091615686216710547.png" alt="Vue logo"></a></p>
 
-<div style="text-align: center;">
+
+<p align="center">
 
  ![beta 1.0.0](https://img.shields.io/badge/beta-1.0.0-ff69b4.svg)
 ![spring boot 2.0.4](https://img.shields.io/badge/spring%20boot-2.0.4-green.svg) ![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) ![License MPL-2.0](https://img.shields.io/badge/license-MPL--2.0-green.svg)  [![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) [![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') [![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub')
 
-</div>
+</p>
 
 ------
 ## 开发指南
