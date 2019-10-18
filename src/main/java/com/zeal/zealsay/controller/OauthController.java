@@ -70,17 +70,13 @@ public class OauthController {
    * @return 登录成功后的信息
    */
   @RequestMapping("/{oauthType}/callback")
-  public void login(@PathVariable String oauthType, AuthCallback callback,HttpServletResponse response) {
+  public void login(@PathVariable String oauthType, AuthCallback callback,HttpServletResponse response) throws IOException {
     AuthRequest authRequest = factory.get(getAuthSource(oauthType));
     AuthResponse authResponse = authRequest.login(callback);
     log.info("【response】= {}", JSONUtil.toJsonStr(authRequest));
     //执行登录逻辑
     Map<String,Object> map = oauthLoginFactory.getOauthLogin(getOauthSource(oauthType)).login(authResponse);
-      try {
-          response.sendRedirect((String) map.get("redirect"));
-      } catch (Exception e) {
-          log.error("第三方注册发生异常，异常信息为:{}",e.getMessage());
-      }
+    response.sendRedirect((String) map.get("redirect"));
   }
 
   private AuthSource getAuthSource(String type) {
