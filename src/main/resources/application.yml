@@ -186,7 +186,7 @@ spring:
 
 web:
   name: zealsay说你想说
-  domain: https://blog.zealsay.com/
+  domain: http://localhost:4000/
 
 qiniu:
   Domain: https://pic.zealsay.com/
@@ -200,7 +200,7 @@ justauth:
     github:
       client-id: ENC(2Yn+IGbaGgy7l9lZIIfTHzBoSAT9PRsqUv7BjBJ7RaA=)
       client-secret: ENC(IqKWhEX8c35fmdFtcTtxPpB9OCmHb6KDd12k647+lSM2Wo7Xz6isevkl5PegKvF+FC0Zc7xYebI=)
-      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
+      redirect-uri: http://localhost:8090/api/v1/oauth/github/callback
   cache:
     type: default
 

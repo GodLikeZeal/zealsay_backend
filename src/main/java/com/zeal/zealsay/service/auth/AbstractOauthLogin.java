@@ -11,13 +11,13 @@ import com.zeal.zealsay.service.AuthUserService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +28,7 @@ import java.util.Map;
  * @author zeal
  * @date 2019/9/11 21:04
  */
+@Slf4j
 public abstract class AbstractOauthLogin implements OauthLogin {
 
   @Autowired
@@ -47,19 +48,32 @@ public abstract class AbstractOauthLogin implements OauthLogin {
     //判断是否注册
     //首先保存授权用户记录
     AuthUser user = toAuthUser(authUser);
-    if (!isRegister(authUser.getUuid(), getSource())) {
-      //没有注册，则注册成为用户
-      authUserService.save(user);
-      //检测用户名是否重复
-
+    SecuityUser secuityUser;
+    User u;
+    if (isRegister(authUser.getUuid(), getSource())) {
+      u = userService.getByAuthUser(authUser.getUuid(), getSource());
+      u.setPassword("123");
+      secuityUser = userDetailsService.toSecuityUser(u);
+    } else {
+      log.info("第一次授权，执行注册逻辑");
+      u = toUser(authUser);
       //保存入库
-      userService.save(toUser(authUser));
+      userService.save(u);
+      //没有注册，则注册成为用户
+      user.setUserId(u.getId());
+      authUserService.save(user);
+      //封装登录对象
+      u.setPassword("123");
+      u.setLastPasswordResetDate(new Date());
+      u.setAvatar("");
+      u.setSex(1);
+      u.setAge(18);
+      secuityUser = userDetailsService.toSecuityUser(u);
     }
     //生成token并且登录
-    SecuityUser secuityUser = userDetailsService
-        .toSecuityUser(userService.getByAuthUser(authUser.getUuid(), getSource()));
     String token = jwtTokenUtil.generateToken(secuityUser);
     map.put("redirect", getRedirectUrl() + "?token=" + token);
+    log.info("token为:{}",map);
     return map;
   }
 
