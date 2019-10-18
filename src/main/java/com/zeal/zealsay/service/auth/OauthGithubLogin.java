@@ -14,7 +14,7 @@ public class OauthGithubLogin extends AbstractOauthLogin{
 
     @Override
     protected String getRedirectUrl() {
-        return null;
+        return "/admin/redirect";
     }
 
     @Override

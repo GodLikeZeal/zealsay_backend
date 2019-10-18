@@ -1,9 +1,11 @@
 package com.zeal.zealsay.service;
 
 import com.zeal.zealsay.entity.AuthUser;
+import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.mapper.AuthUserMapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <p>
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
  * @author zhanglei
  * @since 2019-09-12
  */
+@Transactional(rollbackFor = {ServiceException.class, RuntimeException.class, Exception.class})
 @Service
 public class AuthUserService extends ServiceImpl<AuthUserMapper, AuthUser> {
 

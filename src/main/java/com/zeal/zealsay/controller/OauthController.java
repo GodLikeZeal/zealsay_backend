@@ -70,13 +70,13 @@ public class OauthController {
    * @return 登录成功后的信息
    */
   @RequestMapping("/{oauthType}/callback")
-  public AuthResponse login(@PathVariable String oauthType, AuthCallback callback) {
+  public void login(@PathVariable String oauthType, AuthCallback callback,HttpServletResponse response) throws IOException {
     AuthRequest authRequest = factory.get(getAuthSource(oauthType));
-    AuthResponse response = authRequest.login(callback);
-    log.info("【response】= {}", JSONUtil.toJsonStr(response));
+    AuthResponse authResponse = authRequest.login(callback);
+    log.info("【response】= {}", JSONUtil.toJsonStr(authRequest));
     //执行登录逻辑
-    oauthLoginFactory.getOauthLogin(getOauthSource(oauthType)).login(response);
-    return response;
+    Map<String,Object> map = oauthLoginFactory.getOauthLogin(getOauthSource(oauthType)).login(authResponse);
+    response.sendRedirect((String) map.get("redirect"));
   }
 
   private AuthSource getAuthSource(String type) {

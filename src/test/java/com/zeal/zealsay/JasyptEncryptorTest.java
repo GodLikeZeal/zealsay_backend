@@ -16,7 +16,7 @@ public class JasyptEncryptorTest extends ZealsayApplicationTests{
   public void testEncrypt() throws Exception {
     PooledPBEStringEncryptor encryptor = new PooledPBEStringEncryptor();
     SimpleStringPBEConfig config = new SimpleStringPBEConfig();
-    config.setPassword("jinjinyike");
+    config.setPassword("password");
     config.setAlgorithm("PBEWithMD5AndDES");
     config.setKeyObtentionIterations("1000");
     config.setPoolSize("1");
@@ -24,7 +24,7 @@ public class JasyptEncryptorTest extends ZealsayApplicationTests{
     config.setSaltGeneratorClassName("org.jasypt.salt.RandomSaltGenerator");
     config.setStringOutputType("base64");
     encryptor.setConfig(config);
-    String plainText = "7a47188564c74cea621918344b83c3d2b185dcc5";
+    String plainText = "test";
     String encryptedText = encryptor.encrypt(plainText);
     System.out.println(encryptedText);
     Assert.assertNotNull(encryptedText);

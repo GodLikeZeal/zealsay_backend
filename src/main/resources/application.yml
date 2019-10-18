@@ -180,8 +180,8 @@ spring:
       max-request-size: 50MB
   mail:
     host: smtp.mxhichina.com
-    username: xxx@zealsay.com
-    password: 123
+    username: ENC(QANq/D7pvRn7jN4RXMo4RBFrHDk4HyWnHlxKKhcifpU=)
+    password: ENC(qz4bO/hrEYHjPZYb2YuWfDnWD1zADgO/)
     default-encoding: UTF-8
 
 web:
