@@ -22,6 +22,7 @@ import com.zeal.zealsay.mapper.UserMapper;
 import com.zeal.zealsay.util.SimpleEncryptionUtil;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -373,15 +374,19 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
     if (countName > 0) {
       throw new ServiceException("该用户名已经被使用，无法添加");
     }
-    Integer countPhone = baseMapper.selectCount(new QueryWrapper<User>()
-        .eq("phone_number", phone));
-    if (countPhone > 0) {
-      throw new ServiceException("该手机号已经注册，无法添加");
+    if (StringUtils.isNotBlank(phone)) {
+      Integer countPhone = baseMapper.selectCount(new QueryWrapper<User>()
+          .eq("phone_number", phone));
+      if (countPhone > 0) {
+        throw new ServiceException("该手机号已经注册，无法添加");
+      }
     }
-    Integer countEmail = baseMapper.selectCount(new QueryWrapper<User>()
-        .eq("email", email));
-    if (countEmail > 0) {
-      throw new ServiceException("该邮箱已经注册，无法添加");
+    if (StringUtils.isNotBlank(email)) {
+      Integer countEmail = baseMapper.selectCount(new QueryWrapper<User>()
+          .eq("email", email));
+      if (countEmail > 0) {
+        throw new ServiceException("该邮箱已经注册，无法添加");
+      }
     }
   }
 }

@@ -9,6 +9,7 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -141,9 +142,10 @@ public class EmailService {
    * @param username 用户名
    * @param email    邮件
    */
+  @Async
   public void sendRegisterEmail(String username, String email) throws UnsupportedEncodingException {
     String token = buildToken(email);
-    String url = URLEncoder.encode(systemConstants.getDomain()+"admin/register/confirm?token="+token+"&email="+email,"UTF-8");
+    String url = systemConstants.getDomain()+"admin/register/confirm?token="+token+"&email="+email;
     String content = buildRegisterEmail(username, email, url);
     sendHtmlMail(email, "账号注册激活邮件", content);
   }
@@ -204,7 +206,7 @@ public class EmailService {
         "                    用户名称：" + username + "\n" +
         "                </div>\n" +
         "                <div style=\"font-size: 14px;line-height: 14px; padding: 10px 20px 20px 20px;\">\n" +
-        "                    登录账户：<A data-auto-link=1 href=\"mailto:" + email + "\">" + email + "</A>            </div>\n" +
+        "                    登录邮箱：<A data-auto-link=1 href=\"mailto:" + email + "\">" + email + "</A>            </div>\n" +
         "            </div>\n" +
         "        </td>\n" +
         "    </tr>\n" +
