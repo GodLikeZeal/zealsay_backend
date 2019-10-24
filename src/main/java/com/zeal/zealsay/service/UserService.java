@@ -19,10 +19,10 @@ import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.UserHelper;
 import com.zeal.zealsay.mapper.RoleMapper;
 import com.zeal.zealsay.mapper.UserMapper;
-import com.zeal.zealsay.util.SimpleEncryptionUtil;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,6 +56,8 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
   AuthUserService authUserService;
   @Autowired
   EmailService emailService;
+  @Autowired
+  StringEncryptor stringEncryptor;
 
   /**
    * 通过手机号，用户名或者邮箱查询.
@@ -316,17 +318,20 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
    */
   public Boolean userRegister(UserRegisterRequest userRegisterRequest) {
     //首先校验是否重复
+    log.info("校验是否重复");
     checkDuplicate(userRegisterRequest.getUsername(),userRegisterRequest.getPhoneNumber(),userRegisterRequest.getEmail());
     //初始化参数
     User user = userHelper.initBeforeAdd(userRegisterRequest);
     //发送邮件
     if (Objects.nonNull(userRegisterRequest.getEmail())) {
+      log.info("开始发送注册邮件");
       try {
         emailService.sendRegisterEmail(userRegisterRequest.getUsername(), userRegisterRequest.getEmail());
       } catch (UnsupportedEncodingException e) {
         log.error("发送注册邮件异常，异常信息为{}",e.getMessage());
       }
     }
+    log.info("开始保存用户信息");
     //保存
     return save(user);
   }
@@ -338,7 +343,7 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
   */
   public Boolean confirmEmailRegister(String email,String key) {
     //解析key
-    String value = SimpleEncryptionUtil.dencrypt(key);
+    String value = stringEncryptor.decrypt(key);
     String values[] = value.split(":");
     if (values.length!=2) {
       log.error("注册邮件为:{}的key:{}不合法",email,key);

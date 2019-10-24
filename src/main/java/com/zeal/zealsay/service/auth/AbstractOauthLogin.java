@@ -7,20 +7,19 @@ import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.entity.AuthUser;
 import com.zeal.zealsay.entity.User;
+import com.zeal.zealsay.helper.UserHelper;
 import com.zeal.zealsay.service.AuthUserService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 登录业务抽象类.
@@ -39,6 +38,8 @@ public abstract class AbstractOauthLogin implements OauthLogin {
   UserService userService;
   @Autowired
   JwtTokenUtil jwtTokenUtil;
+  @Autowired
+  UserHelper userHelper;
 
   @Override
   public Map<String, Object> login(AuthResponse authResponse) {
@@ -73,7 +74,7 @@ public abstract class AbstractOauthLogin implements OauthLogin {
     //生成token并且登录
     String token = jwtTokenUtil.generateToken(secuityUser);
     map.put("redirect", getRedirectUrl() + "?token=" + token);
-    log.info("token为:{}",map);
+    log.info("token为:{}", map);
     return map;
   }
 
@@ -125,9 +126,9 @@ public abstract class AbstractOauthLogin implements OauthLogin {
    */
   private User toUser(me.zhyd.oauth.model.AuthUser authUser) {
     return User.builder()
-        .username(checkAndSetUsername(authUser.getUsername(),1))
+        .username(checkAndSetUsername(authUser.getUsername(), 1))
         .name(authUser.getNickname())
-        .avatar(authUser.getAvatar())
+        .avatar(StringUtils.isNotBlank(authUser.getAvatar()) ? authUser.getAvatar() : userHelper.gennerateAvatar())
         .address(authUser.getLocation())
         .status(UserStatus.NORMAL)
         .emailConfirm(false)
@@ -150,4 +151,6 @@ public abstract class AbstractOauthLogin implements OauthLogin {
       return username;
     }
   }
+
+
 }
