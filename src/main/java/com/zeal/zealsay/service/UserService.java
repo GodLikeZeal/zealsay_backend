@@ -4,10 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.zeal.zealsay.common.constant.enums.BlockAction;
-import com.zeal.zealsay.common.constant.enums.BlockType;
-import com.zeal.zealsay.common.constant.enums.OauthSource;
-import com.zeal.zealsay.common.constant.enums.UserStatus;
+import com.zeal.zealsay.common.constant.enums.*;
 import com.zeal.zealsay.common.entity.UserVo;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserRegisterRequest;
@@ -357,14 +354,17 @@ public class UserService extends ServiceImpl<UserMapper, User> implements IServi
       throw new ServiceException("key无效");
     }
     //校验是否过期
-    if (ckTime> System.currentTimeMillis()) {
+    if (ckTime< System.currentTimeMillis()) {
       throw new ServiceException("注册邮件已过期");
     }
     //校验邮件是否相同
     if (!email.equals(ckEmail)) {
       throw new ServiceException("注册邮件校验不一致");
     }
-    return true;
+    //更新状态
+    return update(new User(),new UpdateWrapper<User>()
+        .set("email_confirm", YesOrNo.YES.getDescription())
+        .eq("email",email));
   }
 
   /**

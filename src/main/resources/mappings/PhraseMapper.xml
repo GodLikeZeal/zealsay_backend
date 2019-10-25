@@ -2,4 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zeal.zealsay.mapper.PhraseMapper">
 
+	<select id="randomPhrase" resultType="com.zeal.zealsay.entity.Phrase">
+		SELECT
+			*
+		FROM
+			phrase
+		WHERE
+			id >= ( SELECT floor( RAND( ) * ( SELECT MAX( id ) FROM phrase ) ) )
+		ORDER BY
+			id
+			LIMIT 1;
+	</select>
 </mapper>

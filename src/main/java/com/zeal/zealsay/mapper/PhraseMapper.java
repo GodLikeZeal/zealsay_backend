@@ -13,4 +13,11 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  */
 public interface PhraseMapper extends BaseMapper<Phrase> {
 
+  /**
+   * 随机获取一条.
+   *
+   * @author  zhanglei
+   * @date 2019-10-25  18:18
+   */
+  Phrase randomPhrase();
 }

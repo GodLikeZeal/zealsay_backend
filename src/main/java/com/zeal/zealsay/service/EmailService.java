@@ -16,6 +16,7 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 /**
  * 邮箱发送服务.
@@ -145,8 +146,8 @@ public class EmailService {
    */
   @Async
   public void sendRegisterEmail(String username, String email) throws UnsupportedEncodingException {
-    String token = buildToken(email);
-    String url = systemConstants.getDomain()+"admin/register/confirm?token="+token+"&email="+email;
+    String token = URLEncoder.encode(buildToken(email),"utf-8");
+    String url = systemConstants.getDomain()+"admin/confirm?token="+token+"&email="+email;
     String content = buildRegisterEmail(username, email, url);
     sendHtmlMail(email, "账号注册激活邮件", content);
   }
