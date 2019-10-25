@@ -3,8 +3,8 @@
 
 <p align="center">
 
- ![beta 1.0.0](https://img.shields.io/badge/beta-1.0.0-ff69b4.svg)
-![spring boot 2.0.4](https://img.shields.io/badge/spring%20boot-2.0.4-green.svg) ![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) ![License MPL-2.0](https://img.shields.io/badge/license-MPL--2.0-green.svg)  [![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) [![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') [![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub')
+ ![java 8](https://img.shields.io/badge/java-8-ff69b4.svg)
+![spring boot 2.1.6](https://img.shields.io/badge/springboot-2.1.6-green.svg) ![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) ![License MPL-2.0](https://img.shields.io/badge/license-MPL--2.0-green.svg)  [![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) [![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') [![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') ![GitHub All Releases](https://img.shields.io/github/downloads/GodLikeZeal/zealsay_backend/total)
 
 </p>
 
