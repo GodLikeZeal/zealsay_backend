@@ -6,11 +6,11 @@ import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
+import com.zeal.zealsay.common.constant.SystemConstants;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +18,6 @@ import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 import static org.apache.http.entity.ContentType.*;
 
@@ -38,13 +37,10 @@ public class QiniuService implements InitializingBean {
   BucketManager bucketManager;
   @Autowired
   Auth auth;
+  @Autowired
+  SystemConstants systemConstants;
 
 
-  @Value("${qiniu.Bucket}")
-  private String bucket;
-
-  @Value("${qiniu.Domain}")
-  private String domain;
 
   /**
    * 定义七牛云上传的相关策略.
@@ -62,8 +58,8 @@ public class QiniuService implements InitializingBean {
       retry++;
     }
     Ret ret = response.jsonToObject(Ret.class);
-    log.info("文件上传成功,key={},文件url={}",ret.key,domain+key);
-    return domain+ret.key;
+    log.info("文件上传成功,key={},文件url={}",ret.key,systemConstants.getQiniuDomain()+key);
+    return systemConstants.getQiniuDomain()+ret.key;
   }
 
   /**
@@ -80,8 +76,8 @@ public class QiniuService implements InitializingBean {
       retry++;
     }
     Ret ret = response.jsonToObject(Ret.class);
-    log.info("文件上传成功,key={},文件url={}",ret.key,domain+key);
-    return domain+ret.key;
+    log.info("文件上传成功,key={},文件url={}",ret.key,systemConstants.getQiniuDomain()+key);
+    return systemConstants.getQiniuDomain()+ret.key;
   }
 
   /**
@@ -91,10 +87,10 @@ public class QiniuService implements InitializingBean {
    * @date 2019-03-15  15:59
    */
   public Response delete(String key) throws QiniuException {
-    Response response = bucketManager.delete(this.bucket, key);
+    Response response = bucketManager.delete(systemConstants.getQiniuBucket(), key);
     int retry = 0;
     while (response.needRetry() && retry++ < 3) {
-      response = bucketManager.delete(bucket, key);
+      response = bucketManager.delete(systemConstants.getQiniuBucket(), key);
     }
     return response;
   }
@@ -156,7 +152,7 @@ public class QiniuService implements InitializingBean {
    * @date 2019-03-15  15:59
    */
   private String getUploadToken() {
-    return this.auth.uploadToken(bucket, null, 3600, putPolicy);
+    return this.auth.uploadToken(systemConstants.getQiniuBucket(), null, 3600, putPolicy);
   }
 
   class Ret {

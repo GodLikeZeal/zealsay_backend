@@ -19,4 +19,10 @@ public class SystemConstants {
 
   @Value("${web.name}")
   private String name;
+
+  @Value("${qiniu.Bucket}")
+  private String qiniuBucket;
+
+  @Value("${qiniu.Domain}")
+  private String qiniuDomain;
 }
