@@ -7,6 +7,7 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Objects;
 
 import static org.apache.http.entity.ContentType.*;
 
@@ -109,9 +111,12 @@ public class QiniuService implements InitializingBean {
   * @author  zeal
   * @date 2019/3/17 0:33
   */
-  public String createFileName(MultipartFile file) {
+  public String createFileName(MultipartFile file,String type) {
     LocalDateTime now= LocalDateTime.now();
     StringBuffer sb = new StringBuffer();
+    if (StringUtils.isNotBlank(type)) {
+      sb.append(type + "/");
+    }
     sb.append(now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")))
             .append(now.getNano());
     //设置后缀
@@ -132,6 +137,16 @@ public class QiniuService implements InitializingBean {
       sb.append(".webp");
     }
     return sb.toString();
+  }
+
+  /**
+   * 生成文件名称.
+   *
+   * @author  zhanglei
+   * @date 2019-10-24  14:33
+   */
+  public String createFileName(MultipartFile file) {
+    return this.createFileName(file,null);
   }
 
   /**

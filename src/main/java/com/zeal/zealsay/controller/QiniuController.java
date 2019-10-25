@@ -42,6 +42,28 @@ public class QiniuController {
    * @author zhanglei
    * @date 2018/9/7  下午6:00
    */
+  @PostMapping("/upload/{type}")
+  @ApiOperation(value = "上传文件", notes = "上传文件")
+  public Result<String> upload(@RequestParam MultipartFile file,@PathVariable String type) {
+    if (file.isEmpty()) {
+      throw new ServiceException("上传文件失败");
+    }
+    try(InputStream in = file.getInputStream()) {
+      log.info("开始上传文件到七牛云");
+      return Result
+          .of(qiniuService.uploadFile(in,qiniuService.createFileName(file,type)));
+    } catch (IOException e) {
+      log.error("上传文件到七牛云失败!");
+      throw new ServiceException("上传文件失败");
+    }
+  }
+
+  /**
+   * 上传图片.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
   @PostMapping("/upload")
   @ApiOperation(value = "上传文件", notes = "上传文件")
   public Result<String> upload(@RequestParam MultipartFile file) {
@@ -56,7 +78,6 @@ public class QiniuController {
       log.error("上传文件到七牛云失败!");
       throw new ServiceException("上传文件失败");
     }
-
   }
 
   /**

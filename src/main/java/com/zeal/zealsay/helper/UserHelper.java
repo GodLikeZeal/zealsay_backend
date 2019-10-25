@@ -22,6 +22,7 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -100,6 +101,7 @@ public class UserHelper {
     return userConvertMapper.toUser(userRegisterRequest).toBuilder()
         .password(new BCryptPasswordEncoder().encode(userRegisterRequest.getPassword()))
         .status(UserStatus.NORMAL)
+        .avatar(gennerateAvatar())
         .emailConfirm(false)
         .role(Role.USER)
         .introduction("这人懒死了，什么都没有写⊙﹏⊙∥∣°")
@@ -155,5 +157,21 @@ public class UserHelper {
       queryWrapper.like("sex", user.getSex());
     }
     return queryWrapper;
+  }
+
+  /**
+   * 生成头像.
+   *
+   * @author zhanglei
+   * @date 2019-10-24  16:03
+   */
+  public String gennerateAvatar() {
+    StringBuffer sb = new StringBuffer();
+    Random random = new Random();
+    Integer i = random.nextInt(10) * 12 + 1;
+    sb.append("avatar/");
+    sb.append(i);
+    sb.append(".jpg");
+    return sb.toString();
   }
 }

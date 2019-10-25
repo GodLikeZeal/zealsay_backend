@@ -1,8 +1,8 @@
 package com.zeal.zealsay.service;
 
 import com.zeal.zealsay.common.constant.SystemConstants;
-import com.zeal.zealsay.util.SimpleEncryptionUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.jasypt.encryption.StringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -16,7 +16,6 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 
 /**
  * 邮箱发送服务.
@@ -35,6 +34,8 @@ public class EmailService {
   private JavaMailSender mailSender;
   @Autowired
   SystemConstants systemConstants;
+  @Autowired
+  StringEncryptor stringEncryptor;
 
   private static final int TIMELIMIT = 1000 * 60 * 60 * 24; //激活邮件过期时间24小时
 
@@ -218,7 +219,7 @@ public class EmailService {
         "    <tr>\n" +
         "        <td style=\"height: 50px;color: white;\" valign=\"middle\">\n" +
         "            <div style=\"padding:10px 20px;border-radius:5px;background: rgb(64, 69, 77);margin-left:20px;margin-right:20px\">\n" +
-        "                <a style=\"word-break:break-all;line-height:23px;color:white;font-size:15px;text-decoration:none;\" href=\"" + url + "\">\n" +
+        "                <a style=\"word-break:break-all;line-height:23px;color:white;font-size:15px;\" href=\"" + url + "\">\n" +
         "                    " + url + "\n" +
         "                </a>\n" +
         "            </div>\n" +
@@ -228,7 +229,7 @@ public class EmailService {
         "        <td style=\"padding: 20px 20px 20px 20px;font-size: 12px;\">\n" +
         "            <p style=\"margin: 8px 0;\">如果点击以上链接无效，请尝试将链接复制到浏览器地址栏访问。</p>\n" +
         "            <p style=\"margin: 8px 0;\">假如您没有进行注册操作，请忽略此邮件，不要点击上面链接。</p>\n" +
-        "            <p style=\"margin: 8px 0;\">注册链接只在24小时内有效，若您有任何疑问，请随时联系我们：<a style=\"color:#5098E8;text-decoration:none\" href=\"admin@zealsay.com\">admin@zealsay.com</a></p>\n" +
+        "            <p style=\"margin: 8px 0;\">注册链接只在24小时内有效，若您有任何疑问，请随时联系我们：<A data-auto-link=1 href=\"mailto:admin@zealsay.com\">admin@zealsay.com</A></p>\n" +
         "        </td>\n" +
         "    </tr>\n" +
         "    <tr>\n" +
@@ -284,7 +285,7 @@ public class EmailService {
    * @param email 邮箱
    * @return
    */
-  private String buildToken(String email) {
+  public String buildToken(String email) {
     //当前时间戳
     Long curTime = System.currentTimeMillis();
     //激活的有效时间
@@ -292,7 +293,7 @@ public class EmailService {
     //激活码--用于激活邮箱账号
     String token = email + ":" + activateTime;
 
-    return SimpleEncryptionUtil.encrypt(token);
+    return stringEncryptor.encrypt(token);
   }
 
 }
