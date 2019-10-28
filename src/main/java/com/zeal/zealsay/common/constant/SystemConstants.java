@@ -20,6 +20,9 @@ public class SystemConstants {
   @Value("${web.name}")
   private String name;
 
+  @Value("${web.default.password}")
+  private String defaultPassword;
+
   @Value("${qiniu.Bucket}")
   private String qiniuBucket;
 

@@ -1,6 +1,7 @@
 package com.zeal.zealsay.service.auth;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.zeal.zealsay.common.constant.SystemConstants;
 import com.zeal.zealsay.common.constant.enums.OauthSource;
 import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
@@ -18,6 +19,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -40,6 +43,8 @@ public abstract class AbstractOauthLogin implements OauthLogin {
   JwtTokenUtil jwtTokenUtil;
   @Autowired
   UserHelper userHelper;
+  @Autowired
+  SystemConstants systemConstants;
 
   @Override
   public Map<String, Object> login(AuthResponse authResponse) {
@@ -53,7 +58,6 @@ public abstract class AbstractOauthLogin implements OauthLogin {
     User u;
     if (isRegister(authUser.getUuid(), getSource())) {
       u = userService.getByAuthUser(authUser.getUuid(), getSource());
-      u.setPassword("123");
       secuityUser = userDetailsService.toSecuityUser(u);
     } else {
       log.info("第一次授权，执行注册逻辑");
@@ -64,7 +68,6 @@ public abstract class AbstractOauthLogin implements OauthLogin {
       user.setUserId(u.getId());
       authUserService.save(user);
       //封装登录对象
-      u.setPassword("123");
       u.setLastPasswordResetDate(new Date());
       u.setAvatar("");
       u.setSex(1);
@@ -72,7 +75,12 @@ public abstract class AbstractOauthLogin implements OauthLogin {
       secuityUser = userDetailsService.toSecuityUser(u);
     }
     //生成token并且登录
-    String token = jwtTokenUtil.generateToken(secuityUser);
+    String token = null;
+    try {
+      token = URLEncoder.encode(jwtTokenUtil.generateToken(secuityUser),"utf-8");
+    } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    }
     map.put("redirect", getRedirectUrl() + "?token=" + token);
     log.info("token为:{}", map);
     return map;
@@ -127,6 +135,7 @@ public abstract class AbstractOauthLogin implements OauthLogin {
   private User toUser(me.zhyd.oauth.model.AuthUser authUser) {
     return User.builder()
         .username(checkAndSetUsername(authUser.getUsername(), 1))
+        .password(systemConstants.getDefaultPassword())
         .name(authUser.getNickname())
         .avatar(StringUtils.isNotBlank(authUser.getAvatar()) ? authUser.getAvatar() : userHelper.gennerateAvatar())
         .address(authUser.getLocation())
