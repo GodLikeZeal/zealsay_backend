@@ -19,7 +19,7 @@ public class OauthGithubLogin extends AbstractOauthLogin{
 
     @Override
     protected String getRedirectUrl() {
-        return systemConstants.getDomain()+"/admin/redirect";
+        return systemConstants.getDomain()+"admin/redirect";
     }
 
     @Override

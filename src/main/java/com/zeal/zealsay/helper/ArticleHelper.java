@@ -68,6 +68,8 @@ public class ArticleHelper {
     Article article = articleConvertMapper.toArticle(articleAddRequest);
     article.setCreateDate(LocalDateTime.now());
     article.setAuthorId(userDetailService.getCurrentUser().getUserId());
+    article.setReadNum(0);
+    article.setLikeNum(0);
     article.setIsDel(false);
     return article;
   }

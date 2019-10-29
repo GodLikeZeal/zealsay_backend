@@ -181,5 +181,18 @@ public class ArticleController {
     log.info("开始批量删除id在 '{}' 的文章信息", ids.toString());
     return Result.of(articleService.removeByIds(ids));
   }
+
+  /**
+   * 根据id阅读文章.
+   *
+   * @author  zhanglei
+   * @date 2018/11/23  5:47 PM
+   */
+  @GetMapping("/read/{id}")
+  @ApiOperation(value = "根据id阅读文章",notes = "根据id阅读文章")
+  public Result<Boolean> readArticle(@PathVariable Long id) {
+    log.info("id为 '{}' 的文章信息阅读量加1", id);
+    return Result.of(articleService.readArticle(id));
+  }
 }
 

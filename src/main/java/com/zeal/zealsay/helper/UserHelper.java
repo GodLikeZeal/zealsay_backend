@@ -3,6 +3,7 @@ package com.zeal.zealsay.helper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zeal.zealsay.common.constant.SystemConstants;
 import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.PageInfo;
@@ -12,7 +13,6 @@ import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.User;
-import com.zeal.zealsay.exception.ServiceException;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +36,8 @@ public class UserHelper {
 
   @Autowired
   UserConvertMapper userConvertMapper;
+  @Autowired
+  SystemConstants systemConstants;
 
   /**
    * 更新之前通过请求参数转换成user.
@@ -169,6 +171,7 @@ public class UserHelper {
     StringBuffer sb = new StringBuffer();
     Random random = new Random();
     Integer i = random.nextInt(10) * 12 + 1;
+    sb.append(systemConstants.getQiniuDomain());
     sb.append("avatar/");
     sb.append(i);
     sb.append(".jpg");

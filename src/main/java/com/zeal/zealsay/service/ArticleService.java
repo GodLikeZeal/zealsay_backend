@@ -3,7 +3,10 @@ package com.zeal.zealsay.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zeal.zealsay.common.constant.enums.*;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zeal.zealsay.common.constant.enums.ArticleStatus;
+import com.zeal.zealsay.common.constant.enums.BlockAction;
+import com.zeal.zealsay.common.constant.enums.BlockType;
 import com.zeal.zealsay.converter.ArticleConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleAddRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
@@ -11,9 +14,9 @@ import com.zeal.zealsay.entity.Article;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.ArticleHelper;
 import com.zeal.zealsay.mapper.ArticleMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,7 @@ import java.util.Objects;
  * @author zhanglei
  * @since 2018-11-28
  */
+@Slf4j
 @Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
 public class ArticleService extends ServiceImpl<ArticleMapper, Article> implements IService<Article> {
@@ -134,5 +138,23 @@ public class ArticleService extends ServiceImpl<ArticleMapper, Article> implemen
     update(Article.builder().status(ArticleStatus.DOWN).build(), new UpdateWrapper<Article>()
         .in("id", ids));
     return true;
+  }
+
+  /**
+  * 阅读数增加.
+  *
+  * @author  zeal
+  * @date 2019/10/29 23:05
+  */
+  public Boolean readArticle(Long articleId) {
+    Article article = getById(articleId);
+    if (Objects.isNull(article)) {
+      log.warn("未能找到id为{}的文章信息",articleId);
+      return false;
+    }
+    return updateById(Article.builder()
+            .id(articleId)
+            .readNum(article.getReadNum()+1)
+            .build());
   }
 }
