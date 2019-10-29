@@ -1,16 +1,14 @@
 package com.zeal.zealsay.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.zeal.zealsay.common.constant.enums.ArticleStatus;
 import com.zeal.zealsay.common.constant.enums.Openness;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -79,6 +77,16 @@ public class Article {
      * 标签.
      */
     private String label;
+
+    /**
+     * 阅读数.
+     */
+    private Integer readNum;
+
+    /**
+     * 点赞数.
+     */
+    private Integer likeNum;
 
     /**
      * 分类目录id.

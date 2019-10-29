@@ -1,13 +1,14 @@
 package com.zeal.zealsay.exception;
 
 import com.zeal.zealsay.common.entity.Result;
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import static com.zeal.zealsay.common.constant.enums.ResultCode.*;
@@ -32,6 +33,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(value = ServiceException.class)
     @ResponseStatus(value = HttpStatus.OK)     //服务异常
     public Result handleServiceException(Exception e, WebRequest request, ServiceException exception){
+        e.printStackTrace();
         log.error("捕获异常 code : {},异常信息为 {}",exception.getCode(),e.getMessage());
         return Result.builder()
             .code(exception.getCode())
