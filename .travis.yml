@@ -32,7 +32,7 @@ after_success:
 
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD" registry.cn-qingdao.aliyuncs.com
   - docker build --build-arg key="$ENCRYP_PASSWORD" --build-arg java_file=./target/zealsay-1.0.0.jar -t registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_backend:latest .
-  - docker push registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_backend:$TRAVIS_BRANCH;
+  - docker push registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_backend:latest;
   - sshpass -p $VPS_PASSWORD ssh -o stricthostkeychecking=no travis@$HOST "/home/zeal/docker/zealsay/deploy.sh"
 
 notifications:
