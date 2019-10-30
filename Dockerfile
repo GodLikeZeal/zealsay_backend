@@ -1,5 +1,5 @@
 FROM maven:3.5.4-alpine
-VOLUME /tmp
+#VOLUME /tmp
 ARG key
 ARG mode
 ARG java_file
