@@ -187,6 +187,7 @@ public class ArticleHelper {
             .username("佚名")
             .build());
     articleResponse.setAuthorName(user.getUsername());
+    articleResponse.setAuthorAvatar(user.getAvatar());
     return articleResponse;
   }
 }
