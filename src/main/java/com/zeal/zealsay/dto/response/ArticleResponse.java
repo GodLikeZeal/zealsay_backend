@@ -74,6 +74,9 @@ public class ArticleResponse {
   @ApiModelProperty(value = "作者名称",example = "张三")
   private String authorName;
 
+  @ApiModelProperty(value = "作者头像")
+  private String authorAvatar;
+
   @ApiModelProperty(value = "创建时间")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
