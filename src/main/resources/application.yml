@@ -81,13 +81,14 @@ ignore:
       - /api/v1/article/c/page
       - /api/v1/article/category
       - /api/v1/article/label/page
+      - /api/v1/article/read/*
       - /api/v1/article/*
       - /api/v1/friend/link/page
-      - /api/v1/user/use/username/**
-      - /api/v1/user/use/email/**
+      - /api/v1/user/use/username/*
+      - /api/v1/user/use/email/*
       - /api/v1/user/register/email
       - /api/v1/user/confirm/email
-      - /api/v1/user/register/**
+      - /api/v1/user/register
       - /**/*.css
       - /social
       - /signin
