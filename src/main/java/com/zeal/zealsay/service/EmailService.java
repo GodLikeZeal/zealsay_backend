@@ -147,7 +147,7 @@ public class EmailService {
   @Async
   public void sendRegisterEmail(String username, String email) throws UnsupportedEncodingException {
     String token = URLEncoder.encode(buildToken(email),"utf-8");
-    String url = systemConstants.getDomain()+"admin/confirm?token="+token+"&email="+email;
+    String url = systemConstants.getDomain()+"confirm?token="+token+"&email="+email;
     String content = buildRegisterEmail(username, email, url);
     sendHtmlMail(email, "账号注册激活邮件", content);
   }
@@ -234,7 +234,7 @@ public class EmailService {
         "        </td>\n" +
         "    </tr>\n" +
         "    <tr>\n" +
-        "        <td style=\"font-size: 14px; color: #323A45; padding: 20px 0;\">\n" +
+        "        <td style=\"font-size: 14px; color: #323A45; padding: 20px 0;text-align: right;\">\n" +
         "            zeal\n" +
         "        </td>\n" +
         "    </tr>\n" +
