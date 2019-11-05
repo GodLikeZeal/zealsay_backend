@@ -1,15 +1,12 @@
 package com.zeal.zealsay.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.zeal.zealsay.converter.ArticleLabelConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleLabelAddRequest;
 import com.zeal.zealsay.dto.request.ArticleLabelUpdateRequest;
-import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
 import com.zeal.zealsay.entity.ArticleLabel;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.ArticleLabelHelper;
 import com.zeal.zealsay.mapper.ArticleLabelMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -25,7 +22,7 @@ import java.util.List;
  * @since 2019-05-16
  */
 @Service
-public class ArticleLabelService extends ServiceImpl<ArticleLabelMapper, ArticleLabel> {
+public class ArticleLabelService extends AbstractService<ArticleLabelMapper, ArticleLabel> {
 
     @Autowired
     ArticleLabelHelper articleLabelHelper;

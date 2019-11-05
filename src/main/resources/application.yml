@@ -41,67 +41,64 @@ mybatis-plus:
   # 如果是放在resource目录 classpath:/mappings/*Mapper.xml
   mapper-locations: classpath:/mappings/*Mapper.xml
   #实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: cn.pilipa.notification.entity
+  type-aliases-package: cn.pilipa.notification.entity
   global-config:
     banner: false
-    #主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
-    id-type: 3
-    #字段策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
-    field-strategy: 2
-    #驼峰下划线转换
-    db-column-underline: true
-    #mp2.3+ 全局表前缀 mp_
-    #table-prefix: mp_
-    #刷新mapper 调试神器
-    refresh-mapper: true
-    #数据库大写下划线转换
-    #capital-mode: true
-    # Sequence序列接口实现类配置
-    key-generator: com.baomidou.mybatisplus.incrementer.OracleKeyGenerator
-    #逻辑删除配置（下面3个配置）
-    logic-delete-value: 1
-    logic-not-delete-value: 0
-    # sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
-    #自定义填充策略接口实现
-    # meta-object-handler: com.baomidou.springboot.MyMetaObjectHandler
+    db-config:
+      #驼峰下划线转换
+      table-underline: true
+      #mp2.3+ 全局表前缀 mp_
+      #table-prefix: mp_
+      #是否开启大写命名，默认不开启
+      #capital-mode: true
+      #逻辑删除配置（下面3个配置）
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      # sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+      #字段验证策略之 insert 默认NOT_NULL
+      insert-strategy: default
+      #字段验证策略之 update 默认NOT_NULL
+      update-strategy: default
+      #字段验证策略之 select 默认NOT_NULL
+      select-strategy: default
   configuration:
     #配置返回数据库(column下划线命名&&返回java实体是驼峰命名)，自动匹配无需as（没开启这个，SQL需要写as： select user_id as userId）
     map-underscore-to-camel-case: true
-    cache-enabled: false
+    cache-enabled: true
     #配置JdbcTypeForNull, oracle数据库必须配置
     jdbc-type-for-null: 'null'
 
 ignore:
   urls:
-      - /api/v1/authentication/login
-      - /api/v1/authentication/require
-      - /api/v1/authentication/logout
-      - /api/v1/oauth/**
-      - /api/v1/service/hitokoto
-      - /api/v1/article/c/page
-      - /api/v1/article/category
-      - /api/v1/article/label/page
-      - /api/v1/article/read/*
-      - /api/v1/article/*
-      - /api/v1/friend/link/page
-      - /api/v1/user/use/username/*
-      - /api/v1/user/use/email/*
-      - /api/v1/user/register/email
-      - /api/v1/user/confirm/email
-      - /api/v1/user/register
-      - /**/*.css
-      - /social
-      - /signin
-      - /signup
-      - /info
-      - /health
-      - /metrics/**
-      - /loggers/**
-      - /mobile/token
-      - /v2/**
-      - /webjars/**
-      - /swagger-resources
-      - /doc.html
+    - /api/v1/authentication/login
+    - /api/v1/authentication/require
+    - /api/v1/authentication/logout
+    - /api/v1/oauth/**
+    - /api/v1/service/hitokoto
+    - /api/v1/article/c/page
+    - /api/v1/article/category
+    - /api/v1/article/label/page
+    - /api/v1/article/read/*
+    - /api/v1/article/*
+    - /api/v1/friend/link/page
+    - /api/v1/user/use/username/*
+    - /api/v1/user/use/email/*
+    - /api/v1/user/register/email
+    - /api/v1/user/confirm/email
+    - /api/v1/user/register
+    - /**/*.css
+    - /social
+    - /signin
+    - /signup
+    - /info
+    - /health
+    - /metrics/**
+    - /loggers/**
+    - /mobile/token
+    - /v2/**
+    - /webjars/**
+    - /swagger-resources
+    - /doc.html
 
 ---
 spring:
@@ -165,7 +162,7 @@ spring:
   redis:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
     port: 6379
-#    password: ENC(y/Q+pGasSBO27pTJlSNjkVtTgoENZAqK)
+  #    password: ENC(y/Q+pGasSBO27pTJlSNjkVtTgoENZAqK)
   rabbitmq:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
   datasource:
@@ -215,7 +212,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-#    password: ENC(cax30dcK4hlSyUXvCtTMTDhkczbSTduh)
+  #    password: ENC(cax30dcK4hlSyUXvCtTMTDhkczbSTduh)
   rabbitmq:
     host: 127.0.0.1
   datasource:

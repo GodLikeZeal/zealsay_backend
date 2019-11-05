@@ -3,7 +3,6 @@ package com.zeal.zealsay.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zeal.zealsay.common.constant.enums.ArticleStatus;
 import com.zeal.zealsay.common.constant.enums.BlockAction;
 import com.zeal.zealsay.common.constant.enums.BlockType;
@@ -36,7 +35,7 @@ import java.util.Objects;
 @Slf4j
 @Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
-public class ArticleService extends ServiceImpl<ArticleMapper, Article> implements IService<Article> {
+public class ArticleService extends AbstractService<ArticleMapper, Article> implements IService<Article> {
 
   @Autowired
   ArticleConvertMapper articleConvertMapper;

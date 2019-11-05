@@ -1,6 +1,8 @@
 package com.zeal.zealsay.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import com.baomidou.mybatisplus.annotation.TableId;
 
@@ -21,7 +23,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Phrase {
+public class Phrase implements Serializable {
 
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;

@@ -2,6 +2,8 @@ package com.zeal.zealsay.entity;
 
 
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -22,7 +24,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class FriendLink {
+public class FriendLink implements Serializable {
 
     /**
      * 主键.

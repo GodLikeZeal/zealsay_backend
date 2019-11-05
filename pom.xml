@@ -28,7 +28,7 @@
         <jwt.version>0.9.0</jwt.version>
         <fastjson.version>1.2.60</fastjson.version>
         <commons-io.version>2.6</commons-io.version>
-        <mybatis-plus.version>3.0.1</mybatis-plus.version>
+        <mybatis-plus.version>3.2.0</mybatis-plus.version>
         <swagger2.version>2.9.2</swagger2.version>
         <swagger-ui.version>1.9.0</swagger-ui.version>
         <jasypt.version>2.1.0</jasypt.version>
@@ -152,6 +152,12 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
+        <!--mybatis plus 代码自动生成-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-generator</artifactId>
+            <version>${mybatis-plus.version}</version>
+        </dependency>
         <!-- 阿里json工具包 -->
         <dependency>
             <groupId>com.alibaba</groupId>
@@ -192,34 +198,6 @@
             <artifactId>commons-io</artifactId>
             <version>${commons-io.version}</version>
         </dependency>
-
-        <!-- 自动化驱动-->
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-chrome-driver</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-        </dependency>
-        <!-- 自动化驱动完毕-->
-        <!--phantomjs来爬虫 -->
-        <dependency>
-            <groupId>com.codeborne</groupId>
-            <artifactId>phantomjsdriver</artifactId>
-            <version>1.2.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-exec</artifactId>
-            <version>1.3</version>
-        </dependency>
-        <!--phantomjs来爬虫完毕 -->
 
         <!--七牛云对象云储存-->
         <dependency>

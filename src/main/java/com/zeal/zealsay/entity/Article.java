@@ -8,6 +8,7 @@ import com.zeal.zealsay.common.constant.enums.Openness;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -24,7 +25,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Article {
+public class Article implements Serializable {
 
     /**
      * id.

@@ -1,6 +1,8 @@
 package com.zeal.zealsay.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 
@@ -23,7 +25,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class BlockLog {
+public class BlockLog implements Serializable {
 
     /**
      * 主键id.

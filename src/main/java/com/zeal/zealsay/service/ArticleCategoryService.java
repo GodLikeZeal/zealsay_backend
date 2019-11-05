@@ -11,7 +11,6 @@ import com.zeal.zealsay.entity.ArticleCategory;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.ArticleCategoryHelper;
 import com.zeal.zealsay.mapper.ArticleCategoryMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +30,7 @@ import java.util.Objects;
  */
 @Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
-public class ArticleCategoryService extends ServiceImpl<ArticleCategoryMapper, ArticleCategory> implements IService<ArticleCategory> {
+public class ArticleCategoryService extends AbstractService<ArticleCategoryMapper, ArticleCategory> implements IService<ArticleCategory> {
 
   @Autowired
   ArticleCategoryConvertMapper articleCategoryConvertMapper;
