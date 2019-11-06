@@ -3,7 +3,6 @@ package com.zeal.zealsay.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zeal.zealsay.common.constant.enums.*;
 import com.zeal.zealsay.common.entity.UserVo;
 import com.zeal.zealsay.dto.request.UserAddRequest;
@@ -41,7 +40,7 @@ import java.util.Objects;
 @Slf4j
 @Transactional(rollbackFor = {ServiceException.class, RuntimeException.class, Exception.class})
 @Service
-public class UserService extends ServiceImpl<UserMapper, User> implements IService<User> {
+public class UserService extends AbstractService<UserMapper, User> implements IService<User> {
 
   @Autowired
   RoleMapper roleMapper;

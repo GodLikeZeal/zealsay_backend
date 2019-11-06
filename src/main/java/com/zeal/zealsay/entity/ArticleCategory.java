@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 分类目录表
@@ -19,7 +21,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class ArticleCategory {
+public class ArticleCategory implements Serializable {
 
     /**
      * 主键id.

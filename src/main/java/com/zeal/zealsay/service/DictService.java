@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zeal.zealsay.common.constant.enums.DictType;
 import com.zeal.zealsay.entity.Dict;
 import com.zeal.zealsay.mapper.DictMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -19,7 +18,7 @@ import java.util.List;
  * @since 2019-03-27
  */
 @Service
-public class DictService extends ServiceImpl<DictMapper, Dict> {
+public class DictService extends AbstractService<DictMapper, Dict> {
 
   /**
    * 查询省的接口.

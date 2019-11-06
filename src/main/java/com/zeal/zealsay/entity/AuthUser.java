@@ -1,6 +1,8 @@
 package com.zeal.zealsay.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.*;
@@ -20,7 +22,7 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class AuthUser {
+public class AuthUser implements Serializable {
 
     @TableId(value = "id", type = IdType.ID_WORKER)
     private Long id;

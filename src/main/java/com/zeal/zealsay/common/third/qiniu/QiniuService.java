@@ -19,7 +19,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.apache.http.entity.ContentType.*;
+import static org.springframework.util.MimeTypeUtils.*;
 
 /**
  * 七牛云对象云存储服务.
@@ -117,20 +117,12 @@ public class QiniuService implements InitializingBean {
             .append(now.getNano());
     //设置后缀
     String contentType = file.getContentType();
-    if (IMAGE_JPEG.getMimeType().equals(contentType)) {
+    if (IMAGE_JPEG_VALUE.equals(contentType)) {
       sb.append(".jpg");
-    } else if (IMAGE_BMP.getMimeType().equals(contentType)) {
-      sb.append(".bmp");
-    } else if (IMAGE_SVG.getMimeType().equals(contentType)) {
-      sb.append(".svg");
-    } else if (IMAGE_GIF.getMimeType().equals(contentType)) {
+    } else if (IMAGE_GIF_VALUE.equals(contentType)) {
       sb.append(".gif");
-    } else if (IMAGE_PNG.getMimeType().equals(contentType)) {
+    } else if (IMAGE_PNG_VALUE.equals(contentType)) {
       sb.append(".png");
-    } else if (IMAGE_TIFF.getMimeType().equals(contentType)) {
-      sb.append(".tiff");
-    } else if (IMAGE_WEBP.getMimeType().equals(contentType)) {
-      sb.append(".webp");
     }
     return sb.toString();
   }

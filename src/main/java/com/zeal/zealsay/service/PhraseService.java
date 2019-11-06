@@ -4,18 +4,14 @@ import com.zeal.zealsay.entity.Phrase;
 import com.zeal.zealsay.feign.HitokotoClient;
 import com.zeal.zealsay.feign.response.HitokotoResponse;
 import com.zeal.zealsay.mapper.PhraseMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
-import java.util.Optional;
 
 /**
  * <p>
@@ -27,7 +23,7 @@ import java.util.Optional;
  */
 @Slf4j
 @Service
-public class PhraseService extends ServiceImpl<PhraseMapper, Phrase> {
+public class PhraseService extends AbstractService<PhraseMapper, Phrase> {
 
     @Autowired
     HitokotoClient hitokotoClient;

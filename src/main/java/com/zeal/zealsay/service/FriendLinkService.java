@@ -6,7 +6,6 @@ import com.zeal.zealsay.entity.FriendLink;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.FriendLinkHelper;
 import com.zeal.zealsay.mapper.FriendLinkMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +24,7 @@ import java.util.Objects;
  */
 @Slf4j
 @Service
-public class FriendLinkService extends ServiceImpl<FriendLinkMapper, FriendLink> {
+public class FriendLinkService extends AbstractService<FriendLinkMapper, FriendLink> {
 
   @Autowired
   FriendLinkHelper friendLinkHelper;

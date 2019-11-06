@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+
 /**
  * <p>
  * 全局字典表
@@ -21,7 +23,7 @@ import lombok.experimental.Accessors;
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_dict")
 @Accessors(chain = true)
-public class Dict {
+public class Dict implements Serializable {
 
     /**
      * 主键.

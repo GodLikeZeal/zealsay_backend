@@ -7,7 +7,6 @@ import com.zeal.zealsay.entity.BlockLog;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.mapper.BlockLogMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
-public class BlockLogService extends ServiceImpl<BlockLogMapper, BlockLog> {
+public class BlockLogService extends AbstractService<BlockLogMapper, BlockLog> {
 
     @Autowired
     UserDetailServiceImpl userDetailService;
