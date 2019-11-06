@@ -77,7 +77,6 @@ public abstract class AbstractService<M extends BaseMapper<T>, T> extends Servic
     return super.updateBatchById(entityList, batchSize);
   }
 
-  @Cacheable(key = "")
   @Override
   public T getById(Serializable id) {
     return super.getById(id);
