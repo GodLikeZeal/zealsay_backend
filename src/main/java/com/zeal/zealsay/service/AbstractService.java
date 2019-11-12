@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -19,7 +17,6 @@ import java.util.function.Function;
  * @author zhanglei
  * @date 2019-11-05  14:56
  */
-@CacheConfig(cacheNames = "serviceCache", keyGenerator = "serviceKeyGenerator")
 public abstract class AbstractService<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> {
 
   @Override
@@ -207,5 +204,4 @@ public abstract class AbstractService<M extends BaseMapper<T>, T> extends Servic
     return false;
   }
 
-//  public abstract String getKey();
 }

@@ -58,7 +58,7 @@ mybatis-plus:
       #字段验证策略之 insert 默认NOT_NULL
       insert-strategy: default
       #字段验证策略之 update 默认NOT_NULL
-      update-strategy: default
+      update-strategy: not_null
       #字段验证策略之 select 默认NOT_NULL
       select-strategy: default
   configuration:

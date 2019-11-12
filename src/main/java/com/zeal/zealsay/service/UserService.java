@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.common.constant.enums.*;
 import com.zeal.zealsay.common.entity.UserVo;
+import com.zeal.zealsay.converter.UserConvertMapper;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
@@ -54,6 +55,8 @@ public class UserService extends AbstractService<UserMapper, User> implements IS
   EmailService emailService;
   @Autowired
   StringEncryptor stringEncryptor;
+  @Autowired
+  UserConvertMapper userConvertMapper;
 
   /**
    * 通过手机号，用户名或者邮箱查询.
@@ -189,7 +192,7 @@ public class UserService extends AbstractService<UserMapper, User> implements IS
   public Boolean updateUser(UserUpdateRequest userUpdateRequest) {
     //检查是否可以被更新
     checkBeforeUpdate(userUpdateRequest);
-    return update(User.builder().build(), userHelper.initBeforeUpdate(userUpdateRequest));
+    return updateById(userConvertMapper.toUser(userUpdateRequest));
   }
 
   private void checkBeforeUpdate(UserUpdateRequest userUpdateRequest) {
