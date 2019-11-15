@@ -74,6 +74,11 @@ public class BlockLog implements Serializable {
     private Long operatorId;
 
     /**
+     * 操作人名称.
+     */
+    private String operatorName;
+
+    /**
      * 操作时间.
      */
     private LocalDateTime operatorDate;
