@@ -14,6 +14,7 @@ import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
 import com.zeal.zealsay.entity.ArticleCategory;
 import com.zeal.zealsay.entity.User;
+import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.service.ArticleCategoryService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
@@ -190,4 +191,22 @@ public class ArticleHelper {
     articleResponse.setAuthorAvatar(user.getAvatar());
     return articleResponse;
   }
+
+  /**
+   * 查当前用户的blog.
+   *
+   * @author zhanglei
+   * @date 2019-07-05  16:17
+   */
+  public QueryWrapper<Article> toCurrentUserBlog() {
+    QueryWrapper<Article> wrapper = new QueryWrapper<>();
+    SecuityUser user = userDetailService.getCurrentUser();
+    if (Objects.nonNull(user)) {
+      wrapper.eq("author_id",user.getUserId());
+    } else {
+      throw new ServiceException("请重新登录后再试!");
+    }
+    return wrapper;
+  }
+
 }
