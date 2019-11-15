@@ -1,7 +1,6 @@
 package com.zeal.zealsay.helper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zeal.zealsay.common.constant.SystemConstants;
 import com.zeal.zealsay.common.constant.enums.Role;
@@ -10,7 +9,6 @@ import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.converter.UserConvertMapper;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserRegisterRequest;
-import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.User;
 import lombok.NonNull;
@@ -38,25 +36,6 @@ public class UserHelper {
   UserConvertMapper userConvertMapper;
   @Autowired
   SystemConstants systemConstants;
-
-  /**
-   * 更新之前通过请求参数转换成user.
-   *
-   * @author zhanglei
-   * @date 2018/11/15  7:46 PM
-   */
-  public UpdateWrapper<User> initBeforeUpdate(UserUpdateRequest userUpdateRequest) {
-    return new UpdateWrapper<User>()
-        .set("username", userUpdateRequest.getUsername())
-        .set("name", userUpdateRequest.getName())
-        .set("avatar", userUpdateRequest.getAvatar())
-        .set("phone_number", userUpdateRequest.getPhoneNumber())
-        .set("email", userUpdateRequest.getEmail())
-        .set("age", userUpdateRequest.getAge())
-        .set("sex", userUpdateRequest.getSex())
-        .set("role", userUpdateRequest.getRole())
-        .eq("id", userUpdateRequest.getId());
-  }
 
   /**
    * 转换成返回列表.
