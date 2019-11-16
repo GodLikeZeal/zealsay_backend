@@ -151,21 +151,21 @@ public class UserHelper {
     if (StringUtils.isNotBlank(user.getProvince())) {
       List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getProvince()));
       if (!CollectionUtils.isEmpty(dicts)) {
-        userResponse.setProvince(dicts.get(0).getName());
+        userResponse.setProvinceName(dicts.get(0).getName());
       }
     }
     //解析省市区
     if (StringUtils.isNotBlank(user.getCity())) {
       List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getCity()));
       if (!CollectionUtils.isEmpty(dicts)) {
-        userResponse.setCity(dicts.get(0).getName());
+        userResponse.setCityName(dicts.get(0).getName());
       }
     }
     //解析省市区
     if (StringUtils.isNotBlank(user.getArea())) {
       List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getArea()));
       if (!CollectionUtils.isEmpty(dicts)) {
-        userResponse.setArea(dicts.get(0).getName());
+        userResponse.setAreaName(dicts.get(0).getName());
       }
     }
     return userResponse;
