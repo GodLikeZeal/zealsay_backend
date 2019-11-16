@@ -9,9 +9,16 @@ import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserPageRequest;
 import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
+import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.dto.response.UserResponse;
+import com.zeal.zealsay.entity.Article;
+import com.zeal.zealsay.entity.ArticleLike;
 import com.zeal.zealsay.entity.User;
+import com.zeal.zealsay.helper.ArticleHelper;
+import com.zeal.zealsay.helper.ArticleLikeHelper;
 import com.zeal.zealsay.helper.UserHelper;
+import com.zeal.zealsay.service.ArticleLikeService;
+import com.zeal.zealsay.service.ArticleService;
 import com.zeal.zealsay.service.EmailService;
 import com.zeal.zealsay.service.UserService;
 import io.swagger.annotations.Api;
@@ -41,6 +48,14 @@ public class UserController {
   @Autowired
   EmailService emailService;
   @Autowired
+  ArticleService articleService;
+  @Autowired
+  ArticleHelper articleHelper;
+  @Autowired
+  ArticleLikeService articleLikeService;
+  @Autowired
+  ArticleLikeHelper articleLikeHelper;
+  @Autowired
   UserHelper userHelper;
   @Autowired
   UserConvertMapper userConvertMapper;
@@ -56,7 +71,7 @@ public class UserController {
   public Result<UserResponse> getById(@PathVariable String id) {
     log.info("开始查询用户id为 '{}' 的用户信息", id);
     return Result
-        .of(userConvertMapper.toUserResponse(userService.getById(id)));
+        .of(userHelper.toUserResponse(userService.getById(id)));
   }
 
   /**
@@ -237,6 +252,42 @@ public class UserController {
   public Result register(@RequestBody @Validated UserRegisterRequest userRegisterRequest) {
     log.info("开始执行用户注册服务");
     return Result.of(userService.userRegister(userRegisterRequest));
+  }
+
+  /**
+   * 分页查询.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("/blog")
+  @ApiOperation(value = "分页获取当前用户博客列表", notes = "分页获取当前用户博客列表")
+  public Result<PageInfo<ArticleResponse>> getBlogByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
+                                                             @RequestParam(defaultValue = "10") Long pageSize) {
+    log.info("开始进行分页查询当前用户博客列表 ");
+    Page<Article> articlePage = (Page<Article>) articleService
+            .page(new Page<>(pageNumber, pageSize), articleHelper
+                    .toCurrentUserBlog());
+    return Result
+            .of(articleHelper.toPageInfo(articlePage));
+  }
+
+  /**
+   * 分页查询.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("/like")
+  @ApiOperation(value = "分页获取当前用户喜欢博客列表", notes = "分页获取当前用户喜欢博客列表")
+  public Result<PageInfo<ArticleResponse>> getLikeBlogByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
+                                                             @RequestParam(defaultValue = "10") Long pageSize) {
+    log.info("开始进行分页查询当前用户喜欢的博客列表 ");
+    Page<ArticleLike> articlePage = (Page<ArticleLike>) articleLikeService
+            .page(new Page<>(pageNumber, pageSize), articleLikeHelper
+                    .toCurrentUserLikeBlog());
+    return Result
+            .of(articleLikeHelper.toPageInfo(articlePage));
   }
 }
 

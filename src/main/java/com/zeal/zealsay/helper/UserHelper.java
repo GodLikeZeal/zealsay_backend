@@ -10,12 +10,15 @@ import com.zeal.zealsay.converter.UserConvertMapper;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.response.UserResponse;
+import com.zeal.zealsay.entity.Dict;
 import com.zeal.zealsay.entity.User;
+import com.zeal.zealsay.service.DictService;
 import lombok.NonNull;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -36,6 +39,8 @@ public class UserHelper {
   UserConvertMapper userConvertMapper;
   @Autowired
   SystemConstants systemConstants;
+  @Autowired
+  DictService dictService;
 
   /**
    * 转换成返回列表.
@@ -140,6 +145,31 @@ public class UserHelper {
     return queryWrapper;
   }
 
+  public UserResponse toUserResponse(User user) {
+    UserResponse userResponse = userConvertMapper.toUserResponse(user);
+    //解析省市区
+    if (StringUtils.isNotBlank(user.getProvince())) {
+      List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getProvince()));
+      if (!CollectionUtils.isEmpty(dicts)) {
+        userResponse.setProvinceName(dicts.get(0).getName());
+      }
+    }
+    //解析省市区
+    if (StringUtils.isNotBlank(user.getCity())) {
+      List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getCity()));
+      if (!CollectionUtils.isEmpty(dicts)) {
+        userResponse.setCityName(dicts.get(0).getName());
+      }
+    }
+    //解析省市区
+    if (StringUtils.isNotBlank(user.getArea())) {
+      List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getArea()));
+      if (!CollectionUtils.isEmpty(dicts)) {
+        userResponse.setAreaName(dicts.get(0).getName());
+      }
+    }
+    return userResponse;
+  }
   /**
    * 生成头像.
    *

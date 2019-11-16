@@ -1,6 +1,5 @@
 package com.zeal.zealsay.dto.response;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
@@ -65,14 +64,23 @@ public class UserResponse {
   @ApiModelProperty(value = "地址", example = "北京市朝阳中央大街12号")
   private String address;
 
-  @ApiModelProperty(value = "省", example = "北京市")
+  @ApiModelProperty(value = "省", example = "110000")
   private String province;
 
-  @ApiModelProperty(value = "市", example = "北京市")
+  @ApiModelProperty(value = "省", example = "北京市")
+  private String provinceName;
+
+  @ApiModelProperty(value = "市", example = "110100")
   private String city;
 
-  @ApiModelProperty(value = "区", example = "朝阳区")
+  @ApiModelProperty(value = "市", example = "北京市")
+  private String cityName;
+
+  @ApiModelProperty(value = "区", example = "110104")
   private String area;
+
+  @ApiModelProperty(value = "区", example = "朝阳区")
+  private String areaName;
 
   @ApiModelProperty(value = "角色", example = "USER")
   private Role role;

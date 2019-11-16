@@ -2,6 +2,9 @@ debug: false
 
 server:
   port: 8090
+  jetty:
+    acceptors: 2 #Jetty的线程架构模型非常简单，分为acceptors，selectors和workers三个线程池。acceptors负责接受新连接，然后交给selectors处理
+    selectors: 4
 
 spring:
   profiles:
