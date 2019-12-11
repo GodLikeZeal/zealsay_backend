@@ -263,7 +263,7 @@ public class UserController {
   @GetMapping("/blog")
   @ApiOperation(value = "分页获取当前用户博客列表", notes = "分页获取当前用户博客列表")
   public Result<PageInfo<ArticleResponse>> getBlogByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
-                                                             @RequestParam(defaultValue = "10") Long pageSize) {
+                                                             @RequestParam(defaultValue = "500") Long pageSize) {
     log.info("开始进行分页查询当前用户博客列表 ");
     Page<Article> articlePage = (Page<Article>) articleService
             .page(new Page<>(pageNumber, pageSize), articleHelper
@@ -281,7 +281,7 @@ public class UserController {
   @GetMapping("/like")
   @ApiOperation(value = "分页获取当前用户喜欢博客列表", notes = "分页获取当前用户喜欢博客列表")
   public Result<PageInfo<ArticleResponse>> getLikeBlogByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
-                                                             @RequestParam(defaultValue = "10") Long pageSize) {
+                                                             @RequestParam(defaultValue = "500") Long pageSize) {
     log.info("开始进行分页查询当前用户喜欢的博客列表 ");
     Page<ArticleLike> articlePage = (Page<ArticleLike>) articleLikeService
             .page(new Page<>(pageNumber, pageSize), articleLikeHelper
