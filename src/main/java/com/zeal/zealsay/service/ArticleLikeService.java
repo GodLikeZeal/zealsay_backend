@@ -4,20 +4,20 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zeal.zealsay.common.constant.enums.BlockAction;
 import com.zeal.zealsay.common.constant.enums.BlockType;
 import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.entity.Article;
 import com.zeal.zealsay.entity.ArticleLike;
 import com.zeal.zealsay.entity.BlockLog;
-import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.mapper.ArticleLikeMapper;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 
 /**
@@ -28,6 +28,7 @@ import java.util.Optional;
  * @author zhanglei
  * @since 2019-05-16
  */
+@Transactional
 @Service
 public class ArticleLikeService extends AbstractService<ArticleLikeMapper, ArticleLike> {
 
@@ -71,10 +72,16 @@ public class ArticleLikeService extends AbstractService<ArticleLikeMapper, Artic
     if (count > 0) {
       return false;
     }
-    //查询文章名称和
-    String articleName = Optional.ofNullable(articleService.getById(articleId))
-        .map(u -> u.getTitle())
-        .orElseThrow(() -> new ServiceException("不存在该文章"));
+    //查询文章名称
+    Article article = articleService.getById(articleId);
+    if (Objects.isNull(article)) {
+      //找不到该文章
+      return false;
+    }
+    String articleName = article.getTitle();
+    int likeNum = article.getLikeNum() + 1;
+    //喜欢加1
+    articleService.updateById(Article.builder().likeNum(likeNum).id(articleId).build());
     //保存喜欢记录
     save(ArticleLike.builder()
         .articleId(articleId)
@@ -122,6 +129,15 @@ public class ArticleLikeService extends AbstractService<ArticleLikeMapper, Artic
       //没喜欢，不处理
       return false;
     }
+    //查询文章名称
+    Article article = articleService.getById(articleId);
+    if (Objects.isNull(article)) {
+      //找不到该文章
+      return false;
+    }
+    int likeNum = article.getLikeNum() - 1;
+    //喜欢加1
+    articleService.updateById(Article.builder().likeNum(likeNum).id(articleId).build());
     //删除记录
     removeById(articleLike.getId());
     //保存日志记录
