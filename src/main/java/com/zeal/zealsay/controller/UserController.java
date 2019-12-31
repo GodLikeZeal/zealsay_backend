@@ -17,10 +17,7 @@ import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.helper.ArticleHelper;
 import com.zeal.zealsay.helper.ArticleLikeHelper;
 import com.zeal.zealsay.helper.UserHelper;
-import com.zeal.zealsay.service.ArticleLikeService;
-import com.zeal.zealsay.service.ArticleService;
-import com.zeal.zealsay.service.EmailService;
-import com.zeal.zealsay.service.UserService;
+import com.zeal.zealsay.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -49,6 +46,8 @@ public class UserController {
   EmailService emailService;
   @Autowired
   ArticleService articleService;
+  @Autowired
+  BlockLogService blockLogService;
   @Autowired
   ArticleHelper articleHelper;
   @Autowired
@@ -288,6 +287,20 @@ public class UserController {
                     .toCurrentUserLikeBlog());
     return Result
             .of(articleLikeHelper.toPageInfo(articlePage));
+  }
+
+  /**
+   * 分页查询.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("/action/timelines")
+  @ApiOperation(value = "获取当前用户动态列表", notes = "获取当前用户动态列表")
+  public Result<PageInfo<ArticleResponse>> getCurrentUserActions() {
+    log.info("获取当前用户动态列表");
+    return Result
+        .of(blockLogService.getCurrentUserActions());
   }
 }
 

@@ -7,6 +7,7 @@ package com.zeal.zealsay.common.constant.enums;
  * @date 2019-05-07  15:42
  */
 public enum BlockAction {
+    REGISTER("注册"),
     UNSEALING("解封"),
     BAN("封禁"),
     UP("上架"),
