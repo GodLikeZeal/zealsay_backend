@@ -97,6 +97,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.apache.directory.studio</groupId>
+            <artifactId>org.apache.commons.codec</artifactId>
+            <version>1.8</version>
+        </dependency>
         <!--使用jetty作为默认容器-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

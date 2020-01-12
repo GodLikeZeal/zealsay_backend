@@ -21,7 +21,10 @@ public enum ResultCode {
   NONCE_EXPIRED("003","该账户已失效"),
   ACCOUNT_DISABLED("004","该账户被禁用"),
   TOKEN_EXPIRED("005","token已过期"),
-  METHOD_ARGUMENT_NOT_VALID("006","参数校验异常")
+  METHOD_ARGUMENT_NOT_VALID("006","参数校验异常"),
+  TOKEN_VALIDA_NULL("007","token为空"),
+  TOKEN_VALIDA_ERROR("008","token验证错误"),
+  TOKEN_VALIDA_FAIL("009","token验证失败"),
   ;
   private String code;
   private String message;
