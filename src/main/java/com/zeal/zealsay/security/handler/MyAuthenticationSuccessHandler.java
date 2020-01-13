@@ -4,9 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.common.entity.UserInfo;
 import com.zeal.zealsay.security.core.TokenManager;
 import com.zeal.zealsay.service.LoginLogService;
+import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import com.zeal.zealsay.util.JwtTokenUtil;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -41,6 +44,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
   @Autowired
   TokenManager tokenManager;
 
+  @Autowired
+  UserDetailServiceImpl userDetailService;
+
+  @SneakyThrows
   @Override
   public void onAuthenticationSuccess(HttpServletRequest httpServletRequest,
                                       HttpServletResponse httpServletResponse,
@@ -48,12 +55,10 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
     httpServletResponse.setContentType("application/json;charset=UTF-8");
     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
     final SecuityUser secuityUser = (SecuityUser) authentication.getPrincipal();
-    String token = null;
-    try {
-      token = tokenManager.saveToken(secuityUser);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    final UserInfo userInfo = userDetailService.toUserInfo(secuityUser.getUserId());
+    // 移除之前的token（包含member信息、token排行信息）
+    tokenManager.delToken(userInfo);
+    String token = tokenManager.saveToken(userInfo);
 
 //    final String token = jwtTokenUtil.generateToken(secuityUser);
     log.info("----------------用户'{}'登录成功，开始执行初始化-----------------------",secuityUser.getUsername());

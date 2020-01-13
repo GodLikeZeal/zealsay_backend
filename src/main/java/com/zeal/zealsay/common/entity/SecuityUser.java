@@ -2,17 +2,20 @@ package com.zeal.zealsay.common.entity;
 
 import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 
 
-@Data
-public class SecuityUser extends User {
+@Getter
+@Setter
+public class SecuityUser extends User  implements Serializable {
 
   /**
    * id.
@@ -119,93 +122,4 @@ public class SecuityUser extends User {
     super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
   }
 
-//  @Builder
-//  public SecuityUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities,Long id, String name, Integer sex, Integer age, String introduction, String label, String phoneNumber, String email, Boolean emailConfirm, String avatar, String address, String province, String city, String area, Role role, Long deptId, UserStatus status, LocalDateTime registerDate, Date lastPasswordResetDate, LocalDateTime updateDate) {
-//    super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//    this.userId = id;
-//    this.name = name;
-//    this.sex = sex;
-//    this.age = age;
-//    this.introduction = introduction;
-//    this.label = label;
-//    this.phoneNumber = phoneNumber;
-//    this.email = email;
-//    this.emailConfirm = emailConfirm;
-//    this.avatar = avatar;
-//    this.address = address;
-//    this.province = province;
-//    this.city = city;
-//    this.area = area;
-//    this.role = role;
-//    this.deptId = deptId;
-//    this.status = status;
-//    this.registerDate = registerDate;
-//    this.lastPasswordResetDate = lastPasswordResetDate;
-//  }
-
-//  public SecuityUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, authorities);
-//  }
-//
-//  public SecuityUser(Long userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, authorities);
-//    this.userId = userId;
-//  }
-//
-//  public SecuityUser(Long userId, String username, String password, List<String> roles, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, authorities);
-//    this.userId = userId;
-//    this.roles = roles;
-//  }
-//
-//  public SecuityUser(Date lastPasswordResetDate, Long userId, String username, String password, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, authorities);
-//    this.userId = userId;
-//    this.lastPasswordResetDate = lastPasswordResetDate;
-//  }
-//
-//  public SecuityUser(Date lastPasswordResetDate, Long userId, String username, String password, List<String> roles, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, authorities);
-//    this.userId = userId;
-//    this.lastPasswordResetDate = lastPasswordResetDate;
-//    this.roles = roles;
-//  }
-//
-//  public SecuityUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//  }
-//
-//  public SecuityUser(Long userId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//    this.userId = userId;
-//  }
-//
-//  public SecuityUser(Long userId, String username, String password, List<String> roles, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//    this.userId = userId;
-//    this.roles = roles;
-//  }
-//
-//  public SecuityUser(Date lastPasswordResetDate, Long userId, String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//    this.userId = userId;
-//    this.lastPasswordResetDate = lastPasswordResetDate;
-//  }
-//
-//  public SecuityUser(Date lastPasswordResetDate, Long userId, String username, String password, List<String> roles, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//    this.userId = userId;
-//    this.lastPasswordResetDate = lastPasswordResetDate;
-//    this.roles = roles;
-//  }
-//
-//  public SecuityUser(Date lastPasswordResetDate, Long userId, String username, String password, String avatar, Integer sex, Integer age, List<String> roles, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-//    super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-//    this.userId = userId;
-//    this.lastPasswordResetDate = lastPasswordResetDate;
-//    this.roles = roles;
-//    this.avatar = avatar;
-//    this.sex = sex;
-//    this.age = age;
-//  }
 }

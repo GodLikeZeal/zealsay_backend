@@ -1,6 +1,7 @@
 package com.zeal.zealsay.security.core;
 
 import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.common.entity.UserInfo;
 
 public interface TokenManager {
 
@@ -25,18 +26,18 @@ public interface TokenManager {
      * @param user
      * @return
      */
-    String saveToken(SecuityUser user) throws Exception;
+    String saveToken(UserInfo user) throws Exception;
 
     /**
      * 删除token.
      * @param user
      */
-    void delToken(SecuityUser user);
+    void delToken(UserInfo user);
 
     /**
      * 获取用户信息.
      * @param token
      * @return
      */
-    SecuityUser getUserInfoByToken(String token);
+    UserInfo getUserInfoByToken(String token);
 }

@@ -1,6 +1,7 @@
 package com.zeal.zealsay.security.core;
 
 import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.common.entity.UserInfo;
 import com.zeal.zealsay.util.RSAUtil;
 import com.zeal.zealsay.util.RedisUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,26 +47,26 @@ public class RedisTokenManager implements TokenManager{
     }
 
     @Override
-    public String saveToken(SecuityUser user) throws Exception {
-        String token = generateToken(user.getUserId());
+    public String saveToken(UserInfo user) throws Exception {
+        String token = generateToken(user.getId());
         // 设置zset用于线程根据分数定时清理不活跃用户
         redisUtils.zsetAdd(MEMBER_TOKEN, token, Double.valueOf(System.currentTimeMillis()));
         // 存储相关用户信息(权限等信息)
         redisUtils.set(token, user, 60 * 60 * 24 * 30L);
         // 用于重新登录，但之前token还存在的情况,通过id获取相应的token来进行之前的token清理
-        redisUtils.set(String.valueOf(user.getUserId()), token);
+        redisUtils.set(String.valueOf(user.getId()), token);
         return token;
     }
 
     @Override
-    public void delToken(SecuityUser user) {
-        Object object = redisUtils.get(String.valueOf(user.getUserId()));
+    public void delToken(UserInfo user) {
+        Object object = redisUtils.get(String.valueOf(user.getId()));
         if (object != null) {
             String token = (String) object;
             // 移除token以及相对应的权限信息
             redisUtils.del(token);
             // 移除token
-            redisUtils.del(String.valueOf(user.getUserId()));
+            redisUtils.del(String.valueOf(user.getId()));
             // 移除zset排行的token，避免一个用户重复排行
             redisUtils.remove(MEMBER_TOKEN, token);
         }
@@ -73,9 +74,9 @@ public class RedisTokenManager implements TokenManager{
 
 
     @Override
-    public SecuityUser getUserInfoByToken(String token) {
+    public UserInfo getUserInfoByToken(String token) {
         // 获取redis已有的member信息，不查数据库,重新生成token放入
-        SecuityUser user = (SecuityUser) redisUtils.get(token);
+        UserInfo user = (UserInfo) redisUtils.get(token);
         return Objects.nonNull(user)? user : null;
     }
 }

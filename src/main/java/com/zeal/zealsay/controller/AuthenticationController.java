@@ -62,7 +62,8 @@ public class AuthenticationController {
   @GetMapping("/user")
   @ApiOperation(value = "用户信息校验",notes = "用户信息校验")
   public Result<SecuityUser> user(Authentication authentication) {
-    return Result.of(authentication.getPrincipal());
+    SecuityUser secuityUser = (SecuityUser)authentication.getPrincipal();
+    return Result.of(userDetailService.toUserInfo(secuityUser.getUserId()));
   }
 
   /**

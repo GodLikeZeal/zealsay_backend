@@ -2,6 +2,7 @@ package com.zeal.zealsay.service.auth;
 
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.common.entity.UserInfo;
 import com.zeal.zealsay.common.entity.UserVo;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.security.core.RedisTokenManager;
@@ -9,6 +10,7 @@ import com.zeal.zealsay.service.RoleService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,6 +21,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -72,9 +75,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @param token
      */
     public void refreshUserToken(String token) throws Exception {
-        SecuityUser secuityUser = redisTokenManager.getUserInfoByToken(token);
-        redisTokenManager.delToken(secuityUser);
-        redisTokenManager.saveToken(secuityUser);
+        UserInfo userInfo = redisTokenManager.getUserInfoByToken(token);
+        redisTokenManager.delToken(userInfo);
+        redisTokenManager.saveToken(userInfo);
     }
 
     /**
@@ -83,8 +86,8 @@ public class UserDetailServiceImpl implements UserDetailsService {
      * @param token
      */
     public void loginOff(String token) {
-        SecuityUser secuityUser = redisTokenManager.getUserInfoByToken(token);
-        redisTokenManager.delToken(secuityUser);
+        UserInfo userInfo = redisTokenManager.getUserInfoByToken(token);
+        redisTokenManager.delToken(userInfo);
     }
 
     /**
@@ -106,5 +109,19 @@ public class UserDetailServiceImpl implements UserDetailsService {
         secuityUser.setStatus(user.getStatus());
         secuityUser.setLastPasswordResetDate(user.getLastPasswordResetDate());
         return secuityUser;
+    }
+
+    /**
+     * 获取当前登录信息.
+     *
+     * @author  zhanglei
+     * @date 2020/1/13  12:17 下午
+     */
+    public UserInfo toUserInfo(Long id) {
+        User user = userService.getById(id);
+        UserInfo userInfo = new UserInfo();
+        BeanUtils.copyProperties(user,userInfo);
+        userInfo.setSignDate(LocalDateTime.now());
+        return userInfo;
     }
 }
