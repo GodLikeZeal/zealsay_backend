@@ -2,7 +2,7 @@ package com.zeal.zealsay.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeal.zealsay.common.entity.Result;
-import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,9 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
 
   @Autowired
   JwtTokenUtil jwtTokenUtil;
+
+  @Autowired
+  UserDetailServiceImpl userDetailService;
 
 
   @Override

@@ -1,7 +1,6 @@
 package com.zeal.zealsay.security;
 
 import com.zeal.zealsay.config.FilterIgnorePropertiesConfig;
-import com.zeal.zealsay.security.filter.JwtAuthorizationTokenFilter;
 import com.zeal.zealsay.security.handler.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -19,7 +18,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+//import com.zeal.zealsay.security.filter.JwtAuthorizationTokenFilter;
 
 /**
  * spring security全局安全入口.
@@ -50,8 +50,8 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
   MyLogoutSuccessHandler myLogoutSuccessHandler;
   @Autowired
   UserDetailsService userDetailsService;
-  @Autowired
-  JwtAuthorizationTokenFilter jwtAuthorizationTokenFilter;
+//  @Autowired
+//  JwtAuthorizationTokenFilter jwtAuthorizationTokenFilter;
 
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -99,9 +99,9 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
         .and()
         .exceptionHandling().authenticationEntryPoint(myAuthenticationEntryPoint)
         .and()
-        .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler)   // 无权访问 JSON 格式的数据
-        .and()
-        .addFilterBefore(jwtAuthorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        .exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);   // 无权访问 JSON 格式的数据
+//        .and()
+//        .addFilterBefore(jwtAuthorizationTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
   }
 

@@ -109,6 +109,7 @@ spring:
   redis:
     host: ${REDIS_HOST}
     port: ${REDIS_PORT}
+    timeout: 10000
   rabbitmq:
     host: ${MQ_HOST}
   datasource:
@@ -165,6 +166,7 @@ spring:
   redis:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
     port: 6379
+    timeout: 1000
   #    password: ENC(y/Q+pGasSBO27pTJlSNjkVtTgoENZAqK)
   rabbitmq:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
@@ -189,7 +191,7 @@ spring:
 
 web:
   name: zealsay说你想说
-  domain: http://localhost:4000/
+  domain: http://localhost:8080/
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
 
@@ -215,6 +217,7 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+    timeout: 10000
   #    password: ENC(cax30dcK4hlSyUXvCtTMTDhkczbSTduh)
   rabbitmq:
     host: 127.0.0.1
