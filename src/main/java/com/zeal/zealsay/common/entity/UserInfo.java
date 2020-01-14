@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -21,7 +22,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Data
 @NoArgsConstructor
-public class UserInfo extends User {
+public class UserInfo extends UserResponse {
 
   /**
    * 登录时间.

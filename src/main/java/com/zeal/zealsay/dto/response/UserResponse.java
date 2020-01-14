@@ -1,8 +1,10 @@
 package com.zeal.zealsay.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
@@ -11,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -21,7 +24,7 @@ import java.util.Date;
  * @author  zhanglei
  * @date 2018/11/15  6:39 PM
  */
-@Builder(toBuilder = true)
+@SuperBuilder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -94,6 +97,7 @@ public class UserResponse {
   @ApiModelProperty(value = "注册时间", example = "2018.9.26 12:12:12")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   private LocalDateTime registerAt;
 
   @ApiModelProperty(value = "最后密码修改时间", example = "2018.9.26 12:12:12")
