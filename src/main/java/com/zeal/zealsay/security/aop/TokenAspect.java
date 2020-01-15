@@ -78,11 +78,14 @@ public class TokenAspect {
 
     String requestToken = request.getHeader("Authorization");
     if (StringUtils.isBlank(requestToken)) {
-      // 可以使用以下方式返回json数据
-      // converter.write(JsonMsg.Error(Code.TOKEN_VALIDA_NULL),MediaType.APPLICATION_JSON, outputMessage);
-      // shutdownResponse(response);
-      // 不要用，用了这个在controller@responseBody无效，输出流关闭了
-      throw new ServiceException(ResultCode.TOKEN_VALIDA_NULL.getMessage());
+      requestToken = request.getHeader("authorization");
+      if (StringUtils.isBlank(requestToken)) {
+        // 可以使用以下方式返回json数据
+        // converter.write(JsonMsg.Error(Code.TOKEN_VALIDA_NULL),MediaType.APPLICATION_JSON, outputMessage);
+        // shutdownResponse(response);
+        // 不要用，用了这个在controller@responseBody无效，输出流关闭了
+        throw new ServiceException(ResultCode.TOKEN_VALIDA_NULL.getMessage());
+      }
     }
     Double score = redisUtils.score(MEMBER_TOKEN, requestToken);
     if (score == null) {
