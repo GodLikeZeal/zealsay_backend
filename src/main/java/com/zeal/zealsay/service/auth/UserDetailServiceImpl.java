@@ -112,6 +112,27 @@ public class UserDetailServiceImpl implements UserDetailsService {
     }
 
     /**
+     * 转换成SecuityUser.
+     *
+     * @author zhanglei
+     * @date 2019-09-12  15:12
+     */
+    public SecuityUser toSecuityUser(UserInfo user) {
+        Collection<GrantedAuthority> grantedAuthorities = Collections
+            .singleton(new SimpleGrantedAuthority(user.getRole().name()));
+        SecuityUser secuityUser = new SecuityUser(user.getUsername(), user.getPassword(), UserStatus.NORMAL.equals(user.getStatus()),
+            true, true,
+            !UserStatus.LOCK.equals(user.getStatus()), grantedAuthorities);
+        secuityUser.setAge(user.getAge());
+        secuityUser.setAvatar(user.getAvatar());
+        secuityUser.setSex(user.getSex());
+        secuityUser.setUserId(user.getId());
+        secuityUser.setStatus(user.getStatus());
+        secuityUser.setLastPasswordResetDate(user.getLastPasswordResetDate());
+        return secuityUser;
+    }
+
+    /**
      * 获取当前登录信息.
      *
      * @author  zhanglei
