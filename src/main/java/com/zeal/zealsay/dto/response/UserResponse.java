@@ -68,19 +68,19 @@ public class UserResponse {
   private String address;
 
   @ApiModelProperty(value = "省", example = "110000")
-  private String province;
+  private Integer province;
 
   @ApiModelProperty(value = "省", example = "北京市")
   private String provinceName;
 
   @ApiModelProperty(value = "市", example = "110100")
-  private String city;
+  private Integer city;
 
   @ApiModelProperty(value = "市", example = "北京市")
   private String cityName;
 
   @ApiModelProperty(value = "区", example = "110104")
-  private String area;
+  private Integer area;
 
   @ApiModelProperty(value = "区", example = "朝阳区")
   private String areaName;
