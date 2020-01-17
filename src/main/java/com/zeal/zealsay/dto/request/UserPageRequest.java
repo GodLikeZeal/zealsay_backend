@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -65,13 +66,11 @@ public class UserPageRequest {
   private Long deptId;
 
   @ApiModelProperty(value = "注册时间")
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
   private LocalDateTime registerDate;
 
   @ApiModelProperty(value = "最后修改密码时间")
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @JsonSerialize(using = LocalDateTimeSerializer.class)
   private Date lastPasswordResetDate;
 
 }
