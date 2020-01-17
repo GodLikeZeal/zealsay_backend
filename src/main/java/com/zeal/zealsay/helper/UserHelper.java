@@ -106,7 +106,7 @@ public class UserHelper {
     if (StringUtils.isNotBlank(user.getAddress())) {
       queryWrapper.like("address", user.getAddress());
     }
-    if (StringUtils.isNotBlank(user.getArea())) {
+    if (Objects.nonNull(user.getArea())) {
       queryWrapper.like("area", user.getArea());
     }
     if (StringUtils.isNotBlank(user.getUsername())) {
@@ -127,10 +127,10 @@ public class UserHelper {
     if (StringUtils.isNotBlank(user.getAddress())) {
       queryWrapper.like("address", user.getAddress());
     }
-    if (StringUtils.isNotBlank(user.getProvince())) {
+    if (Objects.nonNull(user.getProvince())) {
       queryWrapper.like("province", user.getProvince());
     }
-    if (StringUtils.isNotBlank(user.getCity())) {
+    if (Objects.nonNull(user.getCity())) {
       queryWrapper.like("city", user.getCity());
     }
     if (StringUtils.isNotBlank(user.getAddress())) {
@@ -148,21 +148,21 @@ public class UserHelper {
   public UserResponse toUserResponse(User user) {
     UserResponse userResponse = userConvertMapper.toUserResponse(user);
     //解析省市区
-    if (StringUtils.isNotBlank(user.getProvince())) {
+    if (Objects.nonNull(user.getProvince())) {
       List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getProvince()));
       if (!CollectionUtils.isEmpty(dicts)) {
         userResponse.setProvinceName(dicts.get(0).getName());
       }
     }
     //解析省市区
-    if (StringUtils.isNotBlank(user.getCity())) {
+    if (Objects.nonNull(user.getCity())) {
       List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getCity()));
       if (!CollectionUtils.isEmpty(dicts)) {
         userResponse.setCityName(dicts.get(0).getName());
       }
     }
     //解析省市区
-    if (StringUtils.isNotBlank(user.getArea())) {
+    if (Objects.nonNull(user.getArea())) {
       List<Dict> dicts = dictService.list(new QueryWrapper<Dict>().eq("code",user.getArea()));
       if (!CollectionUtils.isEmpty(dicts)) {
         userResponse.setAreaName(dicts.get(0).getName());

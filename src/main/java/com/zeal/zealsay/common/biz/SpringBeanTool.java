@@ -29,7 +29,7 @@ public class SpringBeanTool implements ApplicationContextAware, ServletContextLi
     /**
      * 上下文对象实例
      */
-    private ApplicationContext applicationContext;
+    private static ApplicationContext applicationContext;
 
     private ServletContext servletContext;
 
@@ -43,7 +43,7 @@ public class SpringBeanTool implements ApplicationContextAware, ServletContextLi
      *
      * @return
      */
-    public ApplicationContext getApplicationContext() {
+    public static ApplicationContext getApplicationContext() {
         return applicationContext;
     }
 
@@ -62,7 +62,7 @@ public class SpringBeanTool implements ApplicationContextAware, ServletContextLi
      * @param name
      * @return
      */
-    public Object getBean(String name) {
+    public static Object getBean(String name) {
         return getApplicationContext().getBean(name);
     }
 

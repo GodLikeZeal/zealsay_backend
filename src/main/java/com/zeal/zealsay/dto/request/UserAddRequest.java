@@ -75,17 +75,17 @@ public class UserAddRequest {
   /**
    * 省.
    */
-  private String province;
+  private Integer province;
 
   /**
    * 市.
    */
-  private String city;
+  private Integer city;
 
   /**
    * 区.
    */
-  private String area;
+  private Integer area;
 
   /**
    * 角色.
