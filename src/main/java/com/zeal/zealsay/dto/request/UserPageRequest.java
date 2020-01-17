@@ -50,13 +50,13 @@ public class UserPageRequest {
   private String address;
 
   @ApiModelProperty(value = "省", example = "北京市")
-  private String province;
+  private Integer province;
 
   @ApiModelProperty(value = "市", example = "北京市")
-  private String city;
+  private Integer city;
 
   @ApiModelProperty(value = "区", example = "朝阳区")
-  private String area;
+  private Integer area;
 
   @ApiModelProperty(value = "角色", example = "USER")
   private Role role;

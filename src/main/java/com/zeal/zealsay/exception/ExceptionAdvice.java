@@ -50,6 +50,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(value = AccessDeniedException.class)
     @ResponseStatus(value = HttpStatus.OK)     //权限不足异常
     public Result handleAccessDeniedException(Exception e, WebRequest request, AccessDeniedException exception){
+        e.printStackTrace();
         log.error("捕获异常 code : {},异常信息为 {}",ACCESS_DENIED.getCode(),e.getMessage());
         return Result.builder()
             .code(ACCESS_DENIED.getCode())
@@ -69,6 +70,7 @@ public class ExceptionAdvice {
         StringBuffer sb = new StringBuffer();
         exception.getBindingResult().getAllErrors()
             .forEach(s -> sb.append(s.getDefaultMessage()).append(";"));
+        e.printStackTrace();
         log.error("捕获异常 code : {},异常信息为 {}",METHOD_ARGUMENT_NOT_VALID.getCode(),e.getMessage());
         return Result.builder()
             .code(METHOD_ARGUMENT_NOT_VALID.getCode())
@@ -88,6 +90,7 @@ public class ExceptionAdvice {
         StringBuffer sb = new StringBuffer();
         exception.getBindingResult().getAllErrors()
             .forEach(s -> sb.append(s.getDefaultMessage()).append(";"));
+        e.printStackTrace();
         log.error("捕获异常 code : {},异常信息为 {}",METHOD_ARGUMENT_NOT_VALID.getCode(),e.getMessage());
         return Result.builder()
             .code(METHOD_ARGUMENT_NOT_VALID.getCode())
@@ -103,6 +106,7 @@ public class ExceptionAdvice {
      */
     @ExceptionHandler(value = Exception.class)
     public Result handleRuntimeException(Exception e, WebRequest request){
+        e.printStackTrace();
         log.error("捕获异常 code : {},异常信息为 {}",INTERNAL_SERVER_ERROR.getCode(),e.getMessage());
         return Result.builder()
             .code(INTERNAL_SERVER_ERROR.getCode())
