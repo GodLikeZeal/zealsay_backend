@@ -87,9 +87,7 @@ public class ArticleController {
                                                          @RequestParam(defaultValue = "10") Long pageSize,
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
-    Page<Article> articlePage = (Page<Article>) articleService
-        .page(new Page<>(pageNumber, pageSize), articleHelper.toAeticlePageRequestWrapperForC(articlePageRequest));
-    return Result.of(articleHelper.toPageInfo(articlePage));
+    return Result.of(articleHelper.toPageInfo(pageNumber,pageSize));
   }
 
   /**
