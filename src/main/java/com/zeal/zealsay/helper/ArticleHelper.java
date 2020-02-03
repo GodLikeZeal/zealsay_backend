@@ -101,30 +101,6 @@ public class ArticleHelper {
   }
 
   /**
-   * c端查询.
-   * @param pageNumber 当前页数
-   * @param pageSize 页面大小
-   * @return
-   */
-  public PageInfo<ArticlePageResponse> toPageInfo(Long pageNumber,Long pageSize) {
-    //如果是openess为自己的，需要增加筛选条件
-    Long userId = null;
-    SecuityUser user = userDetailService.getCurrentUser();
-    if (Objects.nonNull(user)) {
-      userId = user.getUserId();
-    }
-
-    List<ArticlePageResponse> articleResponses = articleMapper.getPage(userId,pageSize*(pageNumber -1),pageSize);
-    Long total = articleMapper.getPageCount(userId,pageSize*(pageNumber -1),pageSize);
-    return PageInfo.<ArticlePageResponse>builder()
-        .records(articleResponses)
-        .currentPage(pageNumber)
-        .pageSize(pageSize)
-        .total(total)
-        .build();
-  }
-
-  /**
    * 构造文章列表分页查询条件.
    *
    * @author zhanglei
@@ -133,6 +109,19 @@ public class ArticleHelper {
   public QueryWrapper<Article> toAeticlePageRequestWrapper(@NonNull ArticlePageRequest pageRequest) {
     //构造分页查询条件
     QueryWrapper<Article> wrapper = new QueryWrapper<>();
+    wrapper.select("id",
+        "title",
+        "subheading",
+        "cover_image",
+        "status",
+        "openness",
+        "label",
+        "read_num",
+        "like_num",
+        "category_id",
+        "author_id",
+        "create_date",
+        "update_date");
     //模糊检索标题
     if (StringUtils.isNotBlank(pageRequest.getTitle())) {
       wrapper.lambda().like(Article::getTitle, pageRequest.getTitle());
@@ -172,6 +161,19 @@ public class ArticleHelper {
    */
   public QueryWrapper<Article> toAeticlePageRequestWrapperForC(@NonNull ArticlePageRequest pageRequest) {
     QueryWrapper<Article> wrapper = toAeticlePageRequestWrapper(pageRequest);
+    wrapper.select("id",
+        "title",
+        "subheading",
+        "cover_image",
+        "status",
+        "openness",
+        "label",
+        "read_num",
+        "like_num",
+        "category_id",
+        "author_id",
+        "create_date",
+        "update_date");
     //过滤掉下架的和草稿
     wrapper.lambda().eq(Article::getStatus, ArticleStatus.FORMAL);
     wrapper.lambda().eq(Article::getOpenness, Openness.ALL);
@@ -188,17 +190,17 @@ public class ArticleHelper {
   /**
    * 构建返回对象.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2019-07-29  18:19
    */
-  public ArticleResponse toArticleResponse(Article article){
+  public ArticleResponse toArticleResponse(Article article) {
     return this.apply(article);
   }
 
   /**
    * 解析分类目录和作者信息.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2019-07-29  18:22
    */
   private ArticleResponse apply(Article s) {
@@ -223,7 +225,7 @@ public class ArticleHelper {
   /**
    * 解析分类目录和作者信息.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2019-07-29  18:22
    */
   private ArticlePageResponse applyPage(Article s) {
@@ -255,7 +257,7 @@ public class ArticleHelper {
     QueryWrapper<Article> wrapper = new QueryWrapper<>();
     SecuityUser user = userDetailService.getCurrentUser();
     if (Objects.nonNull(user)) {
-      wrapper.eq("author_id",user.getUserId());
+      wrapper.eq("author_id", user.getUserId());
     } else {
       throw new ServiceException("请重新登录后再试!");
     }

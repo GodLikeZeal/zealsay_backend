@@ -15,7 +15,7 @@ import java.util.Objects;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author zhanglei
@@ -25,61 +25,74 @@ import java.util.Objects;
 @Service
 public class PhraseService extends AbstractService<PhraseMapper, Phrase> {
 
-    @Autowired
-    HitokotoClient hitokotoClient;
+  @Autowired
+  HitokotoClient hitokotoClient;
 
-    /**
-    * 获取一言接口.
-    *
-    * @author  zeal
-    * @date 2019/6/30 13:17
-    */
-    public HitokotoResponse get() {
-        HitokotoResponse hitokotoResponse;
-        try {
-            hitokotoResponse = hitokotoClient.get();
-            //本地备份
-            savePhraseLocal(hitokotoResponse);
-        } catch (Exception e) {
-            //出错
-            log.error("获取外部hitokoto接口失败，出错信息为{}",e.getMessage());
-            //随机取出一条
-            Phrase phrase = baseMapper.randomPhrase();
-            hitokotoResponse = HitokotoResponse.builder()
-                .id(phrase.getId())
-                .type(phrase.getType())
-                .hitokoto(phrase.getHitokoto())
-                .from(phrase.getSource())
-                .creator(phrase.getCreator())
-                .build();
-        }
-        return hitokotoResponse;
-    }
+  /**
+   * 获取一言接口.
+   *
+   * @author zeal
+   * @date 2019/6/30 13:17
+   */
+  public HitokotoResponse get() {
+    HitokotoResponse hitokotoResponse;
 
-    /**
-    * 异步存储.
-    *
-    * @author  zeal
-    * @date 2019/6/30 13:17
-    */
-    @Async
-    void savePhraseLocal(HitokotoResponse hitokotoResponse) {
-        if (Objects.isNull(hitokotoResponse)){
-            return;
-        }
-        Phrase phrase = getById(hitokotoResponse.getId());
-        if (Objects.nonNull(phrase)) {
-            return;
-        }
-        save(Phrase.builder()
-                .id(hitokotoResponse.getId())
-                .hitokoto(hitokotoResponse.getHitokoto())
-                .source(hitokotoResponse.getFrom())
-                .creator(hitokotoResponse.getCreator())
-                .type(hitokotoResponse.getType())
-                .createdAt(Instant
-                        .ofEpochMilli(hitokotoResponse.getCreated_at())
-                        .atZone(ZoneId.systemDefault()).toLocalDate())
-                .build());
+    //随机取出一条
+    Phrase phrase = baseMapper.randomPhrase();
+    hitokotoResponse = HitokotoResponse.builder()
+        .id(phrase.getId())
+        .type(phrase.getType())
+        .hitokoto(phrase.getHitokoto())
+        .from(phrase.getSource())
+        .creator(phrase.getCreator())
+        .build();
+
+    return hitokotoResponse;
+  }
+
+  /**
+   * 保存.
+   *
+   * @author zhanglei
+   * @date 2020/2/3  12:38 下午
+   */
+  public void save() {
+      HitokotoResponse hitokotoResponse;
+      try {
+          hitokotoResponse = hitokotoClient.get();
+          //本地备份
+          savePhraseLocal(hitokotoResponse);
+      } catch (Exception e) {
+          //出错
+          log.error("获取外部hitokoto接口失败，出错信息为{}", e.getMessage());
+          e.printStackTrace();
+      }
+  }
+
+  /**
+   * 异步存储.
+   *
+   * @author zeal
+   * @date 2019/6/30 13:17
+   */
+  @Async
+  void savePhraseLocal(HitokotoResponse hitokotoResponse) {
+    if (Objects.isNull(hitokotoResponse)) {
+      return;
     }
+    Phrase phrase = getById(hitokotoResponse.getId());
+    if (Objects.nonNull(phrase)) {
+      return;
+    }
+    save(Phrase.builder()
+        .id(hitokotoResponse.getId())
+        .hitokoto(hitokotoResponse.getHitokoto())
+        .source(hitokotoResponse.getFrom())
+        .creator(hitokotoResponse.getCreator())
+        .type(hitokotoResponse.getType())
+        .createdAt(Instant
+            .ofEpochMilli(hitokotoResponse.getCreated_at())
+            .atZone(ZoneId.systemDefault()).toLocalDate())
+        .build());
+  }
 }

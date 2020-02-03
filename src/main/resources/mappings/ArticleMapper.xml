@@ -1,56 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zeal.zealsay.mapper.ArticleMapper">
-    <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.zeal.zealsay.dto.response.ArticlePageResponse">
-        <result column="id" property="id"/>
-        <result column="title" property="title"/>
-        <result column="subheading" property="subheading"/>
-        <result column="cover_image" property="coverImage"/>
-        <result column="status" property="status"/>
-        <result column="openness" property="openness"/>
-        <result column="label" property="label"/>
-        <result column="read_num" property="readNum"/>
-        <result column="like_num" property="likeNum"/>
-        <result column="category_id" property="categoryId"/>
-        <result column="author_id" property="authorId"/>
-        <result column="create_date" property="createDate"/>
-        <result column="update_date" property="updateDate"/>
-    </resultMap>
 
-    <!-- 通用查询结果列 -->
-    <sql id="Base_Column_List">
-        id,
-        title,
-        subheading,
-        cover_image,
-        status,
-        openness,
-        label,
-        read_num,
-        like_num,
-        category_id,
-        author_id,
-        create_date,
-        update_date
-    </sql>
-
-    <sql id="Where_Cond">
-        <where>
-            ( a.`status` = 'FORMAL' AND a.openness = 'ALL' )
-            <if test="userId != null">
-                OR ( a.author_id = #{userId} AND a.openness = 'SELFONLY' )
-            </if>
-            order by a.create_date desc
-            limit #{offset}, #{size}
-        </where>
-    </sql>
-
-    <select id="getPage" resultMap="BaseResultMap" parameterType="java.lang.String">
-     select <include refid="Base_Column_List"></include> from article a <include refid="Where_Cond"></include>
-    </select>
-
-    <select id="getPageCount" resultType="java.lang.Long" parameterType="java.lang.String">
-        select count(1)  from article a <include refid="Where_Cond"></include>
-    </select>
 </mapper>

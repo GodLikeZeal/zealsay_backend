@@ -166,7 +166,7 @@ spring:
   redis:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
     port: 6379
-    timeout: 1000
+    timeout: 10000
   #    password: ENC(y/Q+pGasSBO27pTJlSNjkVtTgoENZAqK)
   rabbitmq:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
