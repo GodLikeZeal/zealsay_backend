@@ -9,6 +9,7 @@ import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.entity.AuthUser;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.helper.UserHelper;
+import com.zeal.zealsay.security.core.TokenManager;
 import com.zeal.zealsay.service.AuthUserService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.util.JwtTokenUtil;
@@ -40,7 +41,7 @@ public abstract class AbstractOauthLogin implements OauthLogin {
   @Autowired
   UserService userService;
   @Autowired
-  JwtTokenUtil jwtTokenUtil;
+  TokenManager tokenManager;
   @Autowired
   UserHelper userHelper;
   @Autowired
@@ -77,8 +78,10 @@ public abstract class AbstractOauthLogin implements OauthLogin {
     //生成token并且登录
     String token = null;
     try {
-      token = URLEncoder.encode(jwtTokenUtil.generateToken(secuityUser),"utf-8");
+      token = URLEncoder.encode(tokenManager.generateToken(secuityUser),"utf-8");
     } catch (UnsupportedEncodingException e) {
+      e.printStackTrace();
+    } catch (Exception e) {
       e.printStackTrace();
     }
     map.put("redirect", getRedirectUrl() + "?token=" + token);
