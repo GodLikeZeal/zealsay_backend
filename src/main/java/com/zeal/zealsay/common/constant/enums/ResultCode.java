@@ -25,6 +25,7 @@ public enum ResultCode {
   TOKEN_VALIDA_NULL("007","token为空"),
   TOKEN_VALIDA_ERROR("008","token验证错误"),
   TOKEN_VALIDA_FAIL("009","token验证失败"),
+  REQUEST_FREQUENTLY("010","请求频繁"),
   ;
   private String code;
   private String message;

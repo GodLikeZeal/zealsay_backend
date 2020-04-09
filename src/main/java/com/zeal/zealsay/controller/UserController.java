@@ -2,6 +2,7 @@ package com.zeal.zealsay.controller;
 
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.zeal.zealsay.common.annotation.DuplicateSubmit;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.converter.UserConvertMapper;
@@ -301,6 +302,17 @@ public class UserController {
     log.info("获取当前用户动态列表");
     return Result
         .of(blockLogService.getCurrentUserActions());
+  }
+
+  @DuplicateSubmit(time = 60)
+  @GetMapping("/test")
+  public void test() {
+    try {
+      Thread.sleep(5000);
+      System.out.printf("hahaha");
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
   }
 }
 
