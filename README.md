@@ -115,7 +115,7 @@
 ### zealsay blog
 基于zealsay快应用框架构建的博客系统,包含一个blog前端和对应的后台管理系统,为简约,美观和高性能而生。已实现部分功能,项目目前仍在开发中。
 #### 在线预览
-[项目在线预览地址](https://blog.zealsay.com)
+[项目在线预览地址](https://beta.zealsay.com)
 #### TODO LIST
 *  登录模块
 * [x] 用户名密码登录 

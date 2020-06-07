@@ -168,7 +168,7 @@ spring:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
     port: 6379
     timeout: 10000
-  #    password: ENC(y/Q+pGasSBO27pTJlSNjkVtTgoENZAqK)
+    password: ENC(eKuHWGI8NN1dngsFQ+1RBRhLQhbBf34O)
   rabbitmq:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
   datasource:
