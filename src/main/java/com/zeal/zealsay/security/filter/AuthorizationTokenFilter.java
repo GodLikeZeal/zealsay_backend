@@ -57,8 +57,8 @@ public class AuthorizationTokenFilter extends OncePerRequestFilter {
         log.info("couldn't find bearer string, will ignore the header");
       }
 
-      log.info("checking authentication for user '{}'", userInfo.getUsername());
       if (Objects.nonNull(userInfo)) {
+        log.info("checking authentication for user '{}'", userInfo.getUsername());
         log.info("security context was null, so authorizating user");
 
         // It is not compelling necessary to load the use details from the database. You could also store the information

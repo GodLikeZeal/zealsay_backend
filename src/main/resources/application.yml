@@ -13,6 +13,9 @@ spring:
     name: zealsay
   main:
     allow-bean-definition-overriding: true #当遇到相同的名字，是否允许覆盖
+  mvc:
+    servlet:
+      load-on-startup: 1 #一开始就加载
   security:
     oauth2:
       client:
@@ -20,6 +23,7 @@ spring:
           github:
             client-id: 123
             client-secret: 123
+
 
 
 
@@ -263,6 +267,6 @@ justauth:
     github:
       client-id: 123
       client-secret: 123
-      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
+      redirect-uri: http://localhost:8090/api/v1/oauth/github/callback
   cache:
     type: default
