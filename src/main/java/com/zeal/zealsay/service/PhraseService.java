@@ -7,11 +7,13 @@ import com.zeal.zealsay.mapper.PhraseMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Objects;
+import java.util.concurrent.Future;
 
 /**
  * <p>
@@ -34,7 +36,8 @@ public class PhraseService extends AbstractService<PhraseMapper, Phrase> {
    * @author zeal
    * @date 2019/6/30 13:17
    */
-  public HitokotoResponse get() {
+  @Async
+  public Future<HitokotoResponse> get() {
     HitokotoResponse hitokotoResponse;
 
     //随机取出一条
@@ -47,7 +50,7 @@ public class PhraseService extends AbstractService<PhraseMapper, Phrase> {
         .creator(phrase.getCreator())
         .build();
 
-    return hitokotoResponse;
+    return new AsyncResult<>(hitokotoResponse);
   }
 
   /**

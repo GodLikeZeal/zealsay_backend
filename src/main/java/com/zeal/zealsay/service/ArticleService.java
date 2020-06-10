@@ -9,6 +9,7 @@ import com.zeal.zealsay.common.constant.enums.BlockType;
 import com.zeal.zealsay.converter.ArticleConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleAddRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
+import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.ArticleHelper;
@@ -17,12 +18,15 @@ import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Future;
 
 /**
  * <p>
@@ -155,5 +159,20 @@ public class ArticleService extends AbstractService<ArticleMapper, Article> impl
             .id(articleId)
             .readNum(article.getReadNum()+1)
             .build());
+  }
+
+
+  /**
+   * 获取5篇热点文章
+   * .
+   *
+   * @author  zhanglei
+   * @date 2020/6/10 21:03
+   */
+  @Async
+  public Future<List<ArticleResponse>> getHotArticleList() {
+    List<Article> list = list(new QueryWrapper<Article>()
+            .orderByDesc("read_num").last("limit 5"));
+    return new AsyncResult<>(articleConvertMapper.toArticleResponseList(list));
   }
 }

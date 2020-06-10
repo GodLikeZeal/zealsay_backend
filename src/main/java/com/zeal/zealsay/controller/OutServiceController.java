@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.ExecutionException;
+
 /**
 * 外部服务接口.
 *
@@ -32,9 +34,9 @@ public class OutServiceController {
     * @date 2019/6/30 12:56
     */
     @GetMapping("hitokoto")
-    Result<HitokotoResponse> getHitokoto() {
+    Result<HitokotoResponse> getHitokoto() throws ExecutionException, InterruptedException {
         log.info("开始查询一言接口");
-        HitokotoResponse response = phraseService.get();
+        HitokotoResponse response = phraseService.get().get();
         log.info("本次返回一言为{}",response);
         return Result.of(response);
     }

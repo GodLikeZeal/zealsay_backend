@@ -106,7 +106,7 @@ public class ArticleHelper {
    * @author zhanglei
    * @date 2019-05-10  11:25
    */
-  public QueryWrapper<Article> toAeticlePageRequestWrapper(@NonNull ArticlePageRequest pageRequest) {
+  public QueryWrapper<Article> toArticlePageRequestWrapper(@NonNull ArticlePageRequest pageRequest) {
     //构造分页查询条件
     QueryWrapper<Article> wrapper = new QueryWrapper<>();
     wrapper.select("id",
@@ -159,8 +159,8 @@ public class ArticleHelper {
    * @author zhanglei
    * @date 2019-07-05  16:17
    */
-  public QueryWrapper<Article> toAeticlePageRequestWrapperForC(@NonNull ArticlePageRequest pageRequest) {
-    QueryWrapper<Article> wrapper = toAeticlePageRequestWrapper(pageRequest);
+  public QueryWrapper<Article> toArticlePageRequestWrapperForC(@NonNull ArticlePageRequest pageRequest) {
+    QueryWrapper<Article> wrapper = toArticlePageRequestWrapper(pageRequest);
     wrapper.select("id",
         "title",
         "subheading",
@@ -185,6 +185,16 @@ public class ArticleHelper {
           .eq("openness", Openness.SELFONLY));
     }
     return wrapper;
+  }
+
+  /**
+   * 无参数构造.
+   *
+   * @author  zhanglei
+   * @date 2020/6/10 22:03
+   */
+  public QueryWrapper<Article> toArticlePageRequestWrapperForC() {
+    return toArticlePageRequestWrapperForC(ArticlePageRequest.builder().build());
   }
 
   /**

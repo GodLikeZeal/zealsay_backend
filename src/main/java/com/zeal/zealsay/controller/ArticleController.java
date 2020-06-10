@@ -71,7 +71,7 @@ public class ArticleController {
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
     Page<Article> articlePage = (Page<Article>) articleService
-        .page(new Page<>(pageNumber, pageSize), articleHelper.toAeticlePageRequestWrapper(articlePageRequest));
+        .page(new Page<>(pageNumber, pageSize), articleHelper.toArticlePageRequestWrapper(articlePageRequest));
     return Result.of(articleHelper.toPageInfo(articlePage));
   }
 
@@ -88,7 +88,7 @@ public class ArticleController {
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
     Page<Article> articlePage = (Page<Article>) articleService
-        .page(new Page<>(pageNumber, pageSize), articleHelper.toAeticlePageRequestWrapperForC(articlePageRequest));
+        .page(new Page<>(pageNumber, pageSize), articleHelper.toArticlePageRequestWrapperForC(articlePageRequest));
     return Result.of(articleHelper.toPageInfo(articlePage));
   }
 
