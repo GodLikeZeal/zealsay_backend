@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 /**
  * <p>
@@ -65,10 +66,10 @@ public class DictController {
    * @date 2019-04-08  18:03
    */
   @GetMapping("region/province")
-  public Result getProvinceList() {
+  public Result getProvinceList() throws ExecutionException, InterruptedException {
     log.info("开始查询地区省的数据信息");
     return Result.of(dictConvertMapper
-        .toDictResponseList(dictService.getProvinceList()));
+        .toDictResponseList(dictService.getProvinceList().get()));
   }
 
   /**
@@ -78,10 +79,10 @@ public class DictController {
    * @date 2019-04-08  18:03
    */
   @GetMapping("region/city")
-  public Result getCityList(String code) {
+  public Result getCityList(String code) throws ExecutionException, InterruptedException {
     log.info("开始根据code{}查询地区市的数据信息",code);
     return Result.of(dictConvertMapper
-        .toDictResponseList(dictService.getRegionList(code)));
+        .toDictResponseList(dictService.getRegionList(code).get()));
   }
 
   /**
@@ -91,10 +92,10 @@ public class DictController {
    * @date 2019-04-08  18:03
    */
   @GetMapping("region/area")
-  public Result getAreaList(String code) {
+  public Result getAreaList(String code) throws ExecutionException, InterruptedException {
     log.info("开始根据code{}查询地区城市区的数据信息",code);
     return Result.of(dictConvertMapper
-        .toDictResponseList(dictService.getRegionList(code)));
+        .toDictResponseList(dictService.getRegionList(code).get()));
   }
 
   private void setArray(List<Dict> dicts,JSONArray array,Integer parentId, int sort, Integer level) {

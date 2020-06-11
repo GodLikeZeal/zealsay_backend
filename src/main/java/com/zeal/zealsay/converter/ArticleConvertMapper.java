@@ -20,6 +20,8 @@ public interface ArticleConvertMapper {
 
   ArticleResponse toArticleResponse(Article article);
 
+  List<ArticleResponse> toArticleResponseList(List<Article> articles);
+
   ArticlePageResponse toArticlePageResponse(Article article);
 
   Article toArticle(ArticleAddRequest articleAddRequest);

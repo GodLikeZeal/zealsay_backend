@@ -10,6 +10,7 @@ import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserPageRequest;
 import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
+import com.zeal.zealsay.dto.response.ArticlePageResponse;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.Article;
@@ -262,10 +263,10 @@ public class UserController {
    */
   @GetMapping("/blog")
   @ApiOperation(value = "分页获取当前用户博客列表", notes = "分页获取当前用户博客列表")
-  public Result<PageInfo<ArticleResponse>> getBlogByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
-                                                             @RequestParam(defaultValue = "500") Long pageSize) {
+  public Result<PageInfo<ArticlePageResponse>> getBlogByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
+                                                                 @RequestParam(defaultValue = "500") Long pageSize) {
     log.info("开始进行分页查询当前用户博客列表 ");
-    Page<Article> articlePage = (Page<Article>) articleService
+    Page<Article> articlePage = articleService
             .page(new Page<>(pageNumber, pageSize), articleHelper
                     .toCurrentUserBlog());
     return Result
