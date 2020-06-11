@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * <p>
@@ -67,9 +68,9 @@ public class ArticleCategoryController {
    */
   @GetMapping("")
   @ApiOperation(value = "获取分类目录信息", notes = "获取分类目录信息")
-  public Result<List<ArticleCategoryResponse>> getCategoryList() {
+  public Result<List<ArticleCategoryResponse>> getCategoryList() throws ExecutionException, InterruptedException {
     log.info("开始查询分类目录列表");
-    return Result.of(articleCategoryService.getCategoryList());
+    return Result.of(articleCategoryService.getCategoryList().get());
   }
 
   /**

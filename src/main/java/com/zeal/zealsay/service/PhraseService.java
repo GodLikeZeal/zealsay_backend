@@ -39,7 +39,7 @@ public class PhraseService extends AbstractService<PhraseMapper, Phrase> {
   @Async
   public Future<HitokotoResponse> get() {
     HitokotoResponse hitokotoResponse;
-
+    log.info("👌谚语信息获取中...");
     //随机取出一条
     Phrase phrase = baseMapper.randomPhrase();
     hitokotoResponse = HitokotoResponse.builder()
