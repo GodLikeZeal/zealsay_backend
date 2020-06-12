@@ -7,9 +7,10 @@ package com.zeal.zealsay.common.constant.enums;
  * @date 2019-05-07  15:34
  */
 public enum  Role {
-    ADMIN("系统管理员"),
-    EDITOR("作者"),
-    USER("用户")
+    ROLE_ADMIN("系统管理员"),
+    ROLE_EDITOR("作者"),
+    ROLE_USER("用户"),
+    ROLE_EXPERIENCER("体验者")
     ;
 
     private String description;

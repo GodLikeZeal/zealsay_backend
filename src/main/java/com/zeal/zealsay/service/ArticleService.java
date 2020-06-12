@@ -11,6 +11,7 @@ import com.zeal.zealsay.dto.request.ArticleAddRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
+import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.ArticleHelper;
 import com.zeal.zealsay.mapper.ArticleMapper;
@@ -23,6 +24,7 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -161,6 +163,26 @@ public class ArticleService extends AbstractService<ArticleMapper, Article> impl
         .build());
   }
 
+  /**
+   * 今日新增blog.
+   *
+   * @author  zhanglei
+   * @date 2020/6/12  2:19 下午
+   */
+  public long countArticleAdd() {
+    return count(new QueryWrapper<Article>().ge("create_date", LocalDateTime.now())
+        .lt("create_date",LocalDateTime.now().plusDays(1)));
+  }
+
+  /**
+   * 总blog数.
+   *
+   * @author  zhanglei
+   * @date 2020/6/12  2:19 下午
+   */
+  public long countArticle() {
+    return count();
+  }
 
   /**
    * 获取5篇热点文章

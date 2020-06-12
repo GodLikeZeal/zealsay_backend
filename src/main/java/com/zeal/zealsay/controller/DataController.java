@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.ImmutableMap;
 import com.zeal.zealsay.common.annotation.DuplicateSubmit;
+import com.zeal.zealsay.common.constant.enums.ResultCode;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.converter.ArticleLabelConvertMapper;
@@ -16,6 +17,7 @@ import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.dto.response.*;
 import com.zeal.zealsay.entity.*;
+import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.feign.HitokotoClient;
 import com.zeal.zealsay.feign.response.HitokotoResponse;
 import com.zeal.zealsay.helper.ArticleHelper;
@@ -26,6 +28,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,6 +37,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -122,12 +127,16 @@ public class DataController {
    * @author zhanglei
    * @date 2020/6/11  4:34 下午
    */
+  @PostAuthorize("principal.username.equals(returnObject.data.get('user').username)")
   @GetMapping("/user/{id}")
   @ApiOperation(value = "用户中心信息获取", notes = "用户中心信息获取")
   public Result<Map<String, Object>> getUserData(@PathVariable String id) throws ExecutionException, InterruptedException {
-    log.info("用户中心信息获取中...");
+    log.info("👕用户中心信息获取中...");
     //获取当前用户信息
     UserResponse user = userConvertMapper.toUserResponse(userService.getById(id));
+    if (Objects.isNull(user)) {
+      throw new ServiceException(ResultCode.NOT_FOUND.getCode(),"用户不存在");
+    }
     Page<Article> articlePage = articleService
         .page(new Page<>(1, 500), articleHelper
             .toCurrentUserBlog());
@@ -151,7 +160,7 @@ public class DataController {
     //角色信息
     List<RoleResponse> roles = roleConvertMapper.toRoleResponseList(roleService.list());
 
-    log.info("用户中心信息获取完毕");
+    log.info("👕用户中心信息获取完毕");
     return Result
         .of(ImmutableMap.builder()
             .put("user", user)
@@ -160,7 +169,32 @@ public class DataController {
             .put("actions", actions)
             .put("categorys", categorys)
             .put("roles", roles)
-            .put("provinces", provinces)
+            .put("province", provinces)
+            .build());
+  }
+
+  /**
+   * 后台管理页面数据.
+   *
+   * @author  zhanglei
+   * @date 2020/6/12  2:28 下午
+   */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+  @GetMapping("/admin/dashboard")
+  @ApiOperation(value = "后台管理页面数据获取", notes = "后台管理页面获取")
+  public Result<Map<String,Object>> getDashboardData() {
+    log.info("👕后台管理页面数据获取中...");
+    long userNum = userService.countUser();
+    long userAddNum = userService.countUserAdd();
+    long blogNum = articleService.count();
+    long blogAddNum = articleService.countArticleAdd();
+    log.info("👕后台管理页面数据获取完毕");
+    return Result
+        .of(ImmutableMap.builder()
+            .put("userNum", userNum)
+            .put("userAddNum", userAddNum)
+            .put("blogNum", blogNum)
+            .put("blogAddNum", blogAddNum)
             .build());
   }
 }
