@@ -89,7 +89,7 @@ public class UserHelper {
         .status(UserStatus.NORMAL)
         .avatar(gennerateAvatar())
         .emailConfirm(false)
-        .role(Role.USER)
+        .role(Role.ROLE_USER)
         .introduction("这人懒死了，什么都没有写⊙﹏⊙∥∣°")
         .registerDate(LocalDateTime.now())
         .build();
