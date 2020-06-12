@@ -2,6 +2,9 @@ package com.zeal.zealsay.security.handler;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeal.zealsay.common.entity.Result;
+import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.common.entity.UserInfo;
+import com.zeal.zealsay.security.core.TokenManager;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -29,14 +32,18 @@ public class MyLogoutSuccessHandler implements LogoutSuccessHandler {
   private ObjectMapper objectMapper;
 
   @Autowired
-  JwtTokenUtil jwtTokenUtil;
+  UserDetailServiceImpl userDetailService;
 
   @Autowired
-  UserDetailServiceImpl userDetailService;
+  TokenManager tokenManager;
 
 
   @Override
   public void onLogoutSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
+    final SecuityUser secuityUser = (SecuityUser) authentication.getPrincipal();
+    final UserInfo userInfo = userDetailService.toUserInfo(secuityUser.getUserId());
+    // 移除之前的token（包含member信息、token排行信息）
+    tokenManager.delToken(userInfo);
     httpServletResponse.setContentType("application/json;charset=UTF-8");
     httpServletResponse.setStatus(HttpServletResponse.SC_OK);
     httpServletResponse.getWriter()

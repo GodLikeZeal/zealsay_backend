@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -367,6 +368,27 @@ public class UserService extends AbstractService<UserMapper, User> implements IS
     return update(new User(),new UpdateWrapper<User>()
         .set("email_confirm", YesOrNo.YES.getDescription())
         .eq("email",email));
+  }
+
+  /**
+   * 今日新增用户.
+   *
+   * @author  zhanglei
+   * @date 2020/6/12  2:19 下午
+   */
+  public long countUserAdd() {
+    return count(new QueryWrapper<User>().ge("register_date", LocalDateTime.now())
+        .lt("register_date",LocalDateTime.now().plusDays(1)));
+  }
+
+  /**
+   * 总用户.
+   *
+   * @author  zhanglei
+   * @date 2020/6/12  2:19 下午
+   */
+  public long countUser() {
+    return count();
   }
 
   /**
