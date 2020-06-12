@@ -144,7 +144,7 @@ public abstract class AbstractOauthLogin implements OauthLogin {
         .address(authUser.getLocation())
         .status(UserStatus.NORMAL)
         .emailConfirm(false)
-        .role(Role.USER)
+        .role(Role.ROLE_USER)
         .introduction("这人懒死了，什么都没有写⊙﹏⊙∥∣°")
         .registerDate(LocalDateTime.now())
         .build();
