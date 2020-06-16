@@ -23,31 +23,31 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class ArticleCategory implements Serializable {
 
-    /**
-     * 主键id.
-     */
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
+  /**
+   * 主键id.
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
-    /**
-     * 名称.
-     */
-    private String name;
+  /**
+   * 名称.
+   */
+  private String name;
 
-    /**
-     * 别名.
-     */
-    private String alias;
+  /**
+   * 别名.
+   */
+  private String alias;
 
-    /**
-     * 描述.
-     */
-    private String description;
+  /**
+   * 描述.
+   */
+  private String description;
 
-    /**
-     * 父类id.
-     */
-    private Long parentId;
+  /**
+   * 父类id.
+   */
+  private Long parentId;
 
 
 }

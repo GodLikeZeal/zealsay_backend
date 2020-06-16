@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -16,7 +17,7 @@ import lombok.experimental.Accessors;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author zhanglei
@@ -30,36 +31,36 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class Phrase implements Serializable {
 
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
-    /**
-     * 正文
-     */
-    private String hitokoto;
+  /**
+   * 正文
+   */
+  private String hitokoto;
 
-    /**
-     * 类型
-     */
-    private String type;
+  /**
+   * 类型
+   */
+  private String type;
 
-    /**
-     * 来源
-     */
-    private String source;
+  /**
+   * 来源
+   */
+  private String source;
 
-    /**
-     * 创建者
-     */
-    private String creator;
+  /**
+   * 创建者
+   */
+  private String creator;
 
-    /**
-     * 创建时间
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
-    @JsonSerialize(using = LocalDateSerializer.class)
-    @JsonDeserialize(using = LocalDateDeserializer.class)
-    private LocalDate createdAt;
+  /**
+   * 创建时间
+   */
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateSerializer.class)
+  @JsonDeserialize(using = LocalDateDeserializer.class)
+  private LocalDate createdAt;
 
 
 }

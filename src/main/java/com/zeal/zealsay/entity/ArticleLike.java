@@ -31,38 +31,38 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class ArticleLike implements Serializable {
 
-    /**
-     * 主键id.
-     */
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
+  /**
+   * 主键id.
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
-    /**
-     * 文章编号.
-     */
-    private Long articleId;
+  /**
+   * 文章编号.
+   */
+  private Long articleId;
 
-    /**
-     * 文章名称.
-     */
-    private String articleName;
+  /**
+   * 文章名称.
+   */
+  private String articleName;
 
-    /**
-     * 用户id.
-     */
-    private Long userId;
+  /**
+   * 用户id.
+   */
+  private Long userId;
 
-    /**
-     * 用户名称.
-     */
-    private String userName;
+  /**
+   * 用户名称.
+   */
+  private String userName;
 
-    /**
-     * 创建时间.
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime createDate;
+  /**
+   * 创建时间.
+   */
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime createDate;
 
 }
