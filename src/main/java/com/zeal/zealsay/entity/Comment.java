@@ -46,6 +46,11 @@ public class Comment implements Serializable {
    */
   private Long articleId;
 
+  /**
+   * 文章名称.
+   */
+  private String articleName;
+
 
   /**
    * 父层id.

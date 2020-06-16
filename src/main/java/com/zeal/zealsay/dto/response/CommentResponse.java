@@ -47,6 +47,10 @@ public class CommentResponse implements Serializable {
    */
   private Long articleId;
 
+  /**
+   * 文章名称.
+   */
+  private String articleName;
 
   /**
    * 父层id.
@@ -80,6 +84,11 @@ public class CommentResponse implements Serializable {
    * 前端是否打开评论框.
    */
   private Boolean inputText;
+
+  /**
+   * 点赞.
+   */
+  private Boolean thumbUp;
 
   /**
    * 回复的评论.

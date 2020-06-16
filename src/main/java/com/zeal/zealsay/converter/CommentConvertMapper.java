@@ -1,5 +1,6 @@
 package com.zeal.zealsay.converter;
 
+import com.zeal.zealsay.dto.request.CommentRequest;
 import com.zeal.zealsay.dto.response.CommentResponse;
 import com.zeal.zealsay.entity.Comment;
 import org.mapstruct.Mapper;
@@ -15,6 +16,9 @@ import org.mapstruct.Mapper;
 public interface CommentConvertMapper {
 
   CommentResponse toCommentResponse(Comment comment);
+
+
+  Comment toComment(CommentRequest commentRequest);
 
 
 }

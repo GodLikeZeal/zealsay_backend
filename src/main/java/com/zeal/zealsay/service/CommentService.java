@@ -4,13 +4,19 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.common.entity.PageInfo;
+import com.zeal.zealsay.converter.CommentConvertMapper;
+import com.zeal.zealsay.dto.request.CommentRequest;
 import com.zeal.zealsay.dto.response.CommentResponse;
 import com.zeal.zealsay.entity.Comment;
 import com.zeal.zealsay.exception.ServiceException;
+import com.zeal.zealsay.helper.CommentHelper;
 import com.zeal.zealsay.mapper.CommentMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 
 /**
@@ -24,6 +30,24 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class CommentService extends AbstractService<CommentMapper, Comment> implements IService<Comment> {
 
+  @Autowired
+  CommentHelper commentHelper;
+  @Autowired
+  CommentConvertMapper commentConvertMapper;
+
+  /**
+   * 发表评论.
+   *
+   * @author  zhanglei
+   * @date 2020/6/16 21:13
+   */
+  public Boolean createComment(CommentRequest commentRequest) {
+    Comment comment = commentConvertMapper.toComment(commentRequest);
+    comment.setCreateDate(LocalDateTime.now());
+    comment.setIsDel(false);
+    comment.setLikeNum(0);
+    return save(comment);
+  }
 
   /**
    * 根据文章id查询.
@@ -36,6 +60,6 @@ public class CommentService extends AbstractService<CommentMapper, Comment> impl
     wrapper.orderByDesc("create_date");
     wrapper.eq("article_id", articleId);
     Page<Comment> page = page(new Page<>(pageNumber, pageSize), wrapper);
-    return null;
+    return commentHelper.toPageInfo(page);
   }
 }
