@@ -5,6 +5,8 @@ import com.zeal.zealsay.dto.response.CommentResponse;
 import com.zeal.zealsay.entity.Comment;
 import org.mapstruct.Mapper;
 
+import java.util.List;
+
 
 /**
  * role相关转换器.
@@ -16,6 +18,8 @@ import org.mapstruct.Mapper;
 public interface CommentConvertMapper {
 
   CommentResponse toCommentResponse(Comment comment);
+
+  List<CommentResponse> toCommentResponseList(List<Comment> comment);
 
 
   Comment toComment(CommentRequest commentRequest);

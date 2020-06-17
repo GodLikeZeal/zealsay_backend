@@ -84,7 +84,7 @@ public class CommentController {
      * @date 2020/6/17  5:42 下午
      */
     @DuplicateSubmit
-    @GetMapping("/thumb/dowm/{id}")
+    @GetMapping("/thumb/down/{id}")
     @ApiOperation(value = "对评论进行点赞",notes = "根据评论id来点赞")
     public Result<Boolean> thumbDown(@PathVariable Long id) {
         log.info("id为 '{}' 的评论被取消赞一次", id);

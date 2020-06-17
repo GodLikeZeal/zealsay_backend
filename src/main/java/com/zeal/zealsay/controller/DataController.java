@@ -177,7 +177,9 @@ public class DataController {
    */
   @GetMapping("/article/{id}")
   @ApiOperation(value = "获取博客详情页数据", notes = "获取博客详情页数据")
-  public Result<Map<String, Object>> getArticleDetail(@PathVariable Long id) throws ExecutionException, InterruptedException {
+  public Result<Map<String, Object>> getArticleDetail(@PathVariable Long id,
+                                                      @RequestParam(defaultValue = "1") Long pageNumber,
+                                                      @RequestParam(defaultValue = "10") Long pageSize) throws ExecutionException, InterruptedException {
     log.info("🌴文章详情页面数据展现...");
 
     //获取文章
@@ -188,7 +190,7 @@ public class DataController {
 
     //获取评论
 
-    PageInfo<CommentResponse> commentPage = commentService.pageCommentList(1L, 10L, id);
+    PageInfo<CommentResponse> commentPage = commentService.pageCommentList(pageNumber, pageSize, id);
     //判断是否喜欢过
     Boolean like = false;
     SecuityUser currentUser = userDetailService.getCurrentUser();

@@ -1,13 +1,16 @@
 package com.zeal.zealsay.helper;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.converter.CommentConvertMapper;
 import com.zeal.zealsay.dto.response.CommentResponse;
 import com.zeal.zealsay.entity.Comment;
+import com.zeal.zealsay.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +24,8 @@ import java.util.stream.Collectors;
 @Component
 public class CommentHelper {
 
+  @Autowired
+  CommentService commentService;
   @Autowired
   CommentConvertMapper commentConvertMapper;
 
@@ -55,6 +60,17 @@ public class CommentHelper {
   private CommentResponse applyPage(Comment c) {
     CommentResponse commentResponse= commentConvertMapper.toCommentResponse(c);
     commentResponse.setInputText(false);
+    List<Comment> list = commentService.list(new QueryWrapper<Comment>()
+            .eq("comment_id",c.getId()));
+    List<CommentResponse> responses = null;
+    if (!CollectionUtils.isEmpty(list)) {
+      responses = list.stream().map(r -> {
+        CommentResponse response = commentConvertMapper.toCommentResponse(r);
+        response.setInputText(false);
+        return response;
+      }).collect(Collectors.toList());
+    }
+    commentResponse.setReplys(responses);
     return commentResponse;
   }
 

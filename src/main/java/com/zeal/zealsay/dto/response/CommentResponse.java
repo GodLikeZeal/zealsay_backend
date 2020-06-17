@@ -1,7 +1,5 @@
 package com.zeal.zealsay.dto.response;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -32,7 +30,7 @@ public class CommentResponse implements Serializable {
   /**
    * id.
    */
-  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long id;
 
 
@@ -45,6 +43,7 @@ public class CommentResponse implements Serializable {
   /**
    * 文章id.
    */
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long articleId;
 
   /**
@@ -55,12 +54,14 @@ public class CommentResponse implements Serializable {
   /**
    * 父层id.
    */
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long commentId;
 
 
   /**
    * 评论者id.
    */
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long fromId;
 
   /**

@@ -60,6 +60,7 @@ public class CommentService extends AbstractService<CommentMapper, Comment> impl
     QueryWrapper<Comment> wrapper = new QueryWrapper<>();
     wrapper.orderByDesc("create_date");
     wrapper.eq("article_id", articleId);
+    wrapper.isNull("comment_id");
     Page<Comment> page = page(new Page<>(pageNumber, pageSize), wrapper);
     return commentHelper.toPageInfo(page);
   }
