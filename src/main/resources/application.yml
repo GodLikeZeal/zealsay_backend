@@ -2,9 +2,6 @@ debug: false
 
 server:
   port: 8090
-  jetty:
-    acceptors: 2 #Jetty的线程架构模型非常简单，分为acceptors，selectors和workers三个线程池。acceptors负责接受新连接，然后交给selectors处理
-    selectors: 4
 
 spring:
   profiles:
@@ -16,15 +13,14 @@ spring:
   mvc:
     servlet:
       load-on-startup: 1 #一开始就加载
-  security:
-    oauth2:
-      client:
-        registration:
-          github:
-            client-id: 123
-            client-secret: 123
-
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*' #监控暴露所有端口，默认为["health","info"]
+  endpoint:
+    health:
+      show-details: when_authorized #授权显示健康信息
 
 
 jwt:
@@ -82,12 +78,14 @@ ignore:
     - /api/v1/authentication/logout
     - /api/v1/oauth/**
     - /api/v1/data/index
+    - /api/v1/data/article/*
     - /api/v1/service/hitokoto
     - /api/v1/article/c/page
     - /api/v1/article/category
     - /api/v1/article/label/page
     - /api/v1/article/read/*
     - /api/v1/article/*
+    - /api/v1/comment/thumb/*
     - /api/v1/friend/link/page
     - /api/v1/user/use/username/*
     - /api/v1/user/use/email/*

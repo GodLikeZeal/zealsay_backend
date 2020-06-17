@@ -25,46 +25,46 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class Dict implements Serializable {
 
-    /**
-     * 主键.
-     */
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
+  /**
+   * 主键.
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
-    /**
-     * 编码.
-     */
-    private Integer code;
+  /**
+   * 编码.
+   */
+  private Integer code;
 
-    /**
-     * 名称.
-     */
-    private String name;
+  /**
+   * 名称.
+   */
+  private String name;
 
-    /**
-     * 拼音简称.
-     */
-    private String enShort;
+  /**
+   * 拼音简称.
+   */
+  private String enShort;
 
-    /**
-     * 父层code.
-     */
-    private Integer parentCode;
+  /**
+   * 父层code.
+   */
+  private Integer parentCode;
 
-    /**
-     * 类型.
-     */
-    private String type;
+  /**
+   * 类型.
+   */
+  private String type;
 
-    /**
-     * 描述.
-     */
-    private String description;
+  /**
+   * 描述.
+   */
+  private String description;
 
-    /**
-     * 顺序.
-     */
-    private Integer sort;
+  /**
+   * 顺序.
+   */
+  private Integer sort;
 
 
 }

@@ -3,11 +3,6 @@ package com.zeal.zealsay.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableLogic;
-
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -16,21 +11,22 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.*;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
+
 /**
- * 角色实体.
+ * 评论回复.
  *
  * @author zhanglei
- * @date 2018/11/15  7:16 PM
+ * @date 2020/6/16  4:41 下午
  */
 @Builder(toBuilder = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
-@TableName("sys_role")
 @Accessors(chain = true)
-public class Role implements Serializable {
-
+public class Comment implements Serializable {
 
   /**
    * id.
@@ -38,20 +34,51 @@ public class Role implements Serializable {
   @TableId(value = "id", type = IdType.ASSIGN_ID)
   private Long id;
 
-  /**
-   * 角色名称.
-   */
-  private String name;
 
   /**
-   * 角色值.
+   * 评论内容.
    */
-  private String value;
+  private String content;
+
 
   /**
-   * 描述.
+   * 文章id.
    */
-  private String description;
+  private Long articleId;
+
+  /**
+   * 文章名称.
+   */
+  private String articleTitle;
+
+
+  /**
+   * 父层id.
+   */
+  private Long commentId;
+
+
+  /**
+   * 评论者id.
+   */
+  private Long fromId;
+
+  /**
+   * 评论者名称.
+   */
+  private String fromName;
+
+
+  /**
+   * 头像.
+   */
+  private String fromAvatar;
+
+
+  /**
+   * 点赞人数.
+   */
+  private Integer likeNum;
 
   /**
    * 是否删除.
@@ -67,12 +94,5 @@ public class Role implements Serializable {
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   private LocalDateTime createDate;
 
-  /**
-   * 更新时间.
-   */
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-  @JsonSerialize(using = LocalDateTimeSerializer.class)
-  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-  private LocalDateTime updateDate;
 
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -29,81 +30,81 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class AuthUser implements Serializable {
 
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
-    /**
-     * uuid.
-     */
-    private String uid;
+  /**
+   * uuid.
+   */
+  private String uid;
 
-    /**
-     * 用户名.
-     */
-    private String username;
+  /**
+   * 用户名.
+   */
+  private String username;
 
-    /**
-     * 昵称.
-     */
-    private String nickname;
+  /**
+   * 昵称.
+   */
+  private String nickname;
 
-    /**
-     * 头像.
-     */
-    private String avatar;
+  /**
+   * 头像.
+   */
+  private String avatar;
 
-    /**
-     * 博客.
-     */
-    private String blog;
+  /**
+   * 博客.
+   */
+  private String blog;
 
-    /**
-     * 公司.
-     */
-    private String company;
+  /**
+   * 公司.
+   */
+  private String company;
 
-    /**
-     * 位置.
-     */
-    private String location;
+  /**
+   * 位置.
+   */
+  private String location;
 
-    /**
-     * 邮箱.
-     */
-    private String email;
+  /**
+   * 邮箱.
+   */
+  private String email;
 
-    /**
-     * 个人说明.
-     */
-    private String remark;
+  /**
+   * 个人说明.
+   */
+  private String remark;
 
-    /**
-     * 性别.
-     */
-    private String gender;
+  /**
+   * 性别.
+   */
+  private String gender;
 
-    /**
-     * 来源.
-     */
-    private String source;
+  /**
+   * 来源.
+   */
+  private String source;
 
-    /**
-     * 是否绑定过.
-     */
-    private Boolean bind;
+  /**
+   * 是否绑定过.
+   */
+  private Boolean bind;
 
-    /**
-     * 用户id.
-     */
-    private Long userId;
+  /**
+   * 用户id.
+   */
+  private Long userId;
 
-    /**
-     * 创建时间.
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime createDate;
+  /**
+   * 创建时间.
+   */
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime createDate;
 
 
 }

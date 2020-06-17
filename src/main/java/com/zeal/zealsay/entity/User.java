@@ -40,7 +40,7 @@ public class User implements Serializable {
   /**
    * id.
    */
-  @TableId(value = "id", type = IdType.ID_WORKER)
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
   private Long id;
 
   /**
@@ -152,5 +152,5 @@ public class User implements Serializable {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-  private  LocalDateTime updateDate;
+  private LocalDateTime updateDate;
 }

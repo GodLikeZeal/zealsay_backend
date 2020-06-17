@@ -23,36 +23,36 @@ import java.io.Serializable;
 @Accessors(chain = true)
 public class ArticleLabel implements Serializable {
 
-    /**
-     * id.
-     */
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
+  /**
+   * id.
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
-    /**
-     * 名称.
-     */
-    private String name;
+  /**
+   * 名称.
+   */
+  private String name;
 
-    /**
-     * 图标.
-     */
-    private String icon;
+  /**
+   * 图标.
+   */
+  private String icon;
 
-    /**
-     * 热度.
-     */
-    private Long hot;
+  /**
+   * 热度.
+   */
+  private Long hot;
 
-    /**
-     * 外层颜色.
-     */
-    private String outColor;
+  /**
+   * 外层颜色.
+   */
+  private String outColor;
 
-    /**
-     * 头像颜色.
-     */
-    private String avatarColor;
+  /**
+   * 头像颜色.
+   */
+  private String avatarColor;
 
 
 }

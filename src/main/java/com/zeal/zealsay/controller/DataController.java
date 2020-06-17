@@ -1,40 +1,33 @@
 package com.zeal.zealsay.controller;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.ImmutableMap;
-import com.zeal.zealsay.common.annotation.DuplicateSubmit;
 import com.zeal.zealsay.common.constant.enums.ResultCode;
 import com.zeal.zealsay.common.entity.PageInfo;
 import com.zeal.zealsay.common.entity.Result;
+import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.converter.ArticleLabelConvertMapper;
 import com.zeal.zealsay.converter.RoleConvertMapper;
 import com.zeal.zealsay.converter.UserConvertMapper;
-import com.zeal.zealsay.dto.request.UserAddRequest;
-import com.zeal.zealsay.dto.request.UserPageRequest;
-import com.zeal.zealsay.dto.request.UserRegisterRequest;
-import com.zeal.zealsay.dto.request.UserUpdateRequest;
+import com.zeal.zealsay.dto.request.*;
 import com.zeal.zealsay.dto.response.*;
 import com.zeal.zealsay.entity.*;
 import com.zeal.zealsay.exception.ServiceException;
-import com.zeal.zealsay.feign.HitokotoClient;
 import com.zeal.zealsay.feign.response.HitokotoResponse;
 import com.zeal.zealsay.helper.ArticleHelper;
 import com.zeal.zealsay.helper.ArticleLikeHelper;
 import com.zeal.zealsay.helper.UserHelper;
 import com.zeal.zealsay.service.*;
+import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.UnsupportedEncodingException;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -67,13 +60,17 @@ public class DataController {
   @Autowired
   PhraseService phraseService;
   @Autowired
+  CommentService commentService;
+  @Autowired
   ArticleLabelService articleLabelService;
+  @Autowired
+  ArticleLikeService articleLikeService;
   @Autowired
   ArticleCategoryService articleCategoryService;
   @Autowired
   ArticleHelper articleHelper;
   @Autowired
-  ArticleLikeService articleLikeService;
+  UserDetailServiceImpl userDetailService;
   @Autowired
   ArticleLikeHelper articleLikeHelper;
   @Autowired
@@ -93,7 +90,7 @@ public class DataController {
    */
   @GetMapping("/index")
   @ApiOperation(value = "首页数据获取", notes = "首页数据获取")
-  public Result<Map<String, Object>> getIndexData() throws ExecutionException, InterruptedException {
+  public Result<Map<String, Object>> getIndexData(ArticlePageRequest articlePageRequest) throws ExecutionException, InterruptedException {
     log.info("首页数据获取中...");
     //获取五篇火热文章
     List<ArticleResponse> hotArticles = articleService.getHotArticleList().get();
@@ -106,8 +103,7 @@ public class DataController {
         .toArticleLabelResponseList(articleLabelService.list());
     //获取文章列表
     Page<Article> articlePage = (Page<Article>) articleService
-        .page(new Page<>(1, 10), articleHelper
-            .toArticlePageRequestWrapperForC());
+        .page(new Page<>(1, 10), articleHelper.toArticlePageRequestWrapperForC(articlePageRequest));
     PageInfo<ArticlePageResponse> pageInfo = articleHelper.toPageInfo(articlePage);
 
     log.info("首页数据获取完毕");
@@ -135,7 +131,7 @@ public class DataController {
     //获取当前用户信息
     UserResponse user = userConvertMapper.toUserResponse(userService.getById(id));
     if (Objects.isNull(user)) {
-      throw new ServiceException(ResultCode.NOT_FOUND.getCode(),"用户不存在");
+      throw new ServiceException(ResultCode.NOT_FOUND.getCode(), "用户不存在");
     }
     Page<Article> articlePage = articleService
         .page(new Page<>(1, 500), articleHelper
@@ -174,15 +170,54 @@ public class DataController {
   }
 
   /**
+   * 文章详情接口.
+   *
+   * @author zhanglei
+   * @date 2020/6/17  6:49 下午
+   */
+  @GetMapping("/article/{id}")
+  @ApiOperation(value = "获取博客详情页数据", notes = "获取博客详情页数据")
+  public Result<Map<String, Object>> getArticleDetail(@PathVariable Long id,
+                                                      @RequestParam(defaultValue = "1") Long pageNumber,
+                                                      @RequestParam(defaultValue = "10") Long pageSize) throws ExecutionException, InterruptedException {
+    log.info("🌴文章详情页面数据展现...");
+
+    //获取文章
+    ArticleResponse article = articleHelper.toArticleResponse(articleService.getById(id));
+
+    //获取分类
+    List<ArticleCategoryResponse> categorys = articleCategoryService.getCategoryList().get();
+
+    //获取评论
+
+    PageInfo<CommentResponse> commentPage = commentService.pageCommentList(pageNumber, pageSize, id);
+    //判断是否喜欢过
+    Boolean like = false;
+    SecuityUser currentUser = userDetailService.getCurrentUser();
+    if (Objects.nonNull(currentUser)) {
+      like = articleLikeService.islike(id);
+    }
+
+    log.info("👕文章详情页面数据获取完毕");
+    return Result
+        .of(ImmutableMap.builder()
+            .put("article", article)
+            .put("commentPage", commentPage)
+            .put("like", like)
+            .put("categorys", categorys)
+            .build());
+  }
+
+  /**
    * 后台管理页面数据.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2020/6/12  2:28 下午
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @GetMapping("/admin/dashboard")
   @ApiOperation(value = "后台管理页面数据获取", notes = "后台管理页面获取")
-  public Result<Map<String,Object>> getDashboardData() {
+  public Result<Map<String, Object>> getDashboardData() {
     log.info("👕后台管理页面数据获取中...");
     long userNum = userService.countUser();
     long userAddNum = userService.countUserAdd();

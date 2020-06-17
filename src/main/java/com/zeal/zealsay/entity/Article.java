@@ -32,99 +32,99 @@ import java.time.LocalDateTime;
 @Accessors(chain = true)
 public class Article implements Serializable {
 
-    /**
-     * id.
-     */
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
+  /**
+   * id.
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
 
-    /**
-     * 标题.
-     */
-    private String title;
+  /**
+   * 标题.
+   */
+  private String title;
 
 
-    /**
-     * 副标题.
-     */
-    private String subheading;
+  /**
+   * 副标题.
+   */
+  private String subheading;
 
 
-    /**
-     * markdown内容.
-     */
-    private String contentMd;
+  /**
+   * markdown内容.
+   */
+  private String contentMd;
 
 
-    /**
-     * html内容.
-     */
-    private String contentHtml;
+  /**
+   * html内容.
+   */
+  private String contentHtml;
 
-    /**
-     * 封面图片.
-     */
-    private String coverImage;
-
-
-    /**
-     * 状态.
-     */
-    private ArticleStatus status;
+  /**
+   * 封面图片.
+   */
+  private String coverImage;
 
 
-    /**
-     * 公开度.
-     */
-    private Openness openness;
+  /**
+   * 状态.
+   */
+  private ArticleStatus status;
 
-    /**
-     * 标签.
-     */
-    private String label;
 
-    /**
-     * 阅读数.
-     */
-    private Integer readNum;
+  /**
+   * 公开度.
+   */
+  private Openness openness;
 
-    /**
-     * 点赞数.
-     */
-    private Integer likeNum;
+  /**
+   * 标签.
+   */
+  private String label;
 
-    /**
-     * 分类目录id.
-     */
-    private Long categoryId;
+  /**
+   * 阅读数.
+   */
+  private Integer readNum;
 
-    /**
-     * 作者编号.
-     */
-    private Long authorId;
+  /**
+   * 点赞数.
+   */
+  private Integer likeNum;
 
-    /**
-     * 是否删除.
-     */
-    @TableLogic
-    private Boolean isDel;
+  /**
+   * 分类目录id.
+   */
+  private Long categoryId;
 
-    /**
-     * 创建时间.
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime createDate;
+  /**
+   * 作者编号.
+   */
+  private Long authorId;
 
-    /**
-     * 更新时间.
-     */
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @JsonSerialize(using = LocalDateTimeSerializer.class)
-    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
-    private LocalDateTime updateDate;
+  /**
+   * 是否删除.
+   */
+  @TableLogic
+  private Boolean isDel;
+
+  /**
+   * 创建时间.
+   */
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime createDate;
+
+  /**
+   * 更新时间.
+   */
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime updateDate;
 
 
 }
