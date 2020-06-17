@@ -49,7 +49,7 @@ public class Comment implements Serializable {
   /**
    * 文章名称.
    */
-  private String articleName;
+  private String articleTitle;
 
 
   /**

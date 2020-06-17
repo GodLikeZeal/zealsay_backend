@@ -84,6 +84,7 @@ ignore:
     - /api/v1/article/label/page
     - /api/v1/article/read/*
     - /api/v1/article/*
+    - /api/v1/comment/thumb/*
     - /api/v1/friend/link/page
     - /api/v1/user/use/username/*
     - /api/v1/user/use/email/*

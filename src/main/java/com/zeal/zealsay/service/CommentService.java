@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 
 /**
@@ -38,7 +39,7 @@ public class CommentService extends AbstractService<CommentMapper, Comment> impl
   /**
    * 发表评论.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2020/6/16 21:13
    */
   public Boolean createComment(CommentRequest commentRequest) {
@@ -61,5 +62,40 @@ public class CommentService extends AbstractService<CommentMapper, Comment> impl
     wrapper.eq("article_id", articleId);
     Page<Comment> page = page(new Page<>(pageNumber, pageSize), wrapper);
     return commentHelper.toPageInfo(page);
+  }
+
+  /**
+   * 点赞评论.
+   *
+   * @author zhanglei
+   * @date 2020/6/17  5:52 下午
+   */
+  public Boolean thumbUp(Long id) {
+    Comment comment = getById(id);
+    if (Objects.isNull(comment)) {
+      throw new ServiceException("评论参数有误");
+    }
+    return updateById(Comment.builder()
+        .id(id)
+        .likeNum(comment.getLikeNum() + 1)
+        .build());
+  }
+
+  /**
+   * 取消点赞评论.
+   *
+   * @author zhanglei
+   * @date 2020/6/17  5:52 下午
+   */
+  public Boolean thumbDown(Long id) {
+    Comment comment = getById(id);
+    if (Objects.isNull(comment)) {
+      throw new ServiceException("评论参数有误");
+    }
+    int num = Math.max(comment.getLikeNum() - 1, 0);
+    return updateById(Comment.builder()
+        .id(id)
+        .likeNum(num)
+        .build());
   }
 }

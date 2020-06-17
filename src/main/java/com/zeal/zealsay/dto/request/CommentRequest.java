@@ -39,7 +39,7 @@ public class CommentRequest implements Serializable {
    * 文章名称.
    */
   @NotNull(message = "文章名称不能为空")
-  private String articleName;
+  private String articleTitle;
 
   /**
    * 父层id.
