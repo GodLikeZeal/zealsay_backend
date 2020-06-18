@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.zeal.zealsay.common.entity.PageInfo;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -94,7 +95,7 @@ public class CommentResponse implements Serializable {
   /**
    * 回复的评论.
    */
-  private List<CommentResponse> replys;
+  private PageInfo<CommentResponse> replys;
 
   /**
    * 是否删除.

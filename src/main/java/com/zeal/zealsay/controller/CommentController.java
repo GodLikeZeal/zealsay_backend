@@ -58,9 +58,10 @@ public class CommentController {
     @ApiOperation(value = "分页查询评论", notes = "分页查询评论")
     public Result<PageInfo<ArticleResponse>> getByPaginate(@RequestParam(defaultValue = "1") Long pageNumber,
                                                            @RequestParam(defaultValue = "10") Long pageSize,
+                                                           @RequestParam(required = false) Long commentId,
                                                            @RequestParam Long articleId) {
         log.info("开始进行分页查询列表");
-        return Result.of(commentService.pageCommentList(pageNumber, pageSize, articleId));
+        return Result.of(commentService.pageCommentList(pageNumber, pageSize, articleId,commentId));
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.zeal.zealsay.controller;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.google.common.collect.ImmutableMap;
 import com.zeal.zealsay.common.constant.enums.ResultCode;
@@ -106,6 +107,9 @@ public class DataController {
         .page(new Page<>(1, 10), articleHelper.toArticlePageRequestWrapperForC(articlePageRequest));
     PageInfo<ArticlePageResponse> pageInfo = articleHelper.toPageInfo(articlePage);
 
+    //获取近期评论
+    List<CommentResponse> comments = commentService.recentDiscuss();
+
     log.info("首页数据获取完毕");
     return Result
         .of(ImmutableMap.builder()
@@ -114,6 +118,7 @@ public class DataController {
             .put("hitokoto", hitokoto)
             .put("labels", labels)
             .put("categorys", categorys)
+            .put("comments", comments)
             .build());
   }
 
@@ -188,9 +193,10 @@ public class DataController {
     //获取分类
     List<ArticleCategoryResponse> categorys = articleCategoryService.getCategoryList().get();
 
+    //获取评论人数
+    long count = commentService.count(new QueryWrapper<Comment>().eq("article_id", id));
     //获取评论
-
-    PageInfo<CommentResponse> commentPage = commentService.pageCommentList(pageNumber, pageSize, id);
+    PageInfo<CommentResponse> commentPage = commentService.pageCommentList(pageNumber, pageSize, id, null);
     //判断是否喜欢过
     Boolean like = false;
     SecuityUser currentUser = userDetailService.getCurrentUser();
@@ -205,6 +211,7 @@ public class DataController {
             .put("commentPage", commentPage)
             .put("like", like)
             .put("categorys", categorys)
+            .put("count", count)
             .build());
   }
 
