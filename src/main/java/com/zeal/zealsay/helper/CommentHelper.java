@@ -60,8 +60,9 @@ public class CommentHelper {
   private CommentResponse applyPage(Comment c) {
     CommentResponse commentResponse= commentConvertMapper.toCommentResponse(c);
     commentResponse.setInputText(false);
-    List<Comment> list = commentService.list(new QueryWrapper<Comment>()
-            .eq("comment_id",c.getId()));
+    Page<Comment> page = commentService.page(new Page<>(1,5),new QueryWrapper<Comment>()
+        .eq("comment_id",c.getId()));
+    List<Comment> list = page.getRecords();
     List<CommentResponse> responses = null;
     if (!CollectionUtils.isEmpty(list)) {
       responses = list.stream().map(r -> {
@@ -70,7 +71,9 @@ public class CommentHelper {
         return response;
       }).collect(Collectors.toList());
     }
-    commentResponse.setReplys(responses);
+    PageInfo<CommentResponse> responsePageInfo = toPageInfo(page);
+    responsePageInfo.setRecords(responses);
+    commentResponse.setReplys(responsePageInfo);
     return commentResponse;
   }
 

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -56,15 +57,32 @@ public class CommentService extends AbstractService<CommentMapper, Comment> impl
    * @author zhanglei
    * @date 2020/6/16  5:24 下午
    */
-  public PageInfo<CommentResponse> pageCommentList(Long pageNumber, Long pageSize, Long articleId) {
+  public PageInfo<CommentResponse> pageCommentList(Long pageNumber, Long pageSize, Long articleId,Long commentId) {
     QueryWrapper<Comment> wrapper = new QueryWrapper<>();
     wrapper.orderByDesc("create_date");
     wrapper.eq("article_id", articleId);
-    wrapper.isNull("comment_id");
+
+    if (Objects.nonNull(commentId)) {
+      //查询楼中回复
+      wrapper.eq("comment_id",commentId);
+    } else {
+      //查询总回复
+      wrapper.isNull("comment_id");
+    }
     Page<Comment> page = page(new Page<>(pageNumber, pageSize), wrapper);
     return commentHelper.toPageInfo(page);
   }
 
+  /**
+   * 近期评论.
+   *
+   * @author  zhanglei
+   * @date 2020/6/18  4:31 下午
+   */
+  public List<CommentResponse> recentDiscuss() {
+    List<Comment> comments = list(new QueryWrapper<Comment>().orderByDesc("create_date").last("limit 10"));
+    return commentConvertMapper.toCommentResponseList(comments);
+  }
   /**
    * 点赞评论.
    *
