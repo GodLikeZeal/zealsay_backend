@@ -53,6 +53,9 @@ public class ArticlePageResponse {
   @ApiModelProperty(value = "点赞数",example = "120")
   private Integer likeNum;
 
+  @ApiModelProperty(value = "评论数",example = "120")
+  private Integer commentNum;
+
   @ApiModelProperty(value = "分类目录id",example = "1231")
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long categoryId;

@@ -14,10 +14,12 @@ import com.zeal.zealsay.dto.response.ArticlePageResponse;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
 import com.zeal.zealsay.entity.ArticleCategory;
+import com.zeal.zealsay.entity.Comment;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.mapper.ArticleMapper;
 import com.zeal.zealsay.service.ArticleCategoryService;
+import com.zeal.zealsay.service.CommentService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import lombok.NonNull;
@@ -48,6 +50,8 @@ public class ArticleHelper {
   UserService userService;
   @Autowired
   ArticleCategoryService articleCategoryService;
+  @Autowired
+  CommentService commentService;
   @Autowired
   ArticleMapper articleMapper;
 
@@ -252,6 +256,8 @@ public class ArticleHelper {
         .orElse(User.builder()
             .username("佚名")
             .build());
+    int count = commentService.count(new QueryWrapper<Comment>().eq("article_id",s.getId()));
+    articleResponse.setCommentNum(count);
     articleResponse.setAuthorName(user.getUsername());
     articleResponse.setAuthorAvatar(user.getAvatar());
     return articleResponse;
