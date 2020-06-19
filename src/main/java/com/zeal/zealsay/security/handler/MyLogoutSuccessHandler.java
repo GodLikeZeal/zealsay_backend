@@ -6,7 +6,6 @@ import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.common.entity.UserInfo;
 import com.zeal.zealsay.security.core.TokenManager;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
-import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

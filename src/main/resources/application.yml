@@ -10,24 +10,13 @@ spring:
     name: zealsay
   main:
     allow-bean-definition-overriding: true #当遇到相同的名字，是否允许覆盖
-  mvc:
-    servlet:
-      load-on-startup: 1 #一开始就加载
 management:
-  endpoints:
-    web:
-      exposure:
-        include: '*' #监控暴露所有端口，默认为["health","info"]
-  endpoint:
-    health:
-      show-details: when_authorized #授权显示健康信息
-
+  health:
+    rabbit:
+      enabled: false
 
 jwt:
   header: Authorization
-  secret: ENC(rNbHP0gg31+MEI+EgAlZlQ==)
-  expiration: 604800
-  tokenHead: "Bearer "
 
 swagger:
   basic:
@@ -114,8 +103,6 @@ spring:
     port: ${REDIS_PORT}
     password: ${REDIS_PASSWORD}
     timeout: 10000
-  rabbitmq:
-    host: ${MQ_HOST}
   datasource:
     host: ${MYSQL_HOST}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -134,15 +121,6 @@ spring:
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
     default-encoding: UTF-8
-#    password: ENC(bdIOy20mX8QA2TZwsAF0SdguRKrw3TQo)
-#  data:
-#    mongodb:
-#      host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
-#      port: 27017
-#      database: zealsay
-#      username: ENC(u6vRkpDKX567sw/j8nAPjQ==)
-#      password: ENC(0WMifrrUxCi9dOgrn9mG17X6yxsjt14B)
-#      authentication-database: admin
 qiniu:
   Domain: ${QINIU_DOMAIN}
   Bucket: ${QINIU_BUCKET}
@@ -172,8 +150,6 @@ spring:
     port: 6379
     timeout: 10000
     password: ENC(kLn0ddxSEbJcPa2VjfXEELMby61/r7gf)
-  rabbitmq:
-    host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
   datasource:
     host: ENC(nDflcjbxkjqqTe5hDsnUkx5wBjMqhPcX)
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -223,8 +199,6 @@ spring:
     port: 6379
     timeout: 10000
   #    password: ENC(cax30dcK4hlSyUXvCtTMTDhkczbSTduh)
-  rabbitmq:
-    host: 127.0.0.1
   datasource:
     host: 127.0.0.1
     driver-class-name: org.h2.Driver
@@ -243,9 +217,6 @@ spring:
 
 jwt:
   header: Authorization
-  secret: 123
-  expiration: 604800
-  tokenHead: "Bearer "
 
 
 web:

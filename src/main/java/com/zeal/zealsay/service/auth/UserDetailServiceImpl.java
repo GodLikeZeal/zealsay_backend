@@ -8,7 +8,6 @@ import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.security.core.RedisTokenManager;
 import com.zeal.zealsay.service.RoleService;
 import com.zeal.zealsay.service.UserService;
-import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +36,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     RoleService roleService;
     @Autowired
-    JwtTokenUtil jwtTokenUtil;
-    @Autowired
     RedisTokenManager redisTokenManager;
 
     @Override
@@ -49,16 +46,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         } else {
             throw new UsernameNotFoundException("该用户不存在");
         }
-    }
-
-    public String refresh(String oldToken) {
-        final String token = oldToken.substring(tokenHeader.length());
-        String username = jwtTokenUtil.getUsernameFromToken(token);
-        SecuityUser user = (SecuityUser) loadUserByUsername(username);
-        if (jwtTokenUtil.canTokenBeRefreshed(token, user.getLastPasswordResetDate())) {
-            return jwtTokenUtil.refreshToken(token);
-        }
-        return null;
     }
 
     public SecuityUser getCurrentUser() {
