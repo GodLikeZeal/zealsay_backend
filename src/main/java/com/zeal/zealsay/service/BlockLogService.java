@@ -150,4 +150,30 @@ public class BlockLogService extends AbstractService<BlockLogMapper, BlockLog> {
         .build());
     return list;
   }
+
+  /**
+   * 获取用户的动态信息.
+   *
+   * @author  zhanglei
+   * @date 2019-12-31  12:15
+   */
+  public List<BlockLog> getUserActions(Long userId) {
+    //获取当前用户
+    User user = userService.getById(userId);
+    if (Objects.isNull(user)) {
+      return null;
+    }
+    log.info("获取当前用户 '{} ' 的动态", user.getUsername());
+    List<BlockLog> list = list(new QueryWrapper<BlockLog>()
+            .eq("operator_id",user.getId())
+            .orderByDesc("operator_date"));
+    //增加注册信息
+    list.add(BlockLog.builder()
+            .type(BlockType.USER)
+            .action(BlockAction.REGISTER)
+            .operatorName(user.getUsername())
+            .operatorDate(user.getRegisterDate())
+            .build());
+    return list;
+  }
 }

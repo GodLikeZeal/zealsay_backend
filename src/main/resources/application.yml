@@ -68,6 +68,7 @@ ignore:
     - /api/v1/oauth/**
     - /api/v1/data/index
     - /api/v1/data/article/*
+    - /api/v1/data/user/*
     - /api/v1/service/hitokoto
     - /api/v1/article/c/page
     - /api/v1/article/category

@@ -138,14 +138,12 @@ public class DataController {
       throw new ServiceException(ResultCode.NOT_FOUND.getCode(), "用户不存在");
     }
     Page<Article> articlePage = articleService
-        .page(new Page<>(1, 500), articleHelper
-            .toCurrentUserBlog());
+        .page(new Page<>(1, 500), new QueryWrapper<Article>().eq("author_id",id));
     PageInfo<ArticlePageResponse> userPage = articleHelper.toPageInfo(articlePage);
 
     //获取收藏列表
     Page<ArticleLike> likePages = articleLikeService
-        .page(new Page<>(1, 500), articleLikeHelper
-            .toCurrentUserLikeBlog());
+        .page(new Page<>(1, 500), new QueryWrapper<ArticleLike>().eq("user_id",id));
     PageInfo<ArticleResponse> likePage = articleLikeHelper.toPageInfo(likePages);
 
     //获取动态
