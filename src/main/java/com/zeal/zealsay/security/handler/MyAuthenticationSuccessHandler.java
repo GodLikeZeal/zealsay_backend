@@ -8,7 +8,6 @@ import com.zeal.zealsay.common.entity.UserInfo;
 import com.zeal.zealsay.security.core.TokenManager;
 import com.zeal.zealsay.service.LoginLogService;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
-import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,9 +33,6 @@ public class MyAuthenticationSuccessHandler implements AuthenticationSuccessHand
 
   @Autowired
   private ObjectMapper objectMapper;
-
-  @Autowired
-  JwtTokenUtil jwtTokenUtil;
 
   @Autowired
   LoginLogService loginLogService;

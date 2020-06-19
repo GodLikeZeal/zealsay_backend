@@ -128,7 +128,6 @@ public class DataController {
    * @author zhanglei
    * @date 2020/6/11  4:34 下午
    */
-  @PostAuthorize("principal.username.equals(returnObject.data.get('user').username)")
   @GetMapping("/user/{id}")
   @ApiOperation(value = "用户中心信息获取", notes = "用户中心信息获取")
   public Result<Map<String, Object>> getUserData(@PathVariable String id) throws ExecutionException, InterruptedException {

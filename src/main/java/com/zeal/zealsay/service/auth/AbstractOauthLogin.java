@@ -12,7 +12,6 @@ import com.zeal.zealsay.helper.UserHelper;
 import com.zeal.zealsay.security.core.TokenManager;
 import com.zeal.zealsay.service.AuthUserService;
 import com.zeal.zealsay.service.UserService;
-import com.zeal.zealsay.util.JwtTokenUtil;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.model.AuthResponse;
