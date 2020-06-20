@@ -85,7 +85,7 @@
 version: "3.3"
 services:
   zealsay_service:
-    image: registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_backend:stable  #国产私服更快，docker hub有时候不稳定
+    image: registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_backend:latest  #国产私服更快，docker hub有时候不稳定
     container_name: zealsay_service
     expose:
       - 8090 #默认为8090
@@ -112,8 +112,8 @@ services:
       - mysql
       - redis
   zealsay_web:
-    image: registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_front:stable
-    container_name: zealsay_web_beta
+    image: registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_front:latest
+    container_name: zealsay_web
     expose:
       - 4000
     depends_on:
