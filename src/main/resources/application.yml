@@ -140,7 +140,7 @@ justauth:
     github:
       client-id: ${GITHUB_ID}
       client-secret: ${GITHUB_SECRET}
-      redirect-uri: ${GITHUB_URI}https://api.zealsay.com/api/v1/oauth/github/callback
+      redirect-uri: ${GITHUB_URI}
   cache:
     type: default
 ---
