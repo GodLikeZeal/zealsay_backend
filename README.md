@@ -18,10 +18,12 @@
    使用`Vuetify 2.x`构造出符合 `Material Design` 规范的扁平化风格主题UI,你有对美的偏爱,我同样有一份对美的执着,
    面对日趋多样化的技术,抽取一些常用的解决方案,以快,轻为主,打造出一个开箱即用的轻应用脚手架,助力中小企业解决快速部署以及持续交付的`DevOps`。
    > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为 [zealsay_front](https://github.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
-* 博客体验地址[博客首页](https://beta.zealsay.com)
-* 后台管理体验[后台管理首页](https://beta.zealsay.com/admin/dashboard)
-* 后台管理登录[登录页面](https://beta.zealsay.com/login)
-> 我的线上版博客[zealsay博客](https://blog.zealsay.com)
+#### 博客体验地址[博客首页](https://beta.zealsay.com)
+#### 后台管理体验[后台管理首页](https://beta.zealsay.com/admin/dashboard) 体验账号用户名:visitor 密码：abc123
+#### 后台管理登录[登录页面](https://beta.zealsay.com/login) 体验账号用户名:visitor 密码：abc123
+#### api接口展示[api接口](https://dev-api.zealsay.com) 授权用户名：zealsay 密码:api123456
+### 欢迎来我的线上版博客水一波[zealsay博客](https://blog.zealsay.com)
+ 
 -------
 本项目会一直持续更新迭代，新功能正在马不停蹄更新，开发文档也正在不断的完善中...
 ## 技术选型
@@ -79,7 +81,7 @@
 -------
 好了废话不多说，直接上`docker-compose.yml`编排文件
 
-```java
+```yml
 version: "3.3"
 services:
   zealsay_service:
@@ -101,6 +103,11 @@ services:
       - QINIU_BUCKET=your bucket #改成你七牛云bucket
       - QINIU_ACCESSKEY=accesskey #改成你的七牛accesskey
       - QINIU_SECRETKEY=secretkey #改成你的secretkey
+      - GITHUB_ID = 123 #改成你的github授权client-id
+      - GITHUB_SECRET = 123 #改成你的github授权client-secret
+      - GITHUB_URI = http://xxx.xxx.xxx/call/back #改成你的github授权redirect-uri
+      - WEB_NAME = zealsay说你想说 #改成你的blog站点名称
+      - WEB_DOMAIN = http://xxx.xxx.xxx/ #改成你的domain
     external_links: 
       - mysql
       - redis
@@ -118,7 +125,7 @@ services:
       - VUE_APP_API_URL=https://xxx.xxx.xxx #改成你后台服务域名，跟上面的VIRTUAL_HOST保持一致
   redis:
     image: redis:5-alpine
-    container_name: redis_dev
+    container_name: redis
     command: redis-server --requirepass dev_redis
     networks:
       - default
@@ -160,7 +167,6 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro # 将宿主机的docker.sock绑定到nginx，这样，今后添加新的站点时，nginx将会自动发现站点并重启服务
       - certs:/etc/nginx/certs:ro # 将nginx中的证书目录，映射到宿主机中
-      - /home/zeal/docker/zealsay/nginx/nginx.conf:/etc/nginx/nginx.conf
 
 
 
@@ -191,7 +197,7 @@ volumes:
 #### 修改配置文件
 修改`application.yml`
 
-```java
+```yml
 ---
 spring:
   profiles: prod
