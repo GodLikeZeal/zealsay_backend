@@ -10,11 +10,16 @@ import com.zeal.zealsay.converter.ArticleConvertMapper;
 import com.zeal.zealsay.dto.request.ArticleAddRequest;
 import com.zeal.zealsay.dto.request.ArticlePageRequest;
 import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
+import com.zeal.zealsay.dto.response.ArticlePageResponse;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
 import com.zeal.zealsay.entity.ArticleCategory;
+import com.zeal.zealsay.entity.Comment;
 import com.zeal.zealsay.entity.User;
+import com.zeal.zealsay.exception.ServiceException;
+import com.zeal.zealsay.mapper.ArticleMapper;
 import com.zeal.zealsay.service.ArticleCategoryService;
+import com.zeal.zealsay.service.CommentService;
 import com.zeal.zealsay.service.UserService;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
 import lombok.NonNull;
@@ -45,6 +50,10 @@ public class ArticleHelper {
   UserService userService;
   @Autowired
   ArticleCategoryService articleCategoryService;
+  @Autowired
+  CommentService commentService;
+  @Autowired
+  ArticleMapper articleMapper;
 
   /**
    * 更新之前通过请求参数转换成Article.
@@ -68,6 +77,8 @@ public class ArticleHelper {
     Article article = articleConvertMapper.toArticle(articleAddRequest);
     article.setCreateDate(LocalDateTime.now());
     article.setAuthorId(userDetailService.getCurrentUser().getUserId());
+    article.setReadNum(0);
+    article.setLikeNum(0);
     article.setIsDel(false);
     return article;
   }
@@ -79,13 +90,13 @@ public class ArticleHelper {
    * @author zhanglei
    * @date 2018/11/15  9:25 PM
    */
-  public PageInfo<ArticleResponse> toPageInfo(Page<Article> articlePage) {
+  public PageInfo<ArticlePageResponse> toPageInfo(Page<Article> articlePage) {
     PageInfo<Article> articlePageInfo = new PageInfo(articlePage);
-    List<ArticleResponse> articleResponses = articlePage.getRecords()
+    List<ArticlePageResponse> articleResponses = articlePage.getRecords()
         .stream()
-        .map(this::apply)
+        .map(this::applyPage)
         .collect(Collectors.toList());
-    return PageInfo.<ArticleResponse>builder()
+    return PageInfo.<ArticlePageResponse>builder()
         .records(articleResponses)
         .currentPage(articlePageInfo.getCurrentPage())
         .pageSize(articlePageInfo.getPageSize())
@@ -99,9 +110,22 @@ public class ArticleHelper {
    * @author zhanglei
    * @date 2019-05-10  11:25
    */
-  public QueryWrapper<Article> toAeticlePageRequestWrapper(@NonNull ArticlePageRequest pageRequest) {
+  public QueryWrapper<Article> toArticlePageRequestWrapper(@NonNull ArticlePageRequest pageRequest) {
     //构造分页查询条件
     QueryWrapper<Article> wrapper = new QueryWrapper<>();
+    wrapper.select("id",
+        "title",
+        "subheading",
+        "cover_image",
+        "status",
+        "openness",
+        "label",
+        "read_num",
+        "like_num",
+        "category_id",
+        "author_id",
+        "create_date",
+        "update_date");
     //模糊检索标题
     if (StringUtils.isNotBlank(pageRequest.getTitle())) {
       wrapper.lambda().like(Article::getTitle, pageRequest.getTitle());
@@ -139,8 +163,21 @@ public class ArticleHelper {
    * @author zhanglei
    * @date 2019-07-05  16:17
    */
-  public QueryWrapper<Article> toAeticlePageRequestWrapperForC(@NonNull ArticlePageRequest pageRequest) {
-    QueryWrapper<Article> wrapper = toAeticlePageRequestWrapper(pageRequest);
+  public QueryWrapper<Article> toArticlePageRequestWrapperForC(@NonNull ArticlePageRequest pageRequest) {
+    QueryWrapper<Article> wrapper = toArticlePageRequestWrapper(pageRequest);
+    wrapper.select("id",
+        "title",
+        "subheading",
+        "cover_image",
+        "status",
+        "openness",
+        "label",
+        "read_num",
+        "like_num",
+        "category_id",
+        "author_id",
+        "create_date",
+        "update_date");
     //过滤掉下架的和草稿
     wrapper.lambda().eq(Article::getStatus, ArticleStatus.FORMAL);
     wrapper.lambda().eq(Article::getOpenness, Openness.ALL);
@@ -155,19 +192,29 @@ public class ArticleHelper {
   }
 
   /**
-   * 构建返回对象.
+   * 无参数构造.
    *
    * @author  zhanglei
+   * @date 2020/6/10 22:03
+   */
+  public QueryWrapper<Article> toArticlePageRequestWrapperForC() {
+    return toArticlePageRequestWrapperForC(ArticlePageRequest.builder().build());
+  }
+
+  /**
+   * 构建返回对象.
+   *
+   * @author zhanglei
    * @date 2019-07-29  18:19
    */
-  public ArticleResponse toArticleResponse(Article article){
+  public ArticleResponse toArticleResponse(Article article) {
     return this.apply(article);
   }
 
   /**
    * 解析分类目录和作者信息.
    *
-   * @author  zhanglei
+   * @author zhanglei
    * @date 2019-07-29  18:22
    */
   private ArticleResponse apply(Article s) {
@@ -185,6 +232,52 @@ public class ArticleHelper {
             .username("佚名")
             .build());
     articleResponse.setAuthorName(user.getUsername());
+    articleResponse.setAuthorAvatar(user.getAvatar());
     return articleResponse;
   }
+
+  /**
+   * 解析分类目录和作者信息.
+   *
+   * @author zhanglei
+   * @date 2019-07-29  18:22
+   */
+  private ArticlePageResponse applyPage(Article s) {
+    ArticlePageResponse articleResponse = articleConvertMapper.toArticlePageResponse(s);
+    //解析分类目录
+    ArticleCategory articleCategory = Optional
+        .ofNullable(articleCategoryService.getById(s.getCategoryId()))
+        .orElse(ArticleCategory.builder()
+            .name("无")
+            .build());
+    articleResponse.setCategoryName(articleCategory.getName());
+    //解析作者
+    User user = Optional.ofNullable(userService.getById(s.getAuthorId()))
+        .orElse(User.builder()
+            .username("佚名")
+            .build());
+    int count = commentService.count(new QueryWrapper<Comment>().eq("article_id",s.getId()));
+    articleResponse.setCommentNum(count);
+    articleResponse.setAuthorName(user.getUsername());
+    articleResponse.setAuthorAvatar(user.getAvatar());
+    return articleResponse;
+  }
+
+  /**
+   * 查当前用户的blog.
+   *
+   * @author zhanglei
+   * @date 2019-07-05  16:17
+   */
+  public QueryWrapper<Article> toCurrentUserBlog() {
+    QueryWrapper<Article> wrapper = new QueryWrapper<>();
+    SecuityUser user = userDetailService.getCurrentUser();
+    if (Objects.nonNull(user)) {
+      wrapper.eq("author_id", user.getUserId());
+    } else {
+      throw new ServiceException("请重新登录后再试!");
+    }
+    return wrapper;
+  }
+
 }

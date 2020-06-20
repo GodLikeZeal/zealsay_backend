@@ -4,11 +4,13 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.zeal.zealsay.common.constant.enums.DictType;
 import com.zeal.zealsay.entity.Dict;
 import com.zeal.zealsay.mapper.DictMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.Future;
 
 /**
  * <p>
@@ -19,7 +21,7 @@ import java.util.List;
  * @since 2019-03-27
  */
 @Service
-public class DictService extends ServiceImpl<DictMapper, Dict> {
+public class DictService extends AbstractService<DictMapper, Dict> {
 
   /**
    * 查询省的接口.
@@ -27,13 +29,14 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
    * @author  zhanglei
    * @date 2019-04-08  18:11
    */
-  public List<Dict> getProvinceList() {
+  @Async
+  public Future<List<Dict>> getProvinceList() {
     List<Dict> list = list(new QueryWrapper<Dict>()
         .eq("type", DictType.REGION)
         .likeLeft("code","0000"));
     //排序
     list.sort(Comparator.comparing(Dict::getSort));
-    return list;
+    return new AsyncResult<>(list);
   }
 
   /**
@@ -42,12 +45,13 @@ public class DictService extends ServiceImpl<DictMapper, Dict> {
    * @author  zhanglei
    * @date 2019-04-08  18:13
    */
-  public List<Dict> getRegionList(String code) {
+  @Async
+  public Future<List<Dict>> getRegionList(String code) {
     List<Dict> list = list(new QueryWrapper<Dict>()
         .eq("type", DictType.REGION)
         .eq("parent_code",code));
     //排序
     list.sort(Comparator.comparing(Dict::getSort));
-    return list;
+    return new AsyncResult<>(list);
   }
 }

@@ -1,16 +1,20 @@
 package com.zeal.zealsay.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
-import java.time.LocalDateTime;
 import com.baomidou.mybatisplus.annotation.TableId;
-
 import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.zeal.zealsay.common.constant.enums.ArticleStatus;
 import com.zeal.zealsay.common.constant.enums.Openness;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import lombok.experimental.Accessors;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -26,85 +30,101 @@ import lombok.experimental.Accessors;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
-public class Article {
+public class Article implements Serializable {
 
-    /**
-     * id.
-     */
-    @TableId(value = "id", type = IdType.ID_WORKER)
-    private Long id;
-
-
-    /**
-     * 标题.
-     */
-    private String title;
+  /**
+   * id.
+   */
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
+  private Long id;
 
 
-    /**
-     * 副标题.
-     */
-    private String subheading;
+  /**
+   * 标题.
+   */
+  private String title;
 
 
-    /**
-     * markdown内容.
-     */
-    private String contentMd;
+  /**
+   * 副标题.
+   */
+  private String subheading;
 
 
-    /**
-     * html内容.
-     */
-    private String contentHtml;
-
-    /**
-     * 封面图片.
-     */
-    private String coverImage;
+  /**
+   * markdown内容.
+   */
+  private String contentMd;
 
 
-    /**
-     * 状态.
-     */
-    private ArticleStatus status;
+  /**
+   * html内容.
+   */
+  private String contentHtml;
+
+  /**
+   * 封面图片.
+   */
+  private String coverImage;
 
 
-    /**
-     * 公开度.
-     */
-    private Openness openness;
+  /**
+   * 状态.
+   */
+  private ArticleStatus status;
 
-    /**
-     * 标签.
-     */
-    private String label;
 
-    /**
-     * 分类目录id.
-     */
-    private Long categoryId;
+  /**
+   * 公开度.
+   */
+  private Openness openness;
 
-    /**
-     * 作者编号.
-     */
-    private Long authorId;
+  /**
+   * 标签.
+   */
+  private String label;
 
-    /**
-     * 是否删除.
-     */
-    @TableLogic
-    private Boolean isDel;
+  /**
+   * 阅读数.
+   */
+  private Integer readNum;
 
-    /**
-     * 创建时间.
-     */
-    private LocalDateTime createDate;
+  /**
+   * 点赞数.
+   */
+  private Integer likeNum;
 
-    /**
-     * 更新时间.
-     */
-    private LocalDateTime updateDate;
+  /**
+   * 分类目录id.
+   */
+  private Long categoryId;
+
+  /**
+   * 作者编号.
+   */
+  private Long authorId;
+
+  /**
+   * 是否删除.
+   */
+  @TableLogic
+  private Boolean isDel;
+
+  /**
+   * 创建时间.
+   */
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime createDate;
+
+  /**
+   * 更新时间.
+   */
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime updateDate;
 
 
 }

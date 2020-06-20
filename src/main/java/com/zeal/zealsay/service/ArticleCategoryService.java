@@ -11,8 +11,9 @@ import com.zeal.zealsay.entity.ArticleCategory;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.ArticleCategoryHelper;
 import com.zeal.zealsay.mapper.ArticleCategoryMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -20,6 +21,7 @@ import org.springframework.util.CollectionUtils;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Future;
 
 /**
  * <p>
@@ -31,7 +33,7 @@ import java.util.Objects;
  */
 @Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
-public class ArticleCategoryService extends ServiceImpl<ArticleCategoryMapper, ArticleCategory> implements IService<ArticleCategory> {
+public class ArticleCategoryService extends AbstractService<ArticleCategoryMapper, ArticleCategory> implements IService<ArticleCategory> {
 
   @Autowired
   ArticleCategoryConvertMapper articleCategoryConvertMapper;
@@ -71,7 +73,8 @@ public class ArticleCategoryService extends ServiceImpl<ArticleCategoryMapper, A
   * @author  zeal
   * @date 2019/4/14 21:51
   */
-  public List<ArticleCategoryResponse> getCategoryList() {
+  @Async
+  public Future<List<ArticleCategoryResponse>> getCategoryList() {
     List<ArticleCategoryResponse> categoryResponses = articleCategoryConvertMapper
             .toArticleCategoryResponseList(list(new QueryWrapper<>()));
     //递归设置子节点
@@ -80,7 +83,7 @@ public class ArticleCategoryService extends ServiceImpl<ArticleCategoryMapper, A
         categoryResponse.setChildren(recursionChildren(categoryResponses,categoryResponse));
       }
     }
-    return categoryResponses;
+    return new AsyncResult<>(categoryResponses);
   }
 
   /**

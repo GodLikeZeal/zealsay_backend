@@ -2,6 +2,8 @@ package com.zeal.zealsay.converter;
 
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserPageRequest;
+import com.zeal.zealsay.dto.request.UserRegisterRequest;
+import com.zeal.zealsay.dto.request.UserUpdateRequest;
 import com.zeal.zealsay.dto.response.UserResponse;
 import com.zeal.zealsay.entity.User;
 import org.mapstruct.Mapper;
@@ -18,6 +20,10 @@ public interface UserConvertMapper {
   UserResponse toUserResponse(User user);
 
   User toUser(UserAddRequest userAddRequest);
+
+  User toUser(UserUpdateRequest userUpdateRequest);
+
+  User toUser(UserRegisterRequest userRegisterRequest);
 
   User toUser(UserPageRequest userPageRequest);
 

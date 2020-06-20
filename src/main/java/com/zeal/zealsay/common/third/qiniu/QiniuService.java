@@ -6,10 +6,11 @@ import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
 import com.qiniu.util.StringMap;
+import com.zeal.zealsay.common.constant.SystemConstants;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,7 +19,7 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-import static org.apache.http.entity.ContentType.*;
+import static org.springframework.util.MimeTypeUtils.*;
 
 /**
  * 七牛云对象云存储服务.
@@ -36,13 +37,10 @@ public class QiniuService implements InitializingBean {
   BucketManager bucketManager;
   @Autowired
   Auth auth;
+  @Autowired
+  SystemConstants systemConstants;
 
 
-  @Value("${qiniu.Bucket}")
-  private String bucket;
-
-  @Value("${qiniu.Domain}")
-  private String domain;
 
   /**
    * 定义七牛云上传的相关策略.
@@ -60,8 +58,8 @@ public class QiniuService implements InitializingBean {
       retry++;
     }
     Ret ret = response.jsonToObject(Ret.class);
-    log.info("文件上传成功,key={},文件url={}",ret.key,domain+key);
-    return domain+ret.key;
+    log.info("文件上传成功,key={},文件url={}",ret.key,systemConstants.getQiniuDomain()+key);
+    return systemConstants.getQiniuDomain()+ret.key;
   }
 
   /**
@@ -78,8 +76,8 @@ public class QiniuService implements InitializingBean {
       retry++;
     }
     Ret ret = response.jsonToObject(Ret.class);
-    log.info("文件上传成功,key={},文件url={}",ret.key,domain+key);
-    return domain+ret.key;
+    log.info("文件上传成功,key={},文件url={}",ret.key,systemConstants.getQiniuDomain()+key);
+    return systemConstants.getQiniuDomain()+ret.key;
   }
 
   /**
@@ -89,10 +87,10 @@ public class QiniuService implements InitializingBean {
    * @date 2019-03-15  15:59
    */
   public Response delete(String key) throws QiniuException {
-    Response response = bucketManager.delete(this.bucket, key);
+    Response response = bucketManager.delete(systemConstants.getQiniuBucket(), key);
     int retry = 0;
     while (response.needRetry() && retry++ < 3) {
-      response = bucketManager.delete(bucket, key);
+      response = bucketManager.delete(systemConstants.getQiniuBucket(), key);
     }
     return response;
   }
@@ -109,29 +107,34 @@ public class QiniuService implements InitializingBean {
   * @author  zeal
   * @date 2019/3/17 0:33
   */
-  public String createFileName(MultipartFile file) {
+  public String createFileName(MultipartFile file,String type) {
     LocalDateTime now= LocalDateTime.now();
     StringBuffer sb = new StringBuffer();
+    if (StringUtils.isNotBlank(type)) {
+      sb.append(type + "/");
+    }
     sb.append(now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")))
             .append(now.getNano());
     //设置后缀
     String contentType = file.getContentType();
-    if (IMAGE_JPEG.getMimeType().equals(contentType)) {
+    if (IMAGE_JPEG_VALUE.equals(contentType)) {
       sb.append(".jpg");
-    } else if (IMAGE_BMP.getMimeType().equals(contentType)) {
-      sb.append(".bmp");
-    } else if (IMAGE_SVG.getMimeType().equals(contentType)) {
-      sb.append(".svg");
-    } else if (IMAGE_GIF.getMimeType().equals(contentType)) {
+    } else if (IMAGE_GIF_VALUE.equals(contentType)) {
       sb.append(".gif");
-    } else if (IMAGE_PNG.getMimeType().equals(contentType)) {
+    } else if (IMAGE_PNG_VALUE.equals(contentType)) {
       sb.append(".png");
-    } else if (IMAGE_TIFF.getMimeType().equals(contentType)) {
-      sb.append(".tiff");
-    } else if (IMAGE_WEBP.getMimeType().equals(contentType)) {
-      sb.append(".webp");
     }
     return sb.toString();
+  }
+
+  /**
+   * 生成文件名称.
+   *
+   * @author  zhanglei
+   * @date 2019-10-24  14:33
+   */
+  public String createFileName(MultipartFile file) {
+    return this.createFileName(file,null);
   }
 
   /**
@@ -141,7 +144,7 @@ public class QiniuService implements InitializingBean {
    * @date 2019-03-15  15:59
    */
   private String getUploadToken() {
-    return this.auth.uploadToken(bucket, null, 3600, putPolicy);
+    return this.auth.uploadToken(systemConstants.getQiniuBucket(), null, 3600, putPolicy);
   }
 
   class Ret {

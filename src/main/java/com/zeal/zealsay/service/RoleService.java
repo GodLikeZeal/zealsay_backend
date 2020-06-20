@@ -9,7 +9,6 @@ import com.zeal.zealsay.entity.Role;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.helper.RoleHelper;
 import com.zeal.zealsay.mapper.RoleMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,7 +27,7 @@ import java.util.Objects;
  */
 @Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
-public class RoleService extends ServiceImpl<RoleMapper, Role> implements IService<Role> {
+public class RoleService extends AbstractService<RoleMapper, Role> implements IService<Role> {
 
   @Autowired
   RoleConvertMapper roleConvertMapper;

@@ -3,18 +3,24 @@ package com.zeal.zealsay.entity;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
 /**
  * 用户实体.
@@ -22,19 +28,19 @@ import lombok.experimental.Accessors;
  * @author zhanglei
  * @date 2018/11/15  6:46 PM
  */
-@Builder(toBuilder = true)
+@SuperBuilder(toBuilder = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @TableName("sys_user")
 @Accessors(chain = true)
-public class User {
+public class User implements Serializable {
 
   /**
    * id.
    */
-  @TableId(value = "id", type = IdType.ID_WORKER)
+  @TableId(value = "id", type = IdType.ASSIGN_ID)
   private Long id;
 
   /**
@@ -83,6 +89,11 @@ public class User {
   private String email;
 
   /**
+   * 邮箱是否验证过.
+   */
+  private Boolean emailConfirm;
+
+  /**
    * 头像.
    */
   private String avatar;
@@ -95,17 +106,17 @@ public class User {
   /**
    * 省.
    */
-  private String province;
+  private Integer province;
 
   /**
    * 市.
    */
-  private String city;
+  private Integer city;
 
   /**
    * 区.
    */
-  private String area;
+  private Integer area;
 
   /**
    * 角色.
@@ -125,6 +136,9 @@ public class User {
   /**
    * 注册时间.
    */
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   private LocalDateTime registerDate;
 
   /**
@@ -135,5 +149,8 @@ public class User {
   /**
    * 更新时间.
    */
-  private  LocalDateTime updateDate;
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+  @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+  private LocalDateTime updateDate;
 }

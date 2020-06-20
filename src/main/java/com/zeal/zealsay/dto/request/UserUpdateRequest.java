@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotNull;
+
 
 /**
  * 用户修改对象.
@@ -20,6 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserUpdateRequest {
 
+  @NotNull(message = "用户编号不能为空！")
   @ApiModelProperty(value = "id", example = "123")
   private Long id;
 
@@ -48,13 +51,13 @@ public class UserUpdateRequest {
   private String address;
 
   @ApiModelProperty(value = "省", example = "北京市")
-  private String province;
+  private Integer province;
 
   @ApiModelProperty(value = "市", example = "北京市")
-  private String city;
+  private Integer city;
 
   @ApiModelProperty(value = "区", example = "朝阳区")
-  private String area;
+  private Integer area;
 
   @ApiModelProperty(value = "角色", example = "USER")
   private Role role;

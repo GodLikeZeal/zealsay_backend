@@ -53,6 +53,12 @@ public class ArticleResponse {
   @ApiModelProperty(value = "标签",example = "java,IT,云计算,大数据")
   private String label;
 
+  @ApiModelProperty(value = "阅读数",example = "100")
+  private Integer readNum;
+
+  @ApiModelProperty(value = "点赞数",example = "120")
+  private Integer likeNum;
+
   @ApiModelProperty(value = "分类目录id",example = "1231")
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private Long categoryId;
@@ -67,6 +73,9 @@ public class ArticleResponse {
 
   @ApiModelProperty(value = "作者名称",example = "张三")
   private String authorName;
+
+  @ApiModelProperty(value = "作者头像")
+  private String authorAvatar;
 
   @ApiModelProperty(value = "创建时间")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")

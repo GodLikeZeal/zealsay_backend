@@ -64,7 +64,7 @@
     </appender>
 
     <!-- Level: FATAL 0  ERROR 3  WARN 4  INFO 6  DEBUG 7 -->
-    <root level="INFO">
+    <root level="info">
         <appender-ref ref="console" />
         <appender-ref ref="debug" />
         <appender-ref ref="error" />
@@ -72,5 +72,6 @@
 
     <logger name="org.springframework" level="WARN"/>
     <logger name="org.springframework.security" level="WARN"/>
-    <logger name="com.zeal.zealsay" level="INFO"/>
+    <logger name="com.zeal.zealsay" level="debug"/>
+    <logger name="com.zeal.zealsay.mapper" level="debug"/>
 </configuration>

@@ -2,6 +2,9 @@ package com.zeal.zealsay.mapper;
 
 import com.zeal.zealsay.entity.Article;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.zeal.zealsay.service.cache.MybatisRedisCache;
+import org.apache.ibatis.annotations.CacheNamespace;
+
 
 /**
  * <p>
@@ -11,6 +14,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @author zhanglei
  * @since 2018-11-28
  */
+@CacheNamespace(implementation= MybatisRedisCache.class,eviction= MybatisRedisCache.class)
 public interface ArticleMapper extends BaseMapper<Article> {
 
 }

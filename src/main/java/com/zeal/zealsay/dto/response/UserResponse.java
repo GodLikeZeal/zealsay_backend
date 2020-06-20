@@ -1,9 +1,10 @@
 package com.zeal.zealsay.dto.response;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.DateSerializer;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
@@ -12,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -22,7 +24,7 @@ import java.util.Date;
  * @author  zhanglei
  * @date 2018/11/15  6:39 PM
  */
-@Builder(toBuilder = true)
+@SuperBuilder
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -65,14 +67,23 @@ public class UserResponse {
   @ApiModelProperty(value = "地址", example = "北京市朝阳中央大街12号")
   private String address;
 
+  @ApiModelProperty(value = "省", example = "110000")
+  private Integer province;
+
   @ApiModelProperty(value = "省", example = "北京市")
-  private String province;
+  private String provinceName;
+
+  @ApiModelProperty(value = "市", example = "110100")
+  private Integer city;
 
   @ApiModelProperty(value = "市", example = "北京市")
-  private String city;
+  private String cityName;
+
+  @ApiModelProperty(value = "区", example = "110104")
+  private Integer area;
 
   @ApiModelProperty(value = "区", example = "朝阳区")
-  private String area;
+  private String areaName;
 
   @ApiModelProperty(value = "角色", example = "USER")
   private Role role;
@@ -86,6 +97,7 @@ public class UserResponse {
   @ApiModelProperty(value = "注册时间", example = "2018.9.26 12:12:12")
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   @JsonSerialize(using = LocalDateTimeSerializer.class)
+  @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   private LocalDateTime registerAt;
 
   @ApiModelProperty(value = "最后密码修改时间", example = "2018.9.26 12:12:12")

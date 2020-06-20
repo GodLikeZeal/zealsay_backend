@@ -4,7 +4,6 @@ import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.entity.LoginLog;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.mapper.LoginLogMapper;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zeal.zealsay.util.IpAddressUtil;
 import eu.bitwalker.useragentutils.DeviceType;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -28,7 +27,7 @@ import java.util.Optional;
 @Slf4j
 @Transactional(rollbackFor = {ServiceException.class,RuntimeException.class,Exception.class})
 @Service
-public class LoginLogService extends ServiceImpl<LoginLogMapper, LoginLog> {
+public class LoginLogService extends AbstractService<LoginLogMapper, LoginLog> {
 
     /**
     * 保存登录信息.

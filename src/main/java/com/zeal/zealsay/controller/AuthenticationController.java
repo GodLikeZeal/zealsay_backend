@@ -35,9 +35,6 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/api/v1/authentication")
 public class AuthenticationController {
 
-  @Value("${jwt.header}")
-  private String tokenHeader;
-
   @Autowired
   UserDetailServiceImpl userDetailService;
 
@@ -62,26 +59,8 @@ public class AuthenticationController {
   @GetMapping("/user")
   @ApiOperation(value = "用户信息校验",notes = "用户信息校验")
   public Result<SecuityUser> user(Authentication authentication) {
-    return Result.of(authentication.getPrincipal());
+    SecuityUser secuityUser = (SecuityUser)authentication.getPrincipal();
+    return Result.of(userDetailService.toUserInfo(secuityUser.getUserId()));
   }
 
-  /**
-   * 刷新token
-   *
-   * @return 用户信息
-   */
-  @PreAuthorize("hasAnyRole('USER','ADMIN')")
-  @RequestMapping(value = "/refresh",method = {RequestMethod.GET,RequestMethod.POST})
-  @ApiOperation(value = "刷新token",notes = "刷新token")
-  public Result refreshAndGetAuthenticationToken(HttpServletRequest request)
-      throws AuthenticationException {
-    String token = request.getHeader(tokenHeader);
-    String refreshedToken = userDetailService.refresh(token);
-    if (refreshedToken == null) {
-      return Result.serverError();
-    } else {
-      return Result.of(ImmutableMap
-          .of("code","ok","message","刷新token成功","token", token));
-    }
-  }
 }

@@ -11,6 +11,7 @@ import com.zeal.zealsay.dto.request.ArticleUpdateRequest;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
 import com.zeal.zealsay.helper.ArticleHelper;
+import com.zeal.zealsay.service.ArticleLikeService;
 import com.zeal.zealsay.service.ArticleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,6 +37,8 @@ public class ArticleController {
 
   @Autowired
   ArticleService articleService;
+  @Autowired
+  ArticleLikeService articleLikeService;
   @Autowired
   ArticleConvertMapper articleConvertMapper;
   @Autowired
@@ -68,7 +71,7 @@ public class ArticleController {
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
     Page<Article> articlePage = (Page<Article>) articleService
-        .page(new Page<>(pageNumber, pageSize), articleHelper.toAeticlePageRequestWrapper(articlePageRequest));
+        .page(new Page<>(pageNumber, pageSize), articleHelper.toArticlePageRequestWrapper(articlePageRequest));
     return Result.of(articleHelper.toPageInfo(articlePage));
   }
 
@@ -85,7 +88,7 @@ public class ArticleController {
                                                          ArticlePageRequest articlePageRequest) {
     log.info("开始进行分页查询文章列表，查询参数为 '{}' ", articlePageRequest);
     Page<Article> articlePage = (Page<Article>) articleService
-        .page(new Page<>(pageNumber, pageSize), articleHelper.toAeticlePageRequestWrapperForC(articlePageRequest));
+        .page(new Page<>(pageNumber, pageSize), articleHelper.toArticlePageRequestWrapperForC(articlePageRequest));
     return Result.of(articleHelper.toPageInfo(articlePage));
   }
 
@@ -180,6 +183,58 @@ public class ArticleController {
   public Result<Boolean> deleteArticleBatch(Collection<Long> ids) {
     log.info("开始批量删除id在 '{}' 的文章信息", ids.toString());
     return Result.of(articleService.removeByIds(ids));
+  }
+
+  /**
+   * 根据id阅读文章.
+   *
+   * @author  zhanglei
+   * @date 2018/11/23  5:47 PM
+   */
+  @GetMapping("/read/{id}")
+  @ApiOperation(value = "根据id阅读文章",notes = "根据id阅读文章")
+  public Result<Boolean> readArticle(@PathVariable Long id) {
+    log.info("id为 '{}' 的文章信息阅读量加1", id);
+    return Result.of(articleService.readArticle(id));
+  }
+
+  /**
+   * 根据id查询是否喜欢过文章.
+   *
+   * @author  zhanglei
+   * @date 2019-11-15  17:06
+   */
+  @GetMapping("/islike/{id}")
+  @ApiOperation(value = "根据id查询是否喜欢过文章",notes = "根据id查询是否喜欢过文章")
+  public Result<Boolean> islikeArticle(@PathVariable Long id) {
+    log.info("查询id为 '{}' 的文章是否被喜欢过", id);
+    return Result.of(articleLikeService.islike(id));
+  }
+
+  /**
+   * 喜欢文章.
+   *
+   * @author  zhanglei
+   * @date 2019-11-15  17:06
+   */
+  @GetMapping("/like/{id}")
+  @ApiOperation(value = "根据id喜欢文章",notes = "根据id喜欢文章")
+  public Result<Boolean> likeArticle(@PathVariable Long id) {
+    log.info("id为 '{}' 的文章被喜欢", id);
+    return Result.of(articleLikeService.like(id));
+  }
+
+  /**
+   * 不喜欢文章.
+   *
+   * @author  zhanglei
+   * @date 2019-11-15  17:06
+   */
+  @GetMapping("/dislike/{id}")
+  @ApiOperation(value = "根据id取消喜欢文章",notes = "根据id取消喜欢文章")
+  public Result<Boolean> dislikeArticle(@PathVariable Long id) {
+    log.info("id为 '{}' 的文章被取消喜欢", id);
+    return Result.of(articleLikeService.dislike(id));
   }
 }
 

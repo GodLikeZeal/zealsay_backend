@@ -1,6 +1,7 @@
 package com.zeal.zealsay.converter;
 
 import com.zeal.zealsay.dto.request.*;
+import com.zeal.zealsay.dto.response.ArticlePageResponse;
 import com.zeal.zealsay.dto.response.ArticleResponse;
 import com.zeal.zealsay.entity.Article;
 import org.mapstruct.Mapper;
@@ -18,6 +19,10 @@ import java.util.List;
 public interface ArticleConvertMapper {
 
   ArticleResponse toArticleResponse(Article article);
+
+  List<ArticleResponse> toArticleResponseList(List<Article> articles);
+
+  ArticlePageResponse toArticlePageResponse(Article article);
 
   Article toArticle(ArticleAddRequest articleAddRequest);
 
