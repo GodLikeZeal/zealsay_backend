@@ -129,8 +129,8 @@ qiniu:
   SecretKey: ${QINIU_SECRETKEY}
 
 web:
-  name: zealsay说你想说
-  domain: https://blog.zealsay.com/
+  name: ${WEB_NAME}
+  domain: ${WEB_DOMAIN}
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
 
