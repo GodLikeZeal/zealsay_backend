@@ -17,6 +17,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -112,6 +114,7 @@ public class ArticleController {
    * @author zhanglei
    * @date 2018/9/7  下午6:00
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @PutMapping("")
   @ApiOperation(value = "文章修改", notes = "文章修改")
   public Result<Boolean> updateArticle(@RequestBody ArticleUpdateRequest articleUpdateRequest) {
@@ -126,6 +129,7 @@ public class ArticleController {
    * @author zhanglei
    * @date 2018/11/15  8:24 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("down/batch")
   @ApiOperation(value = "根据id列表批量下架文章作品", notes = "根据id列表批量下架文章作品")
   public Result<Boolean> markArticleDownBatch(@RequestBody Collection<Long> ids) {
@@ -139,6 +143,7 @@ public class ArticleController {
    * @author zhanglei
    * @date 2018/11/15  8:24 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("down/{id}")
   @ApiOperation(value = "根据id下架文章作品", notes = "根据id下架文章作品")
   public Result<Boolean> markArticleDown(@PathVariable Long id) {
@@ -152,6 +157,7 @@ public class ArticleController {
    * @author zhanglei
    * @date 2018/11/15  8:24 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @PutMapping("up/{id}")
   @ApiOperation(value = "根据id列表上架文章作品", notes = "根据id上架文章作品")
   public Result<Boolean> markArticleUp(@PathVariable Long id) {
@@ -165,6 +171,7 @@ public class ArticleController {
    * @author  zhanglei
    * @date 2018/11/23  5:47 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @DeleteMapping("/{id}")
   @ApiOperation(value = "根据id删除文章信息",notes = "根据id删除文章信息")
   public Result<Boolean> deleteArticle(@PathVariable Long id) {
@@ -178,6 +185,7 @@ public class ArticleController {
    * @author  zhanglei
    * @date 2018/11/23  5:47 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @DeleteMapping("/batch")
   @ApiOperation(value = "根据id列表批量删除角色信息",notes = "根据id列表批量删除角色信息")
   public Result<Boolean> deleteArticleBatch(Collection<Long> ids) {

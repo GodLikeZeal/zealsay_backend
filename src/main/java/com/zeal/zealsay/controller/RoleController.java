@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -93,6 +94,7 @@ public class RoleController {
    * @author  zhanglei
    * @date 2018/11/23  5:43 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PostMapping("")
   @ApiOperation(value = "新增角色信息",notes = "新增角色信息")
   public Result<Boolean> addRole(@RequestBody @Validated RoleAddResquest roleAddResquest) {
@@ -106,6 +108,7 @@ public class RoleController {
    * @author  zhanglei
    * @date 2018/11/23  5:47 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("")
   @ApiOperation(value = "修改角色信息",notes = "修改角色信息")
   public Result<Boolean> updateRole(@RequestBody @Validated RoleUpdateRequest roleUpdateRequest) {
@@ -119,6 +122,7 @@ public class RoleController {
    * @author  zhanglei
    * @date 2018/11/23  5:47 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
   @ApiOperation(value = "根据id删除角色信息",notes = "根据id删除角色信息")
   public Result<Boolean> deleteRole(@PathVariable Long id) {
@@ -132,6 +136,7 @@ public class RoleController {
    * @author  zhanglei
    * @date 2018/11/23  5:47 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @DeleteMapping("/batch")
   @ApiOperation(value = "根据id列表批量删除角色信息",notes = "根据id列表批量删除角色信息")
   public Result<Boolean> deleteRoleBatch(@RequestBody Collection<String> ids) {

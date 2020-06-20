@@ -129,8 +129,8 @@ qiniu:
   SecretKey: ${QINIU_SECRETKEY}
 
 web:
-  name: zealsay说你想说
-  domain: https://blog.zealsay.com/
+  name: ${WEB_NAME}
+  domain: ${WEB_DOMAIN}
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
 
@@ -138,9 +138,9 @@ justauth:
   enabled: true
   type:
     github:
-      client-id: ENC(2Yn+IGbaGgy7l9lZIIfTHzBoSAT9PRsqUv7BjBJ7RaA=)
-      client-secret: ENC(IqKWhEX8c35fmdFtcTtxPpB9OCmHb6KDd12k647+lSM2Wo7Xz6isevkl5PegKvF+FC0Zc7xYebI=)
-      redirect-uri: https://api.zealsay.com/api/v1/oauth/github/callback
+      client-id: ${GITHUB_ID}
+      client-secret: ${GITHUB_SECRET}
+      redirect-uri: ${GITHUB_URI}
   cache:
     type: default
 ---

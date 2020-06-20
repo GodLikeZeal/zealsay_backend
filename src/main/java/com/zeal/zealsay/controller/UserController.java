@@ -24,6 +24,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -141,6 +142,7 @@ public class UserController {
    * @author zhanglei
    * @date 2018/11/15  8:24 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("disable/batch")
   @ApiOperation(value = "根据id列表批量禁用用户", notes = "根据id列表批量禁用用户")
   public Result<Boolean> markUserDisabledBatch(@RequestBody Collection<Long> ids) {
@@ -154,6 +156,7 @@ public class UserController {
    * @author zhanglei
    * @date 2018/11/15  8:24 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("unsealing/batch")
   @ApiOperation(value = "根据id列表批量解封用户", notes = "根据id列表批量解封用户")
   public Result<Boolean> markUserUnsealingBatch(@RequestBody Collection<Long> ids) {
@@ -167,6 +170,7 @@ public class UserController {
    * @author zhanglei
    * @date 2018/11/15  8:24 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("disable/{id}")
   @ApiOperation(value = "根据id禁用用户", notes = "根据id禁用用户")
   public Result<Boolean> markUserDisabled(@PathVariable Long id) {
@@ -180,6 +184,7 @@ public class UserController {
    * @author zhanglei
    * @date 2018/11/15  8:24 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("unsealing/{id}")
   @ApiOperation(value = "根据id解封用户", notes = "根据id解封用户")
   public Result<Boolean> markUnsealing(@PathVariable Long id) {
@@ -193,6 +198,7 @@ public class UserController {
    * @author zeal
    * @date 2018/11/24 13:50
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PostMapping("")
   @ApiOperation(value = "管理员添加用户", notes = "管理员添加用户")
   public Result<Boolean> addUser(@RequestBody @Validated UserAddRequest userAddRequest) {
@@ -206,6 +212,7 @@ public class UserController {
    * @author zeal
    * @date 2018/11/24 13:50
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR','ROLE_USER')")
   @PutMapping("")
   @ApiOperation(value = "管理员修改用户信息", notes = "管理管理员修改用户信息员添加用户")
   public Result<Boolean> updateUser(@RequestBody @Validated UserUpdateRequest userUpdateRequest) {
