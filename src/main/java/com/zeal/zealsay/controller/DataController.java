@@ -130,7 +130,7 @@ public class DataController {
    */
   @GetMapping("/user/{id}")
   @ApiOperation(value = "用户中心信息获取", notes = "用户中心信息获取")
-  public Result<Map<String, Object>> getUserData(@PathVariable String id) throws ExecutionException, InterruptedException {
+  public Result<Map<String, Object>> getUserData(@PathVariable Long id) throws ExecutionException, InterruptedException {
     log.info("👕用户中心信息获取中...");
     //获取当前用户信息
     UserResponse user = userConvertMapper.toUserResponse(userService.getById(id));
@@ -147,7 +147,7 @@ public class DataController {
     PageInfo<ArticleResponse> likePage = articleLikeHelper.toPageInfo(likePages);
 
     //获取动态
-    List<BlockLog> actions = blockLogService.getCurrentUserActions();
+    List<BlockLog> actions = blockLogService.getUserActions(id);
 
     //获取省份
     List<Dict> provinces = dictService.getProvinceList().get();
@@ -218,7 +218,7 @@ public class DataController {
    * @author zhanglei
    * @date 2020/6/12  2:28 下午
    */
-  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EXPERIENCER')")
   @GetMapping("/admin/dashboard")
   @ApiOperation(value = "后台管理页面数据获取", notes = "后台管理页面获取")
   public Result<Map<String, Object>> getDashboardData() {

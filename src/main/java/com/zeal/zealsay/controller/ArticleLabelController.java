@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,6 +45,7 @@ public class ArticleLabelController {
     * @author  zeal
     * @date 2019/5/19 23:35
     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PostMapping("")
     @ApiOperation(value = "标签云添加", notes = "新增加标签云")
     public Result<Boolean> addArticleLabel(@RequestBody @Validated ArticleLabelAddRequest articleLabelAddRequest) {
@@ -57,6 +59,7 @@ public class ArticleLabelController {
     * @author  zeal
     * @date 2019/5/19 23:35
     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @PutMapping("")
     @ApiOperation(value = "标签云修改", notes = "修改标签云")
     public Result<Boolean> updateArticleLabel(@RequestBody @Validated ArticleLabelUpdateRequest articleLabelUpdateRequest) {
@@ -89,6 +92,7 @@ public class ArticleLabelController {
     * @author  zeal
     * @date 2019/5/19 23:49
     */
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     @ApiOperation(value = "标签云删除", notes = "标签云删除")
     public Result<Boolean> deleteArticleLabel(@PathVariable("id") Long id) {

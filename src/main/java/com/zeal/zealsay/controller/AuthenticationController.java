@@ -55,7 +55,7 @@ public class AuthenticationController {
    * @param authentication 信息
    * @return 用户信息
    */
-  @PostAuthorize(" returnObject.data.username == principal.username or hasRole('ADMIN')")
+  @PostAuthorize(" returnObject.data.username == principal.username or hasRole('ROLE_ADMIN')")
   @GetMapping("/user")
   @ApiOperation(value = "用户信息校验",notes = "用户信息校验")
   public Result<SecuityUser> user(Authentication authentication) {

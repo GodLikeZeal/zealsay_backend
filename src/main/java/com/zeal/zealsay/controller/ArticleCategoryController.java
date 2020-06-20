@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -97,6 +98,7 @@ public class ArticleCategoryController {
    * @author zhanglei
    * @date 2018/9/7  下午6:00
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PostMapping("")
   @ApiOperation(value = "分类目录添加", notes = "分类目录添加")
   public Result<Boolean> addArticleCategory(@RequestBody @Validated ArticleCategoryAddRequest articleCategoryAddRequest) {
@@ -111,6 +113,7 @@ public class ArticleCategoryController {
    * @author zhanglei
    * @date 2018/9/7  下午6:00
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("")
   @ApiOperation(value = "分类目录修改", notes = "分类目录修改")
   public Result<Boolean> updateArticle(@RequestBody @Validated ArticleCategoryUpdateRequest articleCategoryUpdateRequest) {
@@ -125,6 +128,7 @@ public class ArticleCategoryController {
    * @author  zhanglei
    * @date 2018/11/23  5:47 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
   @ApiOperation(value = "根据id删除分类目录信息",notes = "根据id删除分类目录信息")
   public Result<Boolean> deleteArticle(@PathVariable Long id) {
@@ -138,6 +142,7 @@ public class ArticleCategoryController {
    * @author  zhanglei
    * @date 2018/11/23  5:47 PM
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @DeleteMapping("/batch")
   @ApiOperation(value = "根据id列表批量删除角色信息",notes = "根据id列表批量删除角色信息")
   public Result<Boolean> deleteArticleBatch(@RequestBody Collection<Long> ids) {

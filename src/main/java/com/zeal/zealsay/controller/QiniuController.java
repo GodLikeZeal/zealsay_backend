@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,6 +43,7 @@ public class QiniuController {
    * @author zhanglei
    * @date 2018/9/7  下午6:00
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @PostMapping("/upload/{type}")
   @ApiOperation(value = "上传文件", notes = "上传文件")
   public Result<String> upload(@RequestParam MultipartFile file,@PathVariable String type) {
@@ -64,6 +66,7 @@ public class QiniuController {
    * @author zhanglei
    * @date 2018/9/7  下午6:00
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @PostMapping("/upload")
   @ApiOperation(value = "上传文件", notes = "上传文件")
   public Result<String> upload(@RequestParam MultipartFile file) {
@@ -86,6 +89,7 @@ public class QiniuController {
    * @author zhanglei
    * @date 2018/9/7  下午6:00
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @PostMapping("/upload/multiple")
   @ApiOperation(value = "批量上传文件", notes = "上传文件")
   public Result<List<Map<String,String>>> uploadMultiple(@RequestParam MultipartFile[] files) {

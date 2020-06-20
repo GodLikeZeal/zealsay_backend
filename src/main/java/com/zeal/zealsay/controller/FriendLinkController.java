@@ -14,6 +14,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -62,6 +63,7 @@ public class FriendLinkController {
    * @author zhanglei
    * @date 2019-08-05  20:29
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PostMapping("")
   @ApiOperation(value = "新增友链信息", notes = "新增一条友链信息")
   public Result<Boolean> saveFriendLink(@RequestBody FriendLinkRequest request) {
@@ -75,6 +77,7 @@ public class FriendLinkController {
    * @author zhanglei
    * @date 2019-08-05  20:29
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @PutMapping("")
   @ApiOperation(value = "修改友链信息", notes = "修改一条友链信息")
   public Result<Boolean> updateFriendLink(@RequestBody FriendLinkRequest request) {
@@ -88,6 +91,7 @@ public class FriendLinkController {
    * @author zhanglei
    * @date 2019-08-05  20:29
    */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @DeleteMapping("/{id}")
   @ApiOperation(value = "删除友链信息", notes = "删除一条友链信息")
   public Result<Boolean> deleteById(@PathVariable(value = "id") Long id) {

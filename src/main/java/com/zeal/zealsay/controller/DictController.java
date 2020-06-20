@@ -15,6 +15,7 @@ import com.zeal.zealsay.service.DictService;
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -47,6 +48,7 @@ public class DictController {
   @Autowired
   DictConvertMapper dictConvertMapper;
 
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
   @GetMapping("test")
   public Result generateDict() throws IOException {
     String content = Resources.toString(Resources.getResource("region/region.json"), Charsets.UTF_8);
