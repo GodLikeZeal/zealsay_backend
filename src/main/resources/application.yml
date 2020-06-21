@@ -19,13 +19,8 @@ jwt:
   header: Authorization
 
 swagger:
-  basic:
-    ## 开启Swagger的Basic认证功能,默认是false
-    enable: true
-    ## Basic认证用户名
-    username: zealsay
-    ## Basic认证密码
-    password: api123456
+  production: true #生产环境屏蔽
+
 
 
 mybatis-plus:
@@ -128,6 +123,15 @@ qiniu:
   AccessKey: ${QINIU_ACCESSKEY}
   SecretKey: ${QINIU_SECRETKEY}
 
+swagger:
+  basic:
+    ## 开启Swagger的Basic认证功能,默认是false
+    enable: true
+    ## Basic认证用户名
+    username: ${API_USERNAME}
+    ## Basic认证密码
+    password: ${API_PASSWORD}
+
 web:
   name: ${WEB_NAME}
   domain: ${WEB_DOMAIN}
@@ -181,6 +185,15 @@ qiniu:
   Bucket: ENC(URCSSAswx1fYpIxBXzMkmHi8XGVAxqrXL0OXy4w1y+I=)
   AccessKey: ENC(l7FGA3cDMF91mw0Pahc0TO0thE0sXz4C07Ha41tYQkzKAt4hgoF4hLJzmgM8NkK/IPMG8hbDR10=)
   SecretKey: ENC(ptJFuHYe8PtaP+i64Vu+D6QiEUgc+zeTGjzp+d57gn9jtIAJsFwjLLK0IxsmdnN+yma86BmbpF8=)
+
+swagger:
+  basic:
+    ## 开启Swagger的Basic认证功能,默认是false
+    enable: true
+    ## Basic认证用户名
+    username: zealsay
+    ## Basic认证密码
+    password: api123456
 
 justauth:
   enabled: true
