@@ -35,10 +35,4 @@ after_success:
   - docker build --build-arg key="$ENCRYP_PASSWORD" --build-arg java_file=./target/zealsay-1.0.0.jar -t registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_backend:latest .
   - docker push registry.cn-qingdao.aliyuncs.com/zealsay/zealsay_backend:latest;
 
-notifications:
-  email:
-    recipients:
-      - zhangleifor@163.com
-    on_success: change # default: change
-    on_failure: always # default: always
 
