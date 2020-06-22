@@ -40,7 +40,6 @@ notifications:
   email:
     recipients:
       - zhangleifor@163.com
-      - jinjinyike@163.com
     on_success: change # default: change
     on_failure: always # default: always
 
