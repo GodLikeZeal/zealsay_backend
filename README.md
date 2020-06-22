@@ -17,7 +17,7 @@
    前端使用vue,搭载比较火热的`nuxt.js`服务器端渲染框架，截止到目前,使用的是`nuxt.js`最新`2.12.2`版本,
    使用`Vuetify 2.x`构造出符合 `Material Design` 规范的扁平化风格主题UI,你有对美的偏爱,我同样有一份对美的执着,
    面对日趋多样化的技术,抽取一些常用的解决方案,以快,轻为主,打造出一个开箱即用的轻应用脚手架,助力中小企业解决快速部署以及持续交付的`DevOps`。
-   > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为 [zealsay_front](https://github.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
+   > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为:[github](https://github.com/GodLikeZeal/zealsay_front)，国内[gitee](https://gitee.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
 #### 博客体验地址[博客首页](https://beta.zealsay.com)
 #### 后台管理体验[后台管理首页](https://beta.zealsay.com/admin/dashboard) 体验账号用户名:visitor 密码：abc123
 #### 后台管理登录[登录页面](https://beta.zealsay.com/login) 体验账号用户名:visitor 密码：abc123
@@ -68,8 +68,8 @@
 
 
 ## 快速搭建一个博客
-> 有两种方式可以来搭建，分别为传统方式和docker容器方式
-
+ 有两种方式可以来搭建，分别为传统方式和docker容器方式
+ 
 -------
 
 ### 1.docker容器方式部署
@@ -265,7 +265,7 @@ justauth:
 ### 反馈
 欢迎大家在使用的过程中提出宝贵的意见和反馈问题，也可以直接提issue。
 ### 交流群
-* 欢迎加入zealsay交流群一起交流和学习
+* 欢迎加入zealsay交流群一起交流和学习，群号：189361484
 
 <img src="https://pan.zealsay.com/20190716214941558000000.jpg" alt="Sample"  width="150" height="200">
 
