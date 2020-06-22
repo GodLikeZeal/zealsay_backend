@@ -17,11 +17,11 @@
    前端使用vue,搭载比较火热的`nuxt.js`服务器端渲染框架，截止到目前,使用的是`nuxt.js`最新`2.12.2`版本,
    使用`Vuetify 2.x`构造出符合 `Material Design` 规范的扁平化风格主题UI,你有对美的偏爱,我同样有一份对美的执着,
    面对日趋多样化的技术,抽取一些常用的解决方案,以快,轻为主,打造出一个开箱即用的轻应用脚手架,助力中小企业解决快速部署以及持续交付的`DevOps`。
-   > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为 [zealsay_front](https://github.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
+   > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为:[github](https://github.com/GodLikeZeal/zealsay_front)，国内[gitee](https://gitee.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
 #### 博客体验地址[博客首页](https://beta.zealsay.com)
 #### 后台管理体验[后台管理首页](https://beta.zealsay.com/admin/dashboard) 体验账号用户名:visitor 密码：abc123
 #### 后台管理登录[登录页面](https://beta.zealsay.com/login) 体验账号用户名:visitor 密码：abc123
-#### api接口展示[api接口](https://dev-api.zealsay.com) 授权用户名：zealsay 密码:api123456
+#### api接口展示[api接口](https://dev-api.zealsay.com/doc.html) 授权用户名：zealsay 密码:api123456
 ### 欢迎来我的线上版博客水一波[zealsay博客](https://blog.zealsay.com)
  
 -------
@@ -68,11 +68,11 @@
 
 
 ## 快速搭建一个博客
-> 有两种方式可以来搭建，分别为传统方式和docker容器方式
-
+ 有两种方式可以来搭建，分别为传统方式和docker容器方式
+ 
 -------
 
-### docker容器启动
+### 1.docker容器方式部署
 - 先决条件：
 1. 你得有一台安装了docker的主机或者服务器。
 2. 你得安装docker-compose容器编排利器
@@ -103,11 +103,13 @@ services:
       - QINIU_BUCKET=your bucket #改成你七牛云bucket
       - QINIU_ACCESSKEY=accesskey #改成你的七牛accesskey
       - QINIU_SECRETKEY=secretkey #改成你的secretkey
-      - GITHUB_ID = 123 #改成你的github授权client-id
-      - GITHUB_SECRET = 123 #改成你的github授权client-secret
-      - GITHUB_URI = http://xxx.xxx.xxx/call/back #改成你的github授权redirect-uri
-      - WEB_NAME = zealsay说你想说 #改成你的blog站点名称
-      - WEB_DOMAIN = http://xxx.xxx.xxx/ #改成你的domain
+      - GITHUB_ID=123 #改成你的github授权client-id
+      - GITHUB_SECRET=123 #改成你的github授权client-secret
+      - GITHUB_URI=http://xxx.xxx.xxx/call/back #改成你的github授权redirect-uri
+      - WEB_NAME=zealsay说你想说 #改成你的blog站点名称
+      - WEB_DOMAIN=http://xxx.xxx.xxx/ #改成你的domain
+      - API_USERNAME=username #swagger api访问用户名
+      - API_PASSWORD=password #swagger api访问密码
     external_links: 
       - mysql
       - redis
@@ -184,7 +186,7 @@ volumes:
   certs: 
 
 ```
-### 传统部署
+### 2.传统java部署
 #### 运行依赖
 1. 确保本地安装jdk 1.8版本或以上。
 2. 安装maven环境。
@@ -224,6 +226,14 @@ spring:
     username: ${MAIL_USERNAME} #你的email用户名
     password: ${MAIL_PASSWORD} #你的email密码
     default-encoding: UTF-8
+swagger:
+  basic:
+    ## 开启Swagger的Basic认证功能,默认是false
+    enable: true
+    ## Basic认证用户名
+    username: ${API_USERNAME} #api接口授权用户
+    ## Basic认证密码
+    password: ${API_PASSWORD} #api接口授权用户
 qiniu:
   Domain: ${QINIU_DOMAIN} #你的七牛云域名
   Bucket: ${QINIU_BUCKET} #你的七牛云backet
@@ -255,7 +265,7 @@ justauth:
 ### 反馈
 欢迎大家在使用的过程中提出宝贵的意见和反馈问题，也可以直接提issue。
 ### 交流群
-* 欢迎加入zealsay交流群一起交流和学习
+* 欢迎加入zealsay交流群一起交流和学习，群号：189361484
 
 <img src="https://pan.zealsay.com/20190716214941558000000.jpg" alt="Sample"  width="150" height="200">
 
