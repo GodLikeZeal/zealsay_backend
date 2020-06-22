@@ -18,8 +18,6 @@ management:
 jwt:
   header: Authorization
 
-swagger:
-  production: true #生产环境屏蔽
 
 
 

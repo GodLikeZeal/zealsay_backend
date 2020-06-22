@@ -21,7 +21,7 @@
 #### 博客体验地址[博客首页](https://beta.zealsay.com)
 #### 后台管理体验[后台管理首页](https://beta.zealsay.com/admin/dashboard) 体验账号用户名:visitor 密码：abc123
 #### 后台管理登录[登录页面](https://beta.zealsay.com/login) 体验账号用户名:visitor 密码：abc123
-#### api接口展示[api接口](https://dev-api.zealsay.com) 授权用户名：zealsay 密码:api123456
+#### api接口展示[api接口](https://dev-api.zealsay.com/doc.html) 授权用户名：zealsay 密码:api123456
 ### 欢迎来我的线上版博客水一波[zealsay博客](https://blog.zealsay.com)
  
 -------
@@ -72,7 +72,7 @@
 
 -------
 
-### docker容器启动
+### 1.docker容器方式部署
 - 先决条件：
 1. 你得有一台安装了docker的主机或者服务器。
 2. 你得安装docker-compose容器编排利器
@@ -103,11 +103,13 @@ services:
       - QINIU_BUCKET=your bucket #改成你七牛云bucket
       - QINIU_ACCESSKEY=accesskey #改成你的七牛accesskey
       - QINIU_SECRETKEY=secretkey #改成你的secretkey
-      - GITHUB_ID = 123 #改成你的github授权client-id
-      - GITHUB_SECRET = 123 #改成你的github授权client-secret
-      - GITHUB_URI = http://xxx.xxx.xxx/call/back #改成你的github授权redirect-uri
-      - WEB_NAME = zealsay说你想说 #改成你的blog站点名称
-      - WEB_DOMAIN = http://xxx.xxx.xxx/ #改成你的domain
+      - GITHUB_ID=123 #改成你的github授权client-id
+      - GITHUB_SECRET=123 #改成你的github授权client-secret
+      - GITHUB_URI=http://xxx.xxx.xxx/call/back #改成你的github授权redirect-uri
+      - WEB_NAME=zealsay说你想说 #改成你的blog站点名称
+      - WEB_DOMAIN=http://xxx.xxx.xxx/ #改成你的domain
+      - API_USERNAME=username #swagger api访问用户名
+      - API_PASSWORD=password #swagger api访问密码
     external_links: 
       - mysql
       - redis
@@ -184,7 +186,7 @@ volumes:
   certs: 
 
 ```
-### 传统部署
+### 2.传统java部署
 #### 运行依赖
 1. 确保本地安装jdk 1.8版本或以上。
 2. 安装maven环境。
@@ -224,6 +226,14 @@ spring:
     username: ${MAIL_USERNAME} #你的email用户名
     password: ${MAIL_PASSWORD} #你的email密码
     default-encoding: UTF-8
+swagger:
+  basic:
+    ## 开启Swagger的Basic认证功能,默认是false
+    enable: true
+    ## Basic认证用户名
+    username: ${API_USERNAME} #api接口授权用户
+    ## Basic认证密码
+    password: ${API_PASSWORD} #api接口授权用户
 qiniu:
   Domain: ${QINIU_DOMAIN} #你的七牛云域名
   Bucket: ${QINIU_BUCKET} #你的七牛云backet
