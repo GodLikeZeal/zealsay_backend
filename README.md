@@ -11,18 +11,18 @@
 ------
 ## 开发指南
 请参考 [zealsay开发文档](https://docs.zealsay.com)
-本项目代码地址[github](https://github.com/GodLikeZeal/zealsay_backend)，国内版[gitee](https://gitee.com/GodLikeZeal/zealsay_backend)，喜欢的话，欢迎star。
+本项目代码地址[https://github.com/GodLikeZeal/zealsay_backend](https://github.com/GodLikeZeal/zealsay_backend)，国内版[https://gitee.com/GodLikeZeal/zealsay_backend](https://gitee.com/GodLikeZeal/zealsay_backend)，喜欢的话，欢迎star。
 ## 介绍
    zealsay是一套前后端分离的快速开发脚手架，后台采用的是最新的`Spring Boot 2.1.6.RELEASE`最新版本，
    前端使用vue,搭载比较火热的`nuxt.js`服务器端渲染框架，截止到目前,使用的是`nuxt.js`最新`2.12.2`版本,
    使用`Vuetify 2.x`构造出符合 `Material Design` 规范的扁平化风格主题UI,你有对美的偏爱,我同样有一份对美的执着,
    面对日趋多样化的技术,抽取一些常用的解决方案,以快,轻为主,打造出一个开箱即用的轻应用脚手架,助力中小企业解决快速部署以及持续交付的`DevOps`。
-   > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为:[github](https://github.com/GodLikeZeal/zealsay_front)，国内[gitee](https://gitee.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
-#### 博客体验地址[博客首页](https://beta.zealsay.com)
-#### 后台管理体验[后台管理首页](https://beta.zealsay.com/admin/dashboard) 体验账号用户名:visitor 密码：abc123
-#### 后台管理登录[登录页面](https://beta.zealsay.com/login) 体验账号用户名:visitor 密码：abc123
-#### api接口展示[api接口](https://dev-api.zealsay.com/doc.html) 授权用户名：zealsay 密码:api123456
-### 欢迎来我的线上版博客水一波[zealsay博客](https://blog.zealsay.com)
+   > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为:[https://github.com/GodLikeZeal/zealsay_front](https://github.com/GodLikeZeal/zealsay_front)，国内[https://gitee.com/GodLikeZeal/zealsay_front](https://gitee.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
+#### 博客体验地址[https://beta.zealsay.com](https://beta.zealsay.com)
+#### 后台管理体验[https://beta.zealsay.com/admin/dashboard](https://beta.zealsay.com/admin/dashboard) 体验账号用户名:visitor 密码：abc123
+#### 后台管理登录[https://beta.zealsay.com/login](https://beta.zealsay.com/login) 体验账号用户名:visitor 密码：abc123
+#### api接口文档[https://dev-api.zealsay.com/doc.html](https://dev-api.zealsay.com/doc.html) 授权用户名：zealsay 密码:api123456
+### 本项目已成功上线部署，欢迎来我的线上版博客水一波[https://blog.zealsay.com](https://blog.zealsay.com)
  
 -------
 本项目会一直持续更新迭代，新功能正在马不停蹄更新，开发文档也正在不断的完善中...
