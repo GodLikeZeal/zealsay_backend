@@ -8,7 +8,6 @@ branches:
   only:
   - master
   - dev
-  - stable
 
 cache:
   directories:
