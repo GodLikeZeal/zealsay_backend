@@ -17,5 +17,5 @@ public interface OauthLogin {
      * 登录.
      * @return
      */
-    Map<String,Object> login(AuthResponse authResponse);
+    Map<String,Object> login(AuthResponse authResponse) throws Exception;
 }

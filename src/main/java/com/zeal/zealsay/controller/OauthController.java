@@ -5,6 +5,7 @@ import cn.hutool.json.JSONUtil;
 import com.xkcoding.justauth.AuthRequestFactory;
 import com.zeal.zealsay.common.constant.enums.OauthSource;
 import com.zeal.zealsay.service.auth.OauthLoginFactory;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthSource;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
  * @author zhanglei
  * @date 2019-09-11  14:26
  */
+@Api(tags = "第三方授权登录模块")
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/oauth")
@@ -70,10 +72,10 @@ public class OauthController {
    * @return 登录成功后的信息
    */
   @RequestMapping("/{oauthType}/callback")
-  public void login(@PathVariable String oauthType, AuthCallback callback,HttpServletResponse response) throws IOException {
+  public void login(@PathVariable String oauthType, AuthCallback callback,HttpServletResponse response) throws Exception {
     AuthRequest authRequest = factory.get(getAuthSource(oauthType));
     AuthResponse authResponse = authRequest.login(callback);
-    log.info("【response】= {}", JSONUtil.toJsonStr(authRequest));
+    log.info("【response】= {}", authRequest);
     //执行登录逻辑
     Map<String,Object> map = oauthLoginFactory.getOauthLogin(getOauthSource(oauthType)).login(authResponse);
     response.sendRedirect((String) map.get("redirect"));

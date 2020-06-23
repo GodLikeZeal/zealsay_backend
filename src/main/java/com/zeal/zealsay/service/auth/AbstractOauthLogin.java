@@ -6,6 +6,7 @@ import com.zeal.zealsay.common.constant.enums.OauthSource;
 import com.zeal.zealsay.common.constant.enums.Role;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.SecuityUser;
+import com.zeal.zealsay.common.entity.UserInfo;
 import com.zeal.zealsay.entity.AuthUser;
 import com.zeal.zealsay.entity.User;
 import com.zeal.zealsay.helper.UserHelper;
@@ -36,7 +37,7 @@ public abstract class AbstractOauthLogin implements OauthLogin {
   @Autowired
   AuthUserService authUserService;
   @Autowired
-  UserDetailServiceImpl userDetailsService;
+  UserDetailServiceImpl userDetailService;
   @Autowired
   UserService userService;
   @Autowired
@@ -47,7 +48,7 @@ public abstract class AbstractOauthLogin implements OauthLogin {
   SystemConstants systemConstants;
 
   @Override
-  public Map<String, Object> login(AuthResponse authResponse) {
+  public Map<String, Object> login(AuthResponse authResponse) throws Exception {
     Map<String, Object> map = new HashMap<>();
     // 执行登录逻辑
     me.zhyd.oauth.model.AuthUser authUser = (me.zhyd.oauth.model.AuthUser) authResponse.getData();
@@ -58,7 +59,7 @@ public abstract class AbstractOauthLogin implements OauthLogin {
     User u;
     if (isRegister(authUser.getUuid(), getSource())) {
       u = userService.getByAuthUser(authUser.getUuid(), getSource());
-      secuityUser = userDetailsService.toSecuityUser(u);
+      secuityUser = userDetailService.toSecuityUser(u);
     } else {
       log.info("第一次授权，执行注册逻辑");
       u = toUser(authUser);
@@ -72,17 +73,13 @@ public abstract class AbstractOauthLogin implements OauthLogin {
       u.setAvatar("");
       u.setSex(1);
       u.setAge(18);
-      secuityUser = userDetailsService.toSecuityUser(u);
+      secuityUser = userDetailService.toSecuityUser(u);
     }
     //生成token并且登录
-    String token = null;
-    try {
-      token = URLEncoder.encode(tokenManager.generateToken(secuityUser),"utf-8");
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+    final UserInfo userInfo = userDetailService.toUserInfo(secuityUser.getUserId());
+    // 移除之前的token（包含member信息、token排行信息）
+    tokenManager.delToken(userInfo);
+    String token = tokenManager.saveToken(userInfo);
     map.put("redirect", getRedirectUrl() + "?token=" + token);
     log.info("token为:{}", map);
     return map;
