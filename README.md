@@ -18,11 +18,9 @@
    使用`Vuetify 2.x`构造出符合 `Material Design` 规范的扁平化风格主题UI,你有对美的偏爱,我同样有一份对美的执着,
    面对日趋多样化的技术,抽取一些常用的解决方案,以快,轻为主,打造出一个开箱即用的轻应用脚手架,助力中小企业解决快速部署以及持续交付的`DevOps`。
    > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为:[https://github.com/GodLikeZeal/zealsay_front](https://github.com/GodLikeZeal/zealsay_front)，国内[https://gitee.com/GodLikeZeal/zealsay_front](https://gitee.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
-#### 博客体验地址[https://beta.zealsay.com](https://beta.zealsay.com)
-#### 后台管理体验[https://beta.zealsay.com/admin/dashboard](https://beta.zealsay.com/admin/dashboard) 体验账号用户名:visitor 密码：abc123
-#### 后台管理登录[https://beta.zealsay.com/login](https://beta.zealsay.com/login) 体验账号用户名:visitor 密码：abc123
-#### api接口文档[https://dev-api.zealsay.com/doc.html](https://dev-api.zealsay.com/doc.html) 授权用户名：zealsay 密码:api123456
-### 本项目已成功上线部署，欢迎来我的线上版博客水一波[https://blog.zealsay.com](https://blog.zealsay.com)
+- 后台管理登录[https://beta.zealsay.com](https://beta.zealsay.com) 体验账号用户名:visitor 密码：abc123
+- api接口文档[https://dev-api.zealsay.com/doc.html](https://dev-api.zealsay.com/doc.html) 授权用户名：zealsay 密码:api123456
+#### 以本项目开发的博客系统已成功上线部署，欢迎体验[https://blog.zealsay.com](https://blog.zealsay.com)
  
 -------
 本项目会一直持续更新迭代，新功能正在马不停蹄更新，开发文档也正在不断的完善中...
@@ -262,6 +260,8 @@ justauth:
 进入target目录，执行jar文件
 `java -Dspring.profiles.active=prod -jar zealsay-1.0.0.jar`
 
+### 谁在使用
+zealsay博客[https://blog.zealsay.com](https://blog.zealsay.com)
 ### 反馈
 欢迎大家在使用的过程中提出宝贵的意见和反馈问题，也可以直接提issue。
 ### 交流群
