@@ -2,8 +2,15 @@ package com.zeal.zealsay.service.auth;
 
 import com.zeal.zealsay.common.constant.SystemConstants;
 import com.zeal.zealsay.common.constant.enums.OauthSource;
+import com.zeal.zealsay.entity.Dict;
+import com.zeal.zealsay.service.DictService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
+import java.util.stream.Collectors;
 
 /**
 * github登录.
@@ -15,11 +22,20 @@ import org.springframework.stereotype.Service;
 public class OauthGithubLogin extends AbstractOauthLogin{
 
     @Autowired
-    SystemConstants systemConstants;
+    DictService dictService;
 
     @Override
     protected String getRedirectUrl() {
-        return systemConstants.getDomain()+"redirect";
+        List<Dict> dicts = null;
+        try {
+            dicts = dictService.getConfig().get();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        Map<Integer, String> config = dicts.stream().collect(Collectors.toMap(Dict::getCode, Dict::getName));
+        return config.get(1000003)+"/redirect";
     }
 
     @Override

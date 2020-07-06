@@ -1,6 +1,8 @@
 package com.zeal.zealsay.converter;
 
+import com.zeal.zealsay.dto.request.DictAddRequest;
 import com.zeal.zealsay.dto.request.DictRequest;
+import com.zeal.zealsay.dto.request.DictSaveRequest;
 import com.zeal.zealsay.dto.response.DictResponse;
 import com.zeal.zealsay.entity.Dict;
 import org.mapstruct.Mapper;
@@ -18,5 +20,9 @@ public interface DictConvertMapper {
 
   DictResponse toDictResponse(Dict dict);
 
+  Dict toDict(DictAddRequest dictAddRequest);
+
   List<DictResponse> toDictResponseList(List<Dict> dicts);
+
+  List<Dict> toDictList(List<DictSaveRequest> dictSaveRequests);
 }

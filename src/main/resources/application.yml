@@ -72,9 +72,11 @@ ignore:
     - /api/v1/friend/link/page
     - /api/v1/user/use/username/*
     - /api/v1/user/use/email/*
+    - /api/v1/user/use/*
     - /api/v1/user/register/email
     - /api/v1/user/confirm/email
     - /api/v1/user/register
+    - /api/v1/user/valid/code/send
     - /**/*.css
     - /social
     - /signin
@@ -131,10 +133,14 @@ swagger:
     password: ${API_PASSWORD}
 
 web:
-  name: ${WEB_NAME}
-  domain: ${WEB_DOMAIN}
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
+
+sms:
+  regionId: ${SMS_REGIONID}
+  accessKey: ${SMS_ACCESSKEY}
+  accessSecret: ${SMS_ACCESSSECRET}
+  templateCode: ${SMS_TEMPLATECODE}
 
 justauth:
   enabled: true
@@ -173,8 +179,6 @@ spring:
     default-encoding: UTF-8
 
 web:
-  name: zealsay说你想说
-  domain: http://localhost:4000/
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
 
@@ -192,6 +196,13 @@ swagger:
     username: zealsay
     ## Basic认证密码
     password: api123456
+
+sms:
+  regionId: ENC(QBhwcCCdxBbd6tCXHbqA7g5h0WV+80Lx)
+  accessKey: ENC(q48LM6bghg2eC4Yy6aUu6FU2ock/K2WYrkemhtSl234ZyvRRHI3VsA==)
+  accessSecret: ENC(loQMFMQpa4G4GOtoVf3LfU7+5InXYiB7gpDWl/dA0ZFlN4TU48J0VQ==)
+  templateCode: ENC(RtxXoCCrAC7Djm7cnfhZM87TLRzc4OmY)
+  signName: ENC(m0M8R4c7L3hXXT6FZVASWgHFdEyNItSMQas//SB5GYc=)
 
 justauth:
   enabled: true
@@ -232,8 +243,6 @@ jwt:
 
 
 web:
-  name: zealsay说你想说
-  domain: https://blog.zealsay.com/
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
 
@@ -242,6 +251,13 @@ qiniu:
   Bucket: 123
   AccessKey: 123
   SecretKey: 123
+
+sms:
+  regionId: cn-qingdao
+  accessKey: xxx
+  accessSecret: xxxx
+  templateCode: xxx
+  signName: xxxx
 
 justauth:
   enabled: true

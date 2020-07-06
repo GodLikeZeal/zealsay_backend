@@ -26,7 +26,6 @@
         <docker.image.prefix>zealsay</docker.image.prefix>
 
         <jwt.version>0.9.0</jwt.version>
-        <fastjson.version>1.2.60</fastjson.version>
         <commons-io.version>2.6</commons-io.version>
         <mybatis-plus.version>3.3.1</mybatis-plus.version>
         <swagger2.version>2.9.2</swagger2.version>
@@ -105,6 +104,12 @@
             <version>1.8</version>
         </dependency>
 
+        <!--阿里云短信sdk -->
+        <dependency>
+            <groupId>com.aliyun</groupId>
+            <artifactId>aliyun-java-sdk-core</artifactId>
+            <version>4.4.6</version>
+        </dependency>
         <!--entity与dto转换工具 https://mvnrepository.com/artifact/org.mapstruct/mapstruct-jdk8 -->
         <dependency>
             <groupId>org.mapstruct</groupId>
@@ -156,12 +161,7 @@
             <artifactId>mybatis-plus-generator</artifactId>
             <version>${mybatis-plus.version}</version>
         </dependency>
-        <!-- 阿里json工具包 -->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>${fastjson.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-xml</artifactId>
