@@ -4,26 +4,34 @@
 <p align="center">
 
  ![java 8](https://img.shields.io/badge/java-8-ff69b4.svg)
-![spring boot 2.1.6](https://img.shields.io/badge/springboot-2.1.6-green.svg) ![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) ![License MIT](https://img.shields.io/badge/license-MIT--2.0-green.svg)  [![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) [![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') [![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') ![GitHub All Releases](https://img.shields.io/github/downloads/GodLikeZeal/zealsay_backend/total)
+![spring boot 2.1.6](https://img.shields.io/badge/springboot-2.1.6-green.svg) ![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) ![License MIT](https://img.shields.io/badge/license-MIT-green.svg)  [![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) [![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') [![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') ![GitHub All Releases](https://img.shields.io/github/downloads/GodLikeZeal/zealsay_backend/total)
 
 </p>
 
 ------
-## 开发指南
-请参考 [zealsay开发文档](https://docs.zealsay.com)
-本项目代码地址[https://github.com/GodLikeZeal/zealsay_backend](https://github.com/GodLikeZeal/zealsay_backend)，国内版[https://gitee.com/GodLikeZeal/zealsay_backend](https://gitee.com/GodLikeZeal/zealsay_backend)，喜欢的话，欢迎star。
+
 ## 介绍
    zealsay是一套前后端分离的快速开发脚手架，后台采用的是最新的`Spring Boot 2.1.6.RELEASE`最新版本，
    前端使用vue,搭载比较火热的`nuxt.js`服务器端渲染框架，截止到目前,使用的是`nuxt.js`最新`2.12.2`版本,
    使用`Vuetify 2.x`构造出符合 `Material Design` 规范的扁平化风格主题UI,你有对美的偏爱,我同样有一份对美的执着,
    面对日趋多样化的技术,抽取一些常用的解决方案,以快,轻为主,打造出一个开箱即用的轻应用脚手架,助力中小企业解决快速部署以及持续交付的`DevOps`。
-   > 本项目以个人博客网站为示例，展示如何使用`zealsay`快速搭建一个漂亮的个人博客，前后端项目全部开源，此项目为zealsay后台项目，前端项目地址为:[https://github.com/GodLikeZeal/zealsay_front](https://github.com/GodLikeZeal/zealsay_front)，国内[https://gitee.com/GodLikeZeal/zealsay_front](https://gitee.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
-- 后台管理登录[https://beta.zealsay.com](https://beta.zealsay.com) 体验账号用户名:visitor 密码：abc123
+   > 本项目为服务端后台项目，前端项目传送门:
+   - github地址：[zealsay_front](https://github.com/GodLikeZeal/zealsay_front)
+   - gitee地址：[zealsay_front](https://gitee.com/GodLikeZeal/zealsay_front)，欢迎frok，发现bug或者有好的建议也欢迎issue。
+##  体验地址
+- 后台管理登录[https://beta.zealsay.com](https://beta.zealsay.com) 后台管理员用户名:admin 密码：abc123
 - api接口文档[https://dev-api.zealsay.com/doc.html](https://dev-api.zealsay.com/doc.html) 授权用户名：zealsay 密码:api123456
-#### 以本项目开发的博客系统已成功上线部署，欢迎体验[https://blog.zealsay.com](https://blog.zealsay.com)
+#### 另外以本项目开发的博客系统已成功上线部署，欢迎体验[https://blog.zealsay.com](https://blog.zealsay.com) 后台体验账号：visitor 密码：abc123
  
 -------
-本项目会一直持续更新迭代，新功能正在马不停蹄更新，开发文档也正在不断的完善中...
+## 开源协议
+本项目遵循MIT开源协议，可以商用，可以二次开发，但请保留作者信息，也可多帮宣传，比心♥️♥️♥️
+## 开发指南
+- 开发文档： [zealsay开发文档](https://docs.zealsay.com)
+- github代码地址[zealsay_backend](https://github.com/GodLikeZeal/zealsay_backend)
+- gitee代码地址[zealsay_backend](https://gitee.com/GodLikeZeal/zealsay_backend)
+- 开发不易，占用了我几乎所有业余时间，精力与金钱付出换各位使用收益，望各位喜欢不吝顺手 star 以示支持，项目更好亦反馈予你。
+
 ## 技术选型
 ### zealsay_backend（后台项目）
 - Framework : java 8
@@ -37,7 +45,6 @@
 - jasypt 加密
 - mapstruct (对象映射)
 - Mybatis + Mybatis Plus (持久层开发利器)
-- Fastjson (阿里json工具包)
 - Spring Boot Docker (容器服务)
 - Travis CI (自动化构建)
 - Mysql (mysql数据库)
@@ -48,7 +55,6 @@
 - Undertow(高性能服务器容器，告别tomcat和jetty)
 - Feign (外部服务调用，整合spring cloud后可以用于内部服务调用)
 - Logback (日志记录)
-- Actuator (服务监控)
 - Junit Test (单元测试)
 - 第三方SDK或服务
   - 七牛云对象云存储
@@ -264,6 +270,10 @@ justauth:
 zealsay博客[https://blog.zealsay.com](https://blog.zealsay.com)
 ### 反馈
 欢迎大家在使用的过程中提出宝贵的意见和反馈问题，也可以直接提issue。
+### 常见问题
+1. 如何初始化数据库表？
+答：在`resouce`目录下的`zealsay.sql`即为数据库初始化文件，使用navicat等执行即可。
+
 ### 交流群
 * 欢迎加入zealsay交流群一起交流和学习，群号：189361484
 
