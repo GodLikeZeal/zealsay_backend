@@ -6,7 +6,6 @@ import com.zeal.zealsay.common.constant.enums.DictType;
 import com.zeal.zealsay.converter.DictConvertMapper;
 import com.zeal.zealsay.dto.request.DictAddRequest;
 import com.zeal.zealsay.dto.request.DictRequest;
-import com.zeal.zealsay.dto.request.DictSaveRequest;
 import com.zeal.zealsay.entity.Dict;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.mapper.DictMapper;
