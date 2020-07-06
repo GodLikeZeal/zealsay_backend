@@ -5,6 +5,7 @@ import com.qiniu.common.Zone;
 import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.UploadManager;
 import com.qiniu.util.Auth;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +37,7 @@ public class QiniuyunConfig {
    */
   @Bean
   public com.qiniu.storage.Configuration qiniuConfig() {
-    return new com.qiniu.storage.Configuration(Zone.zone1());
+    return new com.qiniu.storage.Configuration(Zone.autoZone());
   }
 
   /**

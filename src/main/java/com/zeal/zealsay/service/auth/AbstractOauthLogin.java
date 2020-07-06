@@ -68,11 +68,6 @@ public abstract class AbstractOauthLogin implements OauthLogin {
       //没有注册，则注册成为用户
       user.setUserId(u.getId());
       authUserService.save(user);
-      //封装登录对象
-      u.setLastPasswordResetDate(new Date());
-      u.setAvatar("");
-      u.setSex(1);
-      u.setAge(18);
       secuityUser = userDetailService.toSecuityUser(u);
     }
     //生成token并且登录
@@ -136,13 +131,16 @@ public abstract class AbstractOauthLogin implements OauthLogin {
         .username(checkAndSetUsername(authUser.getUsername(), 1))
         .password(systemConstants.getDefaultPassword())
         .name(authUser.getNickname())
-        .avatar(StringUtils.isNotBlank(authUser.getAvatar()) ? authUser.getAvatar() : userHelper.gennerateAvatar())
+        .avatar(userHelper.gennerateAvatar())
         .address(authUser.getLocation())
         .status(UserStatus.NORMAL)
         .emailConfirm(false)
         .role(Role.ROLE_USER)
+        .sex(1)
+        .age(18)
         .introduction("这人懒死了，什么都没有写⊙﹏⊙∥∣°")
         .registerDate(LocalDateTime.now())
+        .lastPasswordResetDate(new Date())
         .build();
   }
 

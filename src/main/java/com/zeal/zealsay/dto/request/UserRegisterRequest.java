@@ -32,13 +32,15 @@ public class UserRegisterRequest {
   private String password;
 
   /**
-   * 手机号.
+   * 手机号或邮箱.
    */
-  private String phoneNumber;
+  @NotBlank(message = "手机号或邮箱不能为空")
+  private String emailOrPhone;
 
   /**
-   * 邮箱.
+   * 验证码.
    */
-  private String email;
+  @NotBlank(message = "验证码不能为空")
+  private String validCode;
 
 }
