@@ -25,7 +25,7 @@
  
 -------
 ## 开源协议
-本项目遵循MIT开源协议，可以商用，可以二次开发，但请保留作者信息，也可多帮宣传，比心♥️♥️♥️
+本项目遵循MIT开源协议，可以商用，可以二次开发，但请保留作者信息，也可多帮宣传，比心:heart::heart::heart:
 ## 开发指南
 - 开发文档： [zealsay开发文档](https://docs.zealsay.com)
 - github代码地址[zealsay_backend](https://github.com/GodLikeZeal/zealsay_backend)
@@ -71,8 +71,8 @@
 ![系统架构图](https://pan.zealsay.com/mweb/2020061915925585465233.png)
 
 
-## 快速搭建一个博客
- 有两种方式可以来搭建，分别为传统方式和docker容器方式
+## 快速启动
+ 有两种方式可以来本地搭建，分别为传统方式和docker容器方式
  
 -------
 
@@ -114,6 +114,10 @@ services:
       - WEB_DOMAIN=http://xxx.xxx.xxx/ #改成你的domain
       - API_USERNAME=username #swagger api访问用户名
       - API_PASSWORD=password #swagger api访问密码
+      - SMS_REGIONID=regionId #你申请的阿里云短信regionId
+      - SMS_ACCESSKEY=access_key #阿里云短信accesskey
+      - SMS_ACCESSSECRET=access_secret #阿里云短信access_secret
+      - SMS_TEMPLATECODE=templateId #阿里云短信模板id
     external_links: 
       - mysql
       - redis
@@ -287,15 +291,13 @@ zealsay博客[https://blog.zealsay.com](https://blog.zealsay.com)
 - :heart::heart:兜兜里有糖。
 - 作为一位后台开发者,接触前端时间不长，熟悉了vue后，便使用nuxt.js来开发此项目,刚使用nuxt,踩了不少坑,更多关于nuxt文档,可以访问 [Nuxt.js docs](https://nuxtjs.org).
 ### 截图预览
-![20200706183003](media/15940283232982/20200706183003.jpg)
-![20200706183137](media/15940283232982/20200706183137.jpg)
-![20200706183301](media/15940283232982/20200706183301.jpg)
-![20200706183421](media/15940283232982/20200706183421.jpg)
-![20200706183608](media/15940283232982/20200706183608.jpg)
-![20200706183645](media/15940283232982/20200706183645.jpg)
-
-![20200706183725](media/15940283232982/20200706183725.jpg)
-![20200706184105](media/15940283232982/20200706184105.jpg)
-![20200706184217](media/15940283232982/20200706184217.jpg)
-![20200706184231](media/15940283232982/20200706184231.jpg)
-
+![20200706183003](https://pan.zealsay.com/mweb/2020070615940322923732.jpg)
+![20200706183137](https://pan.zealsay.com/mweb/2020070615940322923766.jpg)
+![20200706183301](https://pan.zealsay.com/mweb/2020070615940322923789.jpg)
+![20200706183421](https://pan.zealsay.com/mweb/2020070615940322923809.jpg)
+![20200706183608](https://pan.zealsay.com/mweb/2020070615940322923825.jpg)
+![20200706183645](https://pan.zealsay.com/mweb/2020070615940322923835.jpg)
+![20200706183725](https://pan.zealsay.com/mweb/2020070615940322923847.jpg)
+![20200706184105](https://pan.zealsay.com/mweb/2020070615940322923858.jpg)
+![20200706184217](https://pan.zealsay.com/mweb/2020070615940322923869.jpg)
+![20200706184231](https://pan.zealsay.com/mweb/2020070615940322923881.jpg)
