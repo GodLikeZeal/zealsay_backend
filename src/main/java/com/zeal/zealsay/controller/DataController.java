@@ -59,8 +59,6 @@ public class DataController {
   @Autowired
   DictService dictService;
   @Autowired
-  PhraseService phraseService;
-  @Autowired
   ArticleLabelService articleLabelService;
   @Autowired
   ArticleLikeService articleLikeService;
