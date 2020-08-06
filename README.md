@@ -22,7 +22,7 @@
 🧀  前端采用基于`Vue`的服务端渲染解决方案`Nuxt`,样式风格基于`Vuetify`这款优秀的`MD`风格样式库。
 
 ### 开发指南
-- [zealsay轻应用开发文档](https://docs.zealsay.com)  
+- [zealsay轻应用开发文档](https://docs.zealsay.com)   🚀 🚀 🚀 正在快马加鞭完善中...
 
 >  📖  文档的项目在 [zealsay_docs](https://gitee.com/GodLikeZeal/zealsay_docs)  ，暂时放到国内的gitee,大家有更完善的文档或建议可以 Pull Request 或 Issues 给我。
 
@@ -87,6 +87,7 @@
 - 📖  如果对本项目进行二次开源，请保留作者信息。 
 
 ### 关于
+- 🍓 欢迎关注作者 [博客](https://blog.zealsay.com)，也是基于`zealsay`开发的,后期会分享一些开发心得。
 - 🍉 作者是一名后台开发者，接触前端时间并不长，项目有不足之处和不合理的地方还请海涵。
 - 关于优化和好的建议，也欢迎联系作者和提issue。同时也欢迎大家PR 👏👏👏
  - 开发不易，来来回回的优化，占用了我几乎所有业余时间，希望各位大佬喜欢本项目的话，不吝顺手右上角 star 以示支持❤️❤️❤️，你们的支持是我坚持下去的最大动力。爱你们😍😍😍
