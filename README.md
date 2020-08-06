@@ -93,8 +93,8 @@
 - 感谢开发神器[Mybatis-Plus](https://mp.baomidou.com/)
 - 感谢dto转换工具[Mapstruct](https://github.com/mapstruct/mapstruct)
 - 感谢友好的swagger ui插件[knife4j](https://gitee.com/xiaoym/knife4j)
-- :kissing_heart::kissing_heart:感谢前端妹子[jinjinyike](https://github.com/jinjinyike)的帮助。
-- :heart::heart:兜兜里有糖。
+- 😘😘感谢前端妹子[jinjinyike](https://github.com/jinjinyike)的帮助。
+- ❤️❤️❤️️️兜兜里有糖。
 - 作为一位后台开发者,接触前端时间不长，熟悉了vue后，便使用nuxt.js来开发此项目,刚使用nuxt,踩了不少坑,后面会写一些那些年，开发nuxt踩过的坑。
 
 ### 部分页面预览
