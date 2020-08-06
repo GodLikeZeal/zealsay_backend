@@ -104,7 +104,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
-    url: jdbc:mysql://${spring.datasource.host}/zealsay_admin?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    url: jdbc:mysql://${spring.datasource.host}/zealsay_svt?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
     hikari:
       maxLifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上
       maximumPoolSize: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
@@ -133,6 +133,8 @@ swagger:
     password: ${API_PASSWORD}
 
 web:
+  name: ${WEB_NAME}
+  domain: ${WEB_DOMAIN}
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
 
@@ -179,6 +181,8 @@ spring:
     default-encoding: UTF-8
 
 web:
+  name: zealsay说你想说
+  domain: http://localhost:4000/
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
 
@@ -243,6 +247,8 @@ jwt:
 
 
 web:
+  name: zealsay说你想说
+  domain: https://blog.zealsay.com/
   default:
     password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
 
