@@ -4,10 +4,18 @@
 <p align="center">
 
  ![java 8](https://img.shields.io/badge/java-8-ff69b4.svg)
-![spring boot 2.1.6](https://img.shields.io/badge/springboot-2.1.6-green.svg) ![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) ![License MIT](https://img.shields.io/badge/license-MIT-green.svg)  [![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) [![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') [![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') ![GitHub All Releases](https://img.shields.io/github/downloads/GodLikeZeal/zealsay_backend/total)
+![spring boot 2.1.6](https://img.shields.io/badge/springboot-2.1.6-green.svg) 
+![swagger valid ](https://img.shields.io/badge/swagger-valid-brightgreen.svg) 
+![License MIT](https://img.shields.io/badge/license-MIT-green.svg)  
+[![Build Status](https://travis-ci.org/GodLikeZeal/zealsay_backend.svg?branch=master)](https://travis-ci.org/GodLikeZeal/zealsay_backend) 
+[![](https://img.shields.io/docker/stars/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') 
+[![](https://img.shields.io/docker/pulls/zealsay/zealsay_backend.svg)](https://hub.docker.com/r/zealsay/zealsay_backend 'DockerHub') 
+![GitHub All Releases](https://img.shields.io/github/downloads/GodLikeZeal/zealsay_backend/total)
 
 </p>
+
 ------
+
 ### 介绍
 🚀  zealsay是一套前后端分离的快速开发脚手架,抽取一些常用的解决方案,以快,轻为主,打造出一个开箱即用的轻应用脚手架。  
 🍰  后台基于`Spring Boot`,主体采用`Spring Security`和`Mybatis-Plus`。  
