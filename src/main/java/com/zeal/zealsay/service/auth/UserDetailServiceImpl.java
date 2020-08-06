@@ -94,7 +94,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         secuityUser.setSex(user.getSex());
         secuityUser.setUserId(user.getId());
         secuityUser.setStatus(user.getStatus());
-        secuityUser.setRole(user.getRole());
         secuityUser.setLastPasswordResetDate(user.getLastPasswordResetDate());
         return secuityUser;
     }
@@ -116,7 +115,6 @@ public class UserDetailServiceImpl implements UserDetailsService {
         secuityUser.setSex(user.getSex());
         secuityUser.setUserId(user.getId());
         secuityUser.setStatus(user.getStatus());
-        secuityUser.setRole(user.getRole());
         secuityUser.setLastPasswordResetDate(user.getLastPasswordResetDate());
         return secuityUser;
     }

@@ -1,7 +1,6 @@
 package com.zeal.zealsay.controller;
 
 
-import com.aliyuncs.exceptions.ClientException;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zeal.zealsay.common.annotation.DuplicateSubmit;
 import com.zeal.zealsay.common.entity.PageInfo;
@@ -31,7 +30,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
-import java.util.concurrent.ExecutionException;
 
 /**
  * 用户服务入口.
@@ -115,19 +113,6 @@ public class UserController {
   public Result<Boolean> getIsInUseByEmail(@PathVariable String email, @RequestParam(required = false) Long userId) {
     log.info("开始查询邮箱email为 '{}' 是否被使用", email);
     return Result.of(userService.getIsInUseByEmail(email, userId));
-  }
-
-  /**
-   * 查询邮箱或手机号是否已被使用.
-   *
-   * @author zhanglei
-   * @date 2018/9/7  下午6:00
-   */
-  @GetMapping("/use/{emailOrPhone}")
-  @ApiOperation(value = "查询邮箱或手机号是否已被使用", notes = "查询邮箱或手机号是否已被使用")
-  public Result<Boolean> getIsInUse(@PathVariable String emailOrPhone) {
-    log.info("查询邮箱或手机号是否已被使用 '{}' 是否被使用", emailOrPhone);
-    return Result.of(userService.getIsInUse(emailOrPhone));
   }
 
 
@@ -261,28 +246,6 @@ public class UserController {
       emailService.sendRegisterEmail(username, email);
     } catch (UnsupportedEncodingException e) {
       log.error("发送注册邮件出错！出错信息为:{}", e.getMessage());
-    }
-    return Result.ok();
-  }
-  /**
-   * 发送注册邮件.
-   *
-   * @author zhanglei
-   * @date 2019-10-08  17:26
-   */
-  @PostMapping("/valid/code/send")
-  public Result sendEmailOrPhone(@RequestParam String emailOrPhone) {
-    log.info("开始执行发送验证码服务");
-    String em = "^\\w+([-+.]\\w+)*@\\w+([-.]\\w+)*\\.\\w+([-.]\\w+)*$";
-    String ph = "^[1][34578]\\d{9}$";
-    try {
-      userService.sendValidCode(emailOrPhone);
-    } catch (ClientException e) {
-      log.error("发送注册验证码出错！出错信息为:{}", e.getMessage());
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    } catch (ExecutionException e) {
-      e.printStackTrace();
     }
     return Result.ok();
   }

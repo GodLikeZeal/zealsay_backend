@@ -14,6 +14,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class SystemConstants {
 
+  @Value("${web.domain}")
+  private String domain;
+
+  @Value("${web.name}")
+  private String name;
+
   @Value("${web.default.password}")
   private String defaultPassword;
 
@@ -22,14 +28,4 @@ public class SystemConstants {
 
   @Value("${qiniu.Domain}")
   private String qiniuDomain;
-
-  @Value("${sms.regionId}")
-  private String smsRegionId;
-
-  @Value("${sms.accessKey}")
-  private String smsAccessKey;
-
-  @Value("${sms.accessSecret}")
-  private String smsAccessSecret;
-
 }

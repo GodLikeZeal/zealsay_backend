@@ -3,7 +3,6 @@ package com.zeal.zealsay.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -29,7 +28,6 @@ public class Dict implements Serializable {
   /**
    * 主键.
    */
-  @JsonFormat(shape = JsonFormat.Shape.STRING)
   @TableId(value = "id", type = IdType.ASSIGN_ID)
   private Long id;
 

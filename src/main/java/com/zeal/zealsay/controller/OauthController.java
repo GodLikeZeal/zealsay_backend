@@ -43,6 +43,15 @@ public class OauthController {
   private OauthLoginFactory oauthLoginFactory;
 
   /**
+   * 登录类型
+   */
+  @GetMapping
+  public Map<String, String> loginType() {
+    List<String> oauthList = factory.oauthList();
+    return oauthList.stream().collect(Collectors.toMap(oauth -> oauth.toLowerCase() + "登录", oauth -> "http://oauth.xkcoding.com/demo/oauth/login/" + oauth.toLowerCase()));
+  }
+
+  /**
    * 登录
    *
    * @param oauthType 第三方登录类型

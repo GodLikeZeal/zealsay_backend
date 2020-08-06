@@ -59,6 +59,10 @@ public class DataController {
   @Autowired
   DictService dictService;
   @Autowired
+  PhraseService phraseService;
+  @Autowired
+  CommentService commentService;
+  @Autowired
   ArticleLabelService articleLabelService;
   @Autowired
   ArticleLikeService articleLikeService;
@@ -78,6 +82,45 @@ public class DataController {
   ArticleLabelConvertMapper articleLabelConvertMapper;
   @Autowired
   RoleConvertMapper roleConvertMapper;
+
+  /**
+   * 首页信息获取.
+   *
+   * @author zhanglei
+   * @date 2018/9/7  下午6:00
+   */
+  @GetMapping("/index")
+  @ApiOperation(value = "首页数据获取", notes = "首页数据获取")
+  public Result<Map<String, Object>> getIndexData(ArticlePageRequest articlePageRequest) throws ExecutionException, InterruptedException {
+    log.info("首页数据获取中...");
+    //获取五篇火热文章
+    List<ArticleResponse> hotArticles = articleService.getHotArticleList().get();
+    //获取一言
+    HitokotoResponse hitokoto = phraseService.get().get();
+    //获取分类
+    List<ArticleCategoryResponse> categorys = articleCategoryService.getCategoryList().get();
+    //获取标签
+    List<ArticleLabelResponse> labels = articleLabelConvertMapper
+        .toArticleLabelResponseList(articleLabelService.list());
+    //获取文章列表
+    Page<Article> articlePage = (Page<Article>) articleService
+        .page(new Page<>(1, 10), articleHelper.toArticlePageRequestWrapperForC(articlePageRequest));
+    PageInfo<ArticlePageResponse> pageInfo = articleHelper.toPageInfo(articlePage);
+
+    //获取近期评论
+    List<CommentResponse> comments = commentService.recentDiscuss();
+
+    log.info("首页数据获取完毕");
+    return Result
+        .of(ImmutableMap.builder()
+            .put("pageInfo", pageInfo)
+            .put("hotArticles", hotArticles)
+            .put("hitokoto", hitokoto)
+            .put("labels", labels)
+            .put("categorys", categorys)
+            .put("comments", comments)
+            .build());
+  }
 
   /**
    * 用户中心信息获取.
@@ -128,5 +171,70 @@ public class DataController {
             .build());
   }
 
+  /**
+   * 文章详情接口.
+   *
+   * @author zhanglei
+   * @date 2020/6/17  6:49 下午
+   */
+  @GetMapping("/article/{id}")
+  @ApiOperation(value = "获取博客详情页数据", notes = "获取博客详情页数据")
+  public Result<Map<String, Object>> getArticleDetail(@PathVariable Long id,
+                                                      @RequestParam(defaultValue = "1") Long pageNumber,
+                                                      @RequestParam(defaultValue = "10") Long pageSize) throws ExecutionException, InterruptedException {
+    log.info("🌴文章详情页面数据展现...");
+
+    //获取文章
+    ArticleResponse article = articleHelper.toArticleResponse(articleService.getById(id));
+
+    //获取分类
+    List<ArticleCategoryResponse> categorys = articleCategoryService.getCategoryList().get();
+
+    //获取评论人数
+    long count = commentService.count(new QueryWrapper<Comment>().eq("article_id", id));
+    //获取评论
+    PageInfo<CommentResponse> commentPage = commentService.pageCommentList(pageNumber, pageSize, id, null);
+    //判断是否喜欢过
+    Boolean like = false;
+    SecuityUser currentUser = userDetailService.getCurrentUser();
+    if (Objects.nonNull(currentUser)) {
+      like = articleLikeService.islike(id);
+    }
+
+    log.info("👕文章详情页面数据获取完毕");
+    return Result
+        .of(ImmutableMap.builder()
+            .put("article", article)
+            .put("commentPage", commentPage)
+            .put("like", like)
+            .put("categorys", categorys)
+            .put("count", count)
+            .build());
+  }
+
+  /**
+   * 后台管理页面数据.
+   *
+   * @author zhanglei
+   * @date 2020/6/12  2:28 下午
+   */
+  @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EXPERIENCER')")
+  @GetMapping("/admin/dashboard")
+  @ApiOperation(value = "后台管理页面数据获取", notes = "后台管理页面获取")
+  public Result<Map<String, Object>> getDashboardData() {
+    log.info("👕后台管理页面数据获取中...");
+    long userNum = userService.countUser();
+    long userAddNum = userService.countUserAdd();
+    long blogNum = articleService.count();
+    long blogAddNum = articleService.countArticleAdd();
+    log.info("👕后台管理页面数据获取完毕");
+    return Result
+        .of(ImmutableMap.builder()
+            .put("userNum", userNum)
+            .put("userAddNum", userAddNum)
+            .put("blogNum", blogNum)
+            .put("blogAddNum", blogAddNum)
+            .build());
+  }
 }
 
