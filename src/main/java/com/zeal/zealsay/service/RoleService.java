@@ -2,7 +2,6 @@ package com.zeal.zealsay.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.zeal.zealsay.converter.RoleConvertMapper;
 import com.zeal.zealsay.dto.request.RoleAddResquest;
 import com.zeal.zealsay.dto.request.RoleUpdateRequest;
 import com.zeal.zealsay.entity.Role;
@@ -29,8 +28,6 @@ import java.util.Objects;
 @Service
 public class RoleService extends AbstractService<RoleMapper, Role> implements IService<Role> {
 
-  @Autowired
-  RoleConvertMapper roleConvertMapper;
   @Autowired
   RoleHelper roleHelper;
 

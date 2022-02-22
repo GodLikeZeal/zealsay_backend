@@ -5,8 +5,6 @@ import com.google.common.collect.ImmutableMap;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.service.auth.UserDetailServiceImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
  * @author zhanglei
  * @date 2018/9/27  下午3:47
  */
-@Api(tags = "认证模块")
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/authentication")
@@ -44,7 +41,6 @@ public class AuthenticationController {
    * @return ModelAndView
    */
   @GetMapping("/require")
-  @ApiOperation(value = "认证页面跳转",notes = "认证页面跳转")
   public ModelAndView require() {
     return new ModelAndView("/ftl/login.ftl");
   }
@@ -57,7 +53,6 @@ public class AuthenticationController {
    */
   @PostAuthorize(" returnObject.data.username == principal.username or hasRole('ROLE_ADMIN')")
   @GetMapping("/user")
-  @ApiOperation(value = "用户信息校验",notes = "用户信息校验")
   public Result<SecuityUser> user(Authentication authentication) {
     SecuityUser secuityUser = (SecuityUser)authentication.getPrincipal();
     return Result.of(userDetailService.toUserInfo(secuityUser.getUserId()));

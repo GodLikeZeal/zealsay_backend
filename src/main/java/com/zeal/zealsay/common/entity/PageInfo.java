@@ -1,8 +1,6 @@
 package com.zeal.zealsay.common.entity;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,17 +18,13 @@ import java.util.Objects;
 @Data
 @Builder
 @AllArgsConstructor
-@ApiModel(value="分页包装对象", description="分页包装对象")
 public class PageInfo<T> {
 
   public static final Long DEFAULT_PAGE_SIZE = 10L;
   public static final Long DEFAULT_PAGE_NUMBER = 1L;
 
-  @ApiModelProperty(value = "pageSize",example = "1")
   private Long pageSize;
-  @ApiModelProperty(value = "currentPage",example = "2")
   private Long currentPage;
-  @ApiModelProperty(value = "total",example = "12")
   private Long total;
 
   @Builder.Default

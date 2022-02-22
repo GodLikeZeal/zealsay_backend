@@ -1,8 +1,6 @@
 package com.zeal.zealsay.web;
 
 import com.zeal.zealsay.common.entity.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,14 +18,12 @@ import static com.zeal.zealsay.common.constant.enums.ResultCode.*;
  * @date 2018-05-09 20:38
  */
 @Slf4j
-@Api(tags = "异常处理模块")
 @RestController
 public class MyErrorController implements ErrorController {
 
   private static final String ERROR_PATH = "/error";
 
   @RequestMapping(value = ERROR_PATH)
-  @ApiOperation(value = "异常处理接口[非外部调用接口]",notes = "异常处理接口[非外部调用接口]")
   public Result<?> handleError(HttpServletRequest request) {
     //获取statusCode:401,404,500
     Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
@@ -71,8 +67,4 @@ public class MyErrorController implements ErrorController {
 
   }
 
-  @Override
-  public String getErrorPath() {
-    return ERROR_PATH;
-  }
 }

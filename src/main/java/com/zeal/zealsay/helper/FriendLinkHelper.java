@@ -2,9 +2,9 @@ package com.zeal.zealsay.helper;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.zeal.zealsay.common.entity.PageInfo;
-import com.zeal.zealsay.converter.FriendLinkConvertMapper;
 import com.zeal.zealsay.dto.request.FriendLinkRequest;
 import com.zeal.zealsay.entity.FriendLink;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +19,6 @@ import java.time.LocalDateTime;
 @Component
 public class FriendLinkHelper {
 
-  @Autowired
-  FriendLinkConvertMapper friendLinkConvertMapper;
-
   /**
    * 添加前初始化.
    *
@@ -29,7 +26,8 @@ public class FriendLinkHelper {
    * @date 2019-08-23  14:44
    */
   public FriendLink initBeforeAdd(FriendLinkRequest friendLinkRequest) {
-    FriendLink friendLink = friendLinkConvertMapper.toFriendLink(friendLinkRequest);
+    FriendLink friendLink = new FriendLink();
+    BeanUtils.copyProperties(friendLinkRequest,friendLink);
     friendLink.setCreateDate(LocalDateTime.now());
     return friendLink;
   }
@@ -41,7 +39,8 @@ public class FriendLinkHelper {
    * @date 2019-08-23  14:44
    */
   public FriendLink initBeforeUpdate(FriendLinkRequest friendLinkRequest) {
-    FriendLink friendLink = friendLinkConvertMapper.toFriendLink(friendLinkRequest);
+    FriendLink friendLink = new FriendLink();
+    BeanUtils.copyProperties(friendLinkRequest,friendLink);
     return friendLink;
   }
 

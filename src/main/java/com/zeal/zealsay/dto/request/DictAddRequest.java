@@ -1,6 +1,5 @@
 package com.zeal.zealsay.dto.request;
 
-import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -21,26 +20,19 @@ import lombok.NoArgsConstructor;
 public class DictAddRequest {
 
   @NotNull(message = "code不能为空")
-  @ApiModelProperty(value = "编码")
   private Integer code;
 
   @NotBlank(message = "名称不能为空")
-  @ApiModelProperty(value = "名称")
   private String name;
 
-  @ApiModelProperty(value = "拼音简称")
   private String enShort;
 
-  @ApiModelProperty(value = "父层code")
   private Integer parentCode;
 
   @NotBlank(message = "类型不能为空")
-  @ApiModelProperty(value = "类型")
   private String type;
 
-  @ApiModelProperty(value = "描述")
   private String description;
 
-  @ApiModelProperty(value = "顺序")
   private Integer sort;
 }

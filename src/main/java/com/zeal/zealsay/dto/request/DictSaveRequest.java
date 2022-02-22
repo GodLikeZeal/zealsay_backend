@@ -1,6 +1,5 @@
 package com.zeal.zealsay.dto.request;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,13 +17,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DictSaveRequest {
 
-  @ApiModelProperty(value = "id")
   private Long id;
 
-  @ApiModelProperty(value = "code")
   private Integer code;
 
-  @ApiModelProperty(value = "名称")
   private String name;
 
 }

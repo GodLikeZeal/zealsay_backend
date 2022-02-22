@@ -2,7 +2,6 @@ package com.zeal.zealsay.service;
 
 import com.zeal.zealsay.common.constant.SystemConstants;
 import lombok.extern.slf4j.Slf4j;
-import org.bouncycastle.jcajce.provider.symmetric.AES;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;

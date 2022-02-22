@@ -10,6 +10,7 @@ spring:
     name: zealsay
   main:
     allow-bean-definition-overriding: true #当遇到相同的名字，是否允许覆盖
+    allow-circular-references: true
 management:
   health:
     rabbit:

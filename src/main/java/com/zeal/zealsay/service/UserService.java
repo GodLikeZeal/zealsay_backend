@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.common.constant.enums.*;
 import com.zeal.zealsay.common.entity.UserVo;
-import com.zeal.zealsay.converter.UserConvertMapper;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
@@ -19,6 +18,7 @@ import com.zeal.zealsay.mapper.UserMapper;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,8 +53,6 @@ public class UserService extends AbstractService<UserMapper, User> implements IS
   AuthUserService authUserService;
   @Autowired
   EmailService emailService;
-  @Autowired
-  UserConvertMapper userConvertMapper;
 
   /**
    * 通过手机号，用户名或者邮箱查询.
@@ -190,7 +188,9 @@ public class UserService extends AbstractService<UserMapper, User> implements IS
   public Boolean updateUser(UserUpdateRequest userUpdateRequest) {
     //检查是否可以被更新
     checkBeforeUpdate(userUpdateRequest);
-    return updateById(userConvertMapper.toUser(userUpdateRequest));
+    User user = new User();
+    BeanUtils.copyProperties(userUpdateRequest,user);
+    return updateById(user);
   }
 
   private void checkBeforeUpdate(UserUpdateRequest userUpdateRequest) {

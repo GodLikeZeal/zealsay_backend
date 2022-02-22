@@ -1,12 +1,9 @@
 package com.zeal.zealsay.controller;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
 import com.xkcoding.justauth.AuthRequestFactory;
 import com.zeal.zealsay.common.constant.enums.OauthSource;
 import com.zeal.zealsay.service.auth.OauthLoginFactory;
-import io.swagger.annotations.Api;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthSource;
 import me.zhyd.oauth.model.AuthCallback;
@@ -31,16 +28,19 @@ import java.util.stream.Collectors;
  * @author zhanglei
  * @date 2019-09-11  14:26
  */
-@Api(tags = "第三方授权登录模块")
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/oauth")
-@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class OauthController {
+
   private final AuthRequestFactory factory;
 
   @Autowired
   private OauthLoginFactory oauthLoginFactory;
+
+  public OauthController(AuthRequestFactory factory) {
+    this.factory = factory;
+  }
 
   /**
    * 登录类型

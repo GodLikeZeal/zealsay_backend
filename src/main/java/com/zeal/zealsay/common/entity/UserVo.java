@@ -2,7 +2,6 @@ package com.zeal.zealsay.common.entity;
 
 import com.zeal.zealsay.entity.Role;
 import com.zeal.zealsay.entity.User;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,10 +16,8 @@ import java.util.Collection;
 @EqualsAndHashCode(callSuper = false)
 public class UserVo implements UserDetails {
 
-  @ApiModelProperty(value = "用户")
   private User user;
 
-  @ApiModelProperty(value = "角色")
   private Role role;
 
   @Override
