@@ -1,0 +1,55 @@
+spring:
+  profiles: prod
+  redis:
+    host: ${REDIS_HOST}
+    port: ${REDIS_PORT}
+    password: ${REDIS_PASSWORD}
+    timeout: 10000
+  datasource:
+    host: ${MYSQL_HOST}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+    url: jdbc:mysql://${spring.datasource.host}/zealsay_svt?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false
+    hikari:
+      maxLifetime: 1765000 #一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒以上
+      maximumPoolSize: 15 #连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count)
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
+  mail:
+    host: smtp.mxhichina.com
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    default-encoding: UTF-8
+qiniu:
+  Domain: ${QINIU_DOMAIN}
+  Bucket: ${QINIU_BUCKET}
+  AccessKey: ${QINIU_ACCESSKEY}
+  SecretKey: ${QINIU_SECRETKEY}
+
+swagger:
+  basic:
+    ## 开启Swagger的Basic认证功能,默认是false
+    enable: true
+    ## Basic认证用户名
+    username: ${API_USERNAME}
+    ## Basic认证密码
+    password: ${API_PASSWORD}
+
+web:
+  name: ${WEB_NAME}
+  domain: ${WEB_DOMAIN}
+  default:
+    password: $2a$10$DmMktUppa9g.qWPmGPOM/.VQGP0Njrf09vC3FIbNp2G91R1Xdq466
+
+justauth:
+  enabled: true
+  type:
+    github:
+      client-id: ${GITHUB_ID}
+      client-secret: ${GITHUB_SECRET}
+      redirect-uri: ${GITHUB_URI}
+  cache:
+    type: default

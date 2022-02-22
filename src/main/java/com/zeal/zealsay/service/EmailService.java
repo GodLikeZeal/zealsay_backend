@@ -2,7 +2,7 @@ package com.zeal.zealsay.service;
 
 import com.zeal.zealsay.common.constant.SystemConstants;
 import lombok.extern.slf4j.Slf4j;
-import org.jasypt.encryption.StringEncryptor;
+import org.bouncycastle.jcajce.provider.symmetric.AES;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
@@ -35,8 +35,6 @@ public class EmailService {
   private JavaMailSender mailSender;
   @Autowired
   SystemConstants systemConstants;
-  @Autowired
-  StringEncryptor stringEncryptor;
 
   private static final int TIMELIMIT = 1000 * 60 * 60 * 24; //激活邮件过期时间24小时
 
@@ -138,19 +136,6 @@ public class EmailService {
     }
   }
 
-  /**
-   * 发送注册邮件
-   *
-   * @param username 用户名
-   * @param email    邮件
-   */
-  @Async
-  public void sendRegisterEmail(String username, String email) throws UnsupportedEncodingException {
-    String token = URLEncoder.encode(buildToken(email),"utf-8");
-    String url = systemConstants.getDomain()+"confirm?token="+token+"&email="+email;
-    String content = buildRegisterEmail(username, email, url);
-    sendHtmlMail(email, "账号注册激活邮件", content);
-  }
 
   /**
    * 构造注册邮件内容.
@@ -280,21 +265,5 @@ public class EmailService {
         "</html>";
   }
 
-  /**
-   * 加密token.
-   *
-   * @param email 邮箱
-   * @return
-   */
-  public String buildToken(String email) {
-    //当前时间戳
-    Long curTime = System.currentTimeMillis();
-    //激活的有效时间
-    Long activateTime = curTime + TIMELIMIT;
-    //激活码--用于激活邮箱账号
-    String token = email + ":" + activateTime;
-
-    return stringEncryptor.encrypt(token);
-  }
 
 }

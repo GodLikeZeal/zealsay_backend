@@ -1,6 +1,5 @@
 package com.zeal.zealsay.config;
 
-import com.ulisesbocchio.jasyptspringboot.configuration.CachingConfiguration;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
@@ -20,7 +19,7 @@ import java.time.Duration;
 @Slf4j
 @Configuration
 @EnableCaching // spring中注解驱动的缓存管理功能
-public class RedisConfig extends CachingConfiguration {
+public class RedisConfig {
 
     @Bean
     public KeyGenerator KeyGenerator() {

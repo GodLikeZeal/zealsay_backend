@@ -221,36 +221,6 @@ public class UserController {
   }
 
   /**
-   * 开始校验注册邮件.
-   *
-   * @return
-   * @author zeal
-   * @date 2019/10/14 22:56
-   */
-  @PostMapping("confirm/email")
-  public Result<Boolean> conformRegisterEmail(@RequestParam String email, @RequestParam String key) {
-    log.info("开始校验用户{}的注册邮件信息", email);
-    return Result.of(userService.confirmEmailRegister(email, key));
-  }
-
-  /**
-   * 发送注册邮件.
-   *
-   * @author zhanglei
-   * @date 2019-10-08  17:26
-   */
-  @PostMapping("register/email")
-  public Result sendRegisterEmail(@RequestParam String username, @RequestParam String email) {
-    log.info("开始执行发送注册邮件服务");
-    try {
-      emailService.sendRegisterEmail(username, email);
-    } catch (UnsupportedEncodingException e) {
-      log.error("发送注册邮件出错！出错信息为:{}", e.getMessage());
-    }
-    return Result.ok();
-  }
-
-  /**
    * 用户自主注册.
    *
    * @author zhanglei
