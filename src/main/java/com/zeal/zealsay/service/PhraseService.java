@@ -1,7 +1,6 @@
 package com.zeal.zealsay.service;
 
 import com.zeal.zealsay.entity.Phrase;
-import com.zeal.zealsay.feign.HitokotoClient;
 import com.zeal.zealsay.feign.response.HitokotoResponse;
 import com.zeal.zealsay.mapper.PhraseMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -27,8 +26,6 @@ import java.util.concurrent.Future;
 @Service
 public class PhraseService extends AbstractService<PhraseMapper, Phrase> {
 
-  @Autowired
-  HitokotoClient hitokotoClient;
 
   /**
    * 获取一言接口.
@@ -59,18 +56,18 @@ public class PhraseService extends AbstractService<PhraseMapper, Phrase> {
    * @author zhanglei
    * @date 2020/2/3  12:38 下午
    */
-  public void save() {
-      HitokotoResponse hitokotoResponse;
-      try {
-          hitokotoResponse = hitokotoClient.get();
-          //本地备份
-          savePhraseLocal(hitokotoResponse);
-      } catch (Exception e) {
-          //出错
-          log.error("获取外部hitokoto接口失败，出错信息为{}", e.getMessage());
-          e.printStackTrace();
-      }
-  }
+//  public void save() {
+//      HitokotoResponse hitokotoResponse;
+//      try {
+//          hitokotoResponse = hitokotoClient.get();
+//          //本地备份
+//          savePhraseLocal(hitokotoResponse);
+//      } catch (Exception e) {
+//          //出错
+//          log.error("获取外部hitokoto接口失败，出错信息为{}", e.getMessage());
+//          e.printStackTrace();
+//      }
+//  }
 
   /**
    * 异步存储.

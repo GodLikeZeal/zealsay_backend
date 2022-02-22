@@ -1,7 +1,5 @@
 package com.zeal.zealsay.common.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,19 +14,15 @@ import static com.zeal.zealsay.common.constant.enums.ResultCode.OK;
  * @description 统一响应返回结果集
  * @date 2018-04-05 15:58
  */
-@ApiModel(value = "统一响应对象")
 @Data
 @Builder
 @AllArgsConstructor
 public class Result<T> {
 
-  @ApiModelProperty(value = "响应码",example = "200")
   private String code;
 
-  @ApiModelProperty(value = "请求message",example = "请求成功")
   private String message;
 
-  @ApiModelProperty(value = "响应内容")
   private T data;
 
   public Result() {

@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.zeal.zealsay.common.constant.enums.*;
 import com.zeal.zealsay.common.entity.UserVo;
-import com.zeal.zealsay.converter.UserConvertMapper;
 import com.zeal.zealsay.dto.request.UserAddRequest;
 import com.zeal.zealsay.dto.request.UserRegisterRequest;
 import com.zeal.zealsay.dto.request.UserUpdateRequest;
@@ -19,7 +18,7 @@ import com.zeal.zealsay.mapper.UserMapper;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.jasypt.encryption.StringEncryptor;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,10 +53,6 @@ public class UserService extends AbstractService<UserMapper, User> implements IS
   AuthUserService authUserService;
   @Autowired
   EmailService emailService;
-  @Autowired
-  StringEncryptor stringEncryptor;
-  @Autowired
-  UserConvertMapper userConvertMapper;
 
   /**
    * 通过手机号，用户名或者邮箱查询.
@@ -193,7 +188,9 @@ public class UserService extends AbstractService<UserMapper, User> implements IS
   public Boolean updateUser(UserUpdateRequest userUpdateRequest) {
     //检查是否可以被更新
     checkBeforeUpdate(userUpdateRequest);
-    return updateById(userConvertMapper.toUser(userUpdateRequest));
+    User user = new User();
+    BeanUtils.copyProperties(userUpdateRequest,user);
+    return updateById(user);
   }
 
   private void checkBeforeUpdate(UserUpdateRequest userUpdateRequest) {
@@ -325,49 +322,11 @@ public class UserService extends AbstractService<UserMapper, User> implements IS
     //发送邮件
     if (Objects.nonNull(userRegisterRequest.getEmail())) {
       log.info("开始发送注册邮件");
-      try {
-        emailService.sendRegisterEmail(userRegisterRequest.getUsername(), userRegisterRequest.getEmail());
-      } catch (UnsupportedEncodingException e) {
-        log.error("发送注册邮件异常，异常信息为{}",e.getMessage());
-      }
+      //todo 执行发送注册邮件逻辑
     }
     log.info("开始保存用户信息");
     //保存
     return save(user);
-  }
-  /**
-  * 校验注册邮件.
-  *
-  * @author  zeal
-  * @date 2019/10/14 22:53
-  */
-  public Boolean confirmEmailRegister(String email,String key) {
-    //解析key
-    String value = stringEncryptor.decrypt(key);
-    String values[] = value.split(":");
-    if (values.length!=2) {
-      log.error("注册邮件为:{}的key:{}不合法",email,key);
-      throw new ServiceException("key无效");
-    }
-    String ckEmail = values[0];
-    long ckTime;
-    try {
-      ckTime = Long.parseLong(values[1]);
-    } catch (Exception e) {
-      throw new ServiceException("key无效");
-    }
-    //校验是否过期
-    if (ckTime< System.currentTimeMillis()) {
-      throw new ServiceException("注册邮件已过期");
-    }
-    //校验邮件是否相同
-    if (!email.equals(ckEmail)) {
-      throw new ServiceException("注册邮件校验不一致");
-    }
-    //更新状态
-    return update(new User(),new UpdateWrapper<User>()
-        .set("email_confirm", YesOrNo.YES.getDescription())
-        .eq("email",email));
   }
 
   /**

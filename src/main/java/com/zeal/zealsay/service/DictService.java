@@ -3,19 +3,21 @@ package com.zeal.zealsay.service;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.zeal.zealsay.common.constant.enums.DictType;
-import com.zeal.zealsay.converter.DictConvertMapper;
 import com.zeal.zealsay.dto.request.DictAddRequest;
 import com.zeal.zealsay.dto.request.DictRequest;
 import com.zeal.zealsay.dto.request.DictSaveRequest;
 import com.zeal.zealsay.entity.Dict;
 import com.zeal.zealsay.exception.ServiceException;
 import com.zeal.zealsay.mapper.DictMapper;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Future;
 import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
@@ -33,8 +35,6 @@ import org.springframework.util.CollectionUtils;
 @Service
 public class DictService extends AbstractService<DictMapper, Dict> {
 
-    @Autowired
-    DictConvertMapper dictConvertMapper;
 
     /**
      * 查询省的接口.
@@ -114,9 +114,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取系统配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     public Future<List<Dict>> getConfig() {
         QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
@@ -132,27 +132,35 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 更新配置.
      *
-     * @author  zhanglei
+     * @author zhanglei
      * @date 2020/7/1  4:17 下午
      */
     public Boolean saveConfig(List<DictSaveRequest> requests) {
-        return updateBatchById(dictConvertMapper.toDictList(requests));
+        if (CollectionUtils.isEmpty(requests)) {
+            return false;
+        }
+        List<Dict> list = requests.stream().map(d -> {
+            Dict dict = new Dict();
+            BeanUtils.copyProperties(d, dict);
+            return dict;
+        }).collect(Collectors.toList());
+        return updateBatchById(list);
     }
 
     /**
      * 更新配置.
      *
-     * @author  zhanglei
+     * @author zhanglei
      * @date 2020/7/1  4:17 下午
      */
     public Boolean saveConfigTheme(List<DictSaveRequest> requests) {
         if (CollectionUtils.isEmpty(requests)) {
             return false;
         }
-        for (DictSaveRequest dictSaveRequest: requests) {
+        for (DictSaveRequest dictSaveRequest : requests) {
             update(new UpdateWrapper<Dict>()
-                    .set("name",dictSaveRequest.getName())
-                    .eq("code",dictSaveRequest.getCode()));
+                    .set("name", dictSaveRequest.getName())
+                    .eq("code", dictSaveRequest.getCode()));
         }
         return true;
     }
@@ -160,9 +168,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取作者信息配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     @Async
     public Future<List<Dict>> getConfigAuthor() {
@@ -180,9 +188,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取主题信息配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     @Async
     public Future<List<Dict>> getConfigTheme() {
@@ -199,9 +207,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取关于页面配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     @Async
     public Future<List<Dict>> getConfigAbout() {
@@ -218,9 +226,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取github登录配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     public Future<List<Dict>> getConfigLoginGithub() {
         QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
@@ -236,9 +244,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取七牛云配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     public Future<List<Dict>> getConfigQiniu() {
         QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
@@ -254,9 +262,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取阿里云短信配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     public Future<List<Dict>> getConfigSms() {
         QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
@@ -272,9 +280,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取邮箱配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     public Future<List<Dict>> getConfigMail() {
         QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
@@ -290,9 +298,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
     /**
      * 获取live2d配置.
      *
+     * @return
      * @author zhanglei
      * @date 2020/6/30  5:20 下午
-     * @return
      */
     public Future<List<Dict>> getConfiglive2d() {
         QueryWrapper<Dict> dictQueryWrapper = new QueryWrapper<>();
@@ -316,7 +324,9 @@ public class DictService extends AbstractService<DictMapper, Dict> {
         if (count > 0) {
             throw new ServiceException("code不能重复");
         }
-        return save(dictConvertMapper.toDict(dictRequest));
+        Dict dict = new Dict();
+        BeanUtils.copyProperties(dictRequest, dict);
+        return save(dict);
     }
 
     /**

@@ -7,8 +7,6 @@ import com.google.common.collect.Maps;
 import com.zeal.zealsay.common.entity.Result;
 import com.zeal.zealsay.common.third.qiniu.QiniuService;
 import com.zeal.zealsay.exception.ServiceException;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +26,6 @@ import java.util.Map;
  * @author zhanglei
  * @since 2018-11-28
  */
-@Api(tags = "七牛云对象云存储模块")
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/qiniu")
@@ -45,7 +42,6 @@ public class QiniuController {
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @PostMapping("/upload/{type}")
-  @ApiOperation(value = "上传文件", notes = "上传文件")
   public Result<String> upload(@RequestParam MultipartFile file,@PathVariable String type) {
     if (file.isEmpty()) {
       throw new ServiceException("上传文件失败");
@@ -68,7 +64,6 @@ public class QiniuController {
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @PostMapping("/upload")
-  @ApiOperation(value = "上传文件", notes = "上传文件")
   public Result<String> upload(@RequestParam MultipartFile file) {
     if (file.isEmpty()) {
       throw new ServiceException("上传文件失败");
@@ -91,7 +86,6 @@ public class QiniuController {
    */
   @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_EDITOR')")
   @PostMapping("/upload/multiple")
-  @ApiOperation(value = "批量上传文件", notes = "上传文件")
   public Result<List<Map<String,String>>> uploadMultiple(@RequestParam MultipartFile[] files) {
     if (files.length <= 0) {
       throw new ServiceException("上传文件失败");
