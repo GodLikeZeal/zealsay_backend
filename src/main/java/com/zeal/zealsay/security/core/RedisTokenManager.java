@@ -1,5 +1,8 @@
 package com.zeal.zealsay.security.core;
 
+import com.alibaba.fastjson.JSON;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.common.entity.UserInfo;
 import com.zeal.zealsay.util.RSAUtil;
@@ -23,6 +26,8 @@ public class RedisTokenManager implements TokenManager{
 
     @Autowired
     private RedisUtil redisUtils;
+    @Autowired
+    ObjectMapper objectMapper;
 
 
     /**
@@ -74,9 +79,9 @@ public class RedisTokenManager implements TokenManager{
 
 
     @Override
-    public UserInfo getUserInfoByToken(String token) {
+    public UserInfo getUserInfoByToken(String token) throws JsonProcessingException {
         // 获取redis已有的member信息，不查数据库,重新生成token放入
-        UserInfo user = (UserInfo) redisUtils.get(token);
+        UserInfo user =  objectMapper.readValue(JSON.toJSONString(redisUtils.get(token)),UserInfo.class);
         return Objects.nonNull(user)? user : null;
     }
 }

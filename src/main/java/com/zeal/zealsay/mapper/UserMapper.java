@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.CacheNamespace;
  * @author zhanglei
  * @since 2018-09-14
  */
-@CacheNamespace(implementation= MybatisRedisCache.class,eviction= MybatisRedisCache.class)
+//@CacheNamespace(implementation= MybatisRedisCache.class,eviction= MybatisRedisCache.class)
 public interface UserMapper extends BaseMapper<User> {
 
 }

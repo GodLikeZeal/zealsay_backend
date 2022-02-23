@@ -1,6 +1,10 @@
 package com.zeal.zealsay.config;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
@@ -11,7 +15,10 @@ import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.*;
+import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializationContext;
+import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
@@ -20,6 +27,9 @@ import java.time.Duration;
 @Configuration
 @EnableCaching // spring中注解驱动的缓存管理功能
 public class RedisConfig {
+
+    @Autowired
+    ObjectMapper objectMapper;
 
     @Bean
     public KeyGenerator KeyGenerator() {
@@ -71,7 +81,6 @@ public class RedisConfig {
         // jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
         // 使用StringRedisSerializer来序列化和反序列化redis的key值
-        RedisSerializer redisSerializer = new StringRedisSerializer();
         // key
         redisTemplate.setKeySerializer(keySerializer());
         redisTemplate.setHashKeySerializer(keySerializer());
@@ -100,7 +109,11 @@ public class RedisConfig {
 
     // 使用Jackson序列化器
     private RedisSerializer<Object> valueSerializer() {
-        return new GenericJackson2JsonRedisSerializer();
+        Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer(Object.class);
+         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+         return jackson2JsonRedisSerializer;
+//        return new GenericJackson2JsonRedisSerializer();
     }
 
     private RedisSerializer<String> keySerializer() {
