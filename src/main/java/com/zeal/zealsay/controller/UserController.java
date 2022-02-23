@@ -119,7 +119,7 @@ public class UserController {
                                                       @RequestParam(defaultValue = "10") Long pageSize,
                                                       UserPageRequest userPageRequest) {
     log.info("开始进行分页查询用户列表，查询参数为 '{}' ", userPageRequest);
-    User user = null;
+    User user = new User();
     if (Objects.nonNull(userPageRequest)) {
       BeanUtils.copyProperties(userPageRequest,user);
     }

@@ -130,7 +130,7 @@ public class DataController {
         log.info("👕用户中心信息获取中...");
         //获取当前用户信息
         User userInfo = userService.getById(id);
-        UserResponse user = null;
+        UserResponse user = new UserResponse();
         if (Objects.nonNull(userInfo)) {
             BeanUtils.copyProperties(userInfo,user);
         }
