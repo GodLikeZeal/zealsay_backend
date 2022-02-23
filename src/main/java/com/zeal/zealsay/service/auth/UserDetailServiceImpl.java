@@ -1,5 +1,6 @@
 package com.zeal.zealsay.service.auth;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zeal.zealsay.common.constant.enums.UserStatus;
 import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.common.entity.UserInfo;
@@ -72,7 +73,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
      *
      * @param token
      */
-    public void loginOff(String token) {
+    public void loginOff(String token) throws JsonProcessingException {
         UserInfo userInfo = redisTokenManager.getUserInfoByToken(token);
         redisTokenManager.delToken(userInfo);
     }

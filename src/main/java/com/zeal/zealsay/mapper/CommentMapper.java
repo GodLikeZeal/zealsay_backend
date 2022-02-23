@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.CacheNamespace;
  * @author  zhanglei
  * @date 2020/6/16  4:57 下午
  */
-@CacheNamespace(implementation= MybatisRedisCache.class,eviction= MybatisRedisCache.class)
+//@CacheNamespace(implementation= MybatisRedisCache.class,eviction= MybatisRedisCache.class)
 public interface CommentMapper extends BaseMapper<Comment> {
 
 }

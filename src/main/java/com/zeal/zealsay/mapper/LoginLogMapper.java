@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.CacheNamespace;
  * @author zhanglei
  * @since 2019-03-16
  */
-@CacheNamespace(implementation= MybatisRedisCache.class,eviction= MybatisRedisCache.class)
+//@CacheNamespace(implementation= MybatisRedisCache.class,eviction= MybatisRedisCache.class)
 public interface LoginLogMapper extends BaseMapper<LoginLog> {
 
 }

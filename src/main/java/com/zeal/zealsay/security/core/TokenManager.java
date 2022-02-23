@@ -1,5 +1,6 @@
 package com.zeal.zealsay.security.core;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.zeal.zealsay.common.entity.SecuityUser;
 import com.zeal.zealsay.common.entity.UserInfo;
 
@@ -39,5 +40,5 @@ public interface TokenManager {
      * @param token
      * @return
      */
-    UserInfo getUserInfoByToken(String token);
+    UserInfo getUserInfoByToken(String token) throws JsonProcessingException;
 }
